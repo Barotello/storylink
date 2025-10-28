@@ -41,9 +41,11 @@ const ExplorePage = () => {
               <p className="text-white text-lg font-medium leading-normal">5 ortak film, 3 ortak kitap</p>
             </div>
             <div className="flex-shrink-0">
-              <Button className="bg-white/20 backdrop-blur-sm rounded-full w-12 h-12 flex items-center justify-center">
-                <span className="material-symbols-outlined text-white">info</span>
-              </Button>
+              <Link to="/profile"> {/* 'info' butonunu UserProfilePage'e yönlendir */}
+                <Button className="bg-white/20 backdrop-blur-sm rounded-full w-12 h-12 flex items-center justify-center">
+                  <span className="material-symbols-outlined text-white">info</span>
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

@@ -77,6 +77,7 @@ export default {
         "accent-app": "#FF6F61", // Canlı mercan rengi
         "chip-dark-bg": "#3c2348", // Koyu mod çip arka planı
         "nav-dark-text": "#b792c9", // Koyu mod alt navigasyon metin rengi
+        "profile-accent-red": "#E50914", // Profil sayfasındaki kırmızı vurgu
       },
       fontFamily: {
         // Custom font family from user's request
@@ -84,10 +85,10 @@ export default {
       },
       borderRadius: {
         "DEFAULT": "1rem",
-        "lg": "2rem", // Overriding existing 'lg' to 2rem as per user's request
-        "md": "calc(var(--radius) - 2px)", // Keeping existing md
-        "sm": "calc(var(--radius) - 4px)", // Keeping existing sm
-        "xl": "3rem",
+        "lg": "1.5rem", // Updated from 2rem
+        "md": "calc(var(--radius) - 2px)",
+        "sm": "calc(var(--radius) - 4px)",
+        "xl": "2rem", // Updated from 3rem
         "full": "9999px",
       },
       keyframes: {
