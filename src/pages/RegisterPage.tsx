@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // useNavigate hook'unu import et
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -16,6 +16,8 @@ const RegisterPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedMedia, setSelectedMedia] = useState<string[]>(["Yüzüklerin Efendisi", "Dune"]);
   const [showPassword, setShowPassword] = useState(false);
+
+  const navigate = useNavigate(); // useNavigate hook'unu kullan
 
   const genres = [
     { name: "Bilim Kurgu", icon: "science" },
@@ -57,6 +59,7 @@ const RegisterPage = () => {
     // Handle final submission logic here
     console.log("Form Submitted:", { email, password, name, age, gender, selectedGenres, selectedMedia });
     alert("Kayıt Başarılı!");
+    navigate("/explore"); // Kayıt başarılı olduktan sonra /explore sayfasına yönlendir
   };
 
   return (

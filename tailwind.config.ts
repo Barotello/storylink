@@ -74,6 +74,9 @@ export default {
         "surface-dark": "#2b1933",
         "border-light": "#e5e7eb",
         "border-dark": "#553267",
+        "accent-app": "#FF6F61", // Canlı mercan rengi
+        "chip-dark-bg": "#3c2348", // Koyu mod çip arka planı
+        "nav-dark-text": "#b792c9", // Koyu mod alt navigasyon metin rengi
       },
       fontFamily: {
         // Custom font family from user's request
