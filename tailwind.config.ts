@@ -66,18 +66,24 @@ export default {
         "primary-app": "#a413ec",
         "background-light": "#f7f6f8",
         "background-dark": "#1c1022",
+        "text-light": "#1f2937",
+        "text-dark": "#e5e7eb",
+        "subtle-light": "#6b7280",
+        "subtle-dark": "#9ca3af",
+        "surface-light": "#ffffff",
+        "surface-dark": "#2b1933",
+        "border-light": "#e5e7eb",
+        "border-dark": "#553267",
       },
       fontFamily: {
         // Custom font family from user's request
         "display": ["Plus Jakarta Sans", "sans-serif"],
       },
       borderRadius: {
-        lg: "var(--radius)", // Keep existing lg
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-        // Custom border-radius from user's request
         "DEFAULT": "1rem",
-        "app-lg": "2rem", // Renamed to avoid conflict with existing 'lg'
+        "lg": "2rem", // Overriding existing 'lg' to 2rem as per user's request
+        "md": "calc(var(--radius) - 2px)", // Keeping existing md
+        "sm": "calc(var(--radius) - 4px)", // Keeping existing sm
         "xl": "3rem",
         "full": "9999px",
       },

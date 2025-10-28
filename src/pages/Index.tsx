@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   return (
@@ -29,10 +30,12 @@ const Index = () => {
         {/* ButtonGroup */}
         <div className="flex justify-center w-full px-4 pt-6 pb-8">
           <div className="flex flex-1 gap-4 max-w-[480px] flex-col items-stretch">
-            <button className="font-display flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-5 bg-primary-app text-white text-base font-bold leading-normal tracking-[0.015em] w-full transition-transform active:scale-95">
-              <span className="truncate">Yeni Bir Hikayeye Başla</span>
-            </button>
-            <button className="font-display flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-5 bg-primary-app/20 text-primary-app text-base font-bold leading-normal tracking-[0.015em] w-full transition-transform active:scale-95">
+            <Link to="/register" className="w-full">
+              <button className="font-display flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-5 bg-primary-app text-white text-base font-bold leading-normal tracking-[0.015em] w-full transition-transform active:scale-95 hover:bg-primary-app/90">
+                <span className="truncate">Yeni Bir Hikayeye Başla</span>
+              </button>
+            </Link>
+            <button className="font-display flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-5 bg-primary-app/20 text-primary-app text-base font-bold leading-normal tracking-[0.015em] w-full transition-transform active:scale-95 hover:bg-primary-app/30">
               <span className="truncate">Giriş Yap</span>
             </button>
           </div>
