@@ -79,12 +79,12 @@ const ExplorePage = () => {
 
       {/* Alt Navigasyon Çubuğu (BottomNavBar) */}
       <nav className="flex gap-2 border-t border-slate-200 dark:border-chip-dark-bg bg-background-light dark:bg-surface-dark px-4 pb-3 pt-2">
-        {/* Yeni Keşfet (Boş bırakılan alan) */}
-        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="#">
+        {/* Keşfet (Sol) */}
+        <Link className="flex flex-1 flex-col items-center justify-end gap-1 rounded-full text-primary-app" to="/explore">
           <div className="flex h-8 items-center justify-center">
-            <span className="material-symbols-outlined">grid_view</span> {/* Geçici ikon */}
+            <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>travel_explore</span>
           </div>
-          <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Yeni Keşfet</p> {/* Geçici metin */}
+          <p className="text-primary-app text-xs font-medium leading-normal tracking-[0.015em]">Keşfet</p>
         </Link>
 
         {/* Sohbetler */}
@@ -95,12 +95,12 @@ const ExplorePage = () => {
           <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Sohbetler</p>
         </Link>
 
-        {/* Keşfet (Kalp ikonu) */}
-        <Link className="flex flex-1 flex-col items-center justify-end gap-1 rounded-full text-primary-app" to="/explore">
+        {/* Eşleş (Kalp ikonu - Orta) */}
+        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="/matches">
           <div className="flex h-8 items-center justify-center">
-            <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>favorite</span>
+            <span className="material-symbols-outlined">favorite</span>
           </div>
-          <p className="text-primary-app text-xs font-medium leading-normal tracking-[0.015em]">Keşfet</p>
+          <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Eşleş</p>
         </Link>
 
         {/* Profil */}

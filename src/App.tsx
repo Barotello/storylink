@@ -6,7 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import RegisterPage from "./pages/RegisterPage";
 import ExplorePage from "./pages/ExplorePage";
-import UserProfilePage from "./pages/UserProfilePage"; // Yeni eklenen sayfa
+import UserProfilePage from "./pages/UserProfilePage";
+import MatchesPage from "./pages/MatchesPage"; // Yeni eklenen sayfa
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -21,7 +22,8 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/explore" element={<ExplorePage />} />
-          <Route path="/profile" element={<UserProfilePage />} /> {/* Yeni kullanıcı profili sayfası rotası */}
+          <Route path="/profile" element={<UserProfilePage />} />
+          <Route path="/matches" element={<MatchesPage />} /> {/* Yeni eşleşmeler sayfası rotası */}
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
