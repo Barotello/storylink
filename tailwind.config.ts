@@ -62,11 +62,24 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        // Custom colors from user's request
+        "primary-app": "#a413ec",
+        "background-light": "#f7f6f8",
+        "background-dark": "#1c1022",
+      },
+      fontFamily: {
+        // Custom font family from user's request
+        "display": ["Plus Jakarta Sans", "sans-serif"],
       },
       borderRadius: {
-        lg: "var(--radius)",
+        lg: "var(--radius)", // Keep existing lg
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        // Custom border-radius from user's request
+        "DEFAULT": "1rem",
+        "app-lg": "2rem", // Renamed to avoid conflict with existing 'lg'
+        "xl": "3rem",
+        "full": "9999px",
       },
       keyframes: {
         "accordion-down": {
