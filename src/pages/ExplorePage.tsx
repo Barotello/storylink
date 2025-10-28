@@ -79,24 +79,39 @@ const ExplorePage = () => {
 
       {/* Alt Navigasyon Çubuğu (BottomNavBar) */}
       <nav className="flex gap-2 border-t border-slate-200 dark:border-chip-dark-bg bg-background-light dark:bg-surface-dark px-4 pb-3 pt-2">
-        <Link className="flex flex-1 flex-col items-center justify-end gap-1 rounded-full text-primary-app" to="/explore">
+        {/* Yeni Keşfet (Boş bırakılan alan) */}
+        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="#">
           <div className="flex h-8 items-center justify-center">
-            <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>explore</span>
+            <span className="material-symbols-outlined">grid_view</span> {/* Geçici ikon */}
           </div>
-          <p className="text-primary-app text-xs font-medium leading-normal tracking-[0.015em]">Keşfet</p>
+          <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Yeni Keşfet</p> {/* Geçici metin */}
         </Link>
+
+        {/* Sohbetler */}
         <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="#">
           <div className="flex h-8 items-center justify-center">
             <span className="material-symbols-outlined">chat_bubble</span>
           </div>
           <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Sohbetler</p>
         </Link>
+
+        {/* Keşfet (Kalp ikonu) */}
+        <Link className="flex flex-1 flex-col items-center justify-end gap-1 rounded-full text-primary-app" to="/explore">
+          <div className="flex h-8 items-center justify-center">
+            <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>favorite</span>
+          </div>
+          <p className="text-primary-app text-xs font-medium leading-normal tracking-[0.015em]">Keşfet</p>
+        </Link>
+
+        {/* Profil */}
         <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="#">
           <div className="flex h-8 items-center justify-center">
             <span className="material-symbols-outlined">person</span>
           </div>
           <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Profil</p>
         </Link>
+
+        {/* Ayarlar */}
         <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="#">
           <div className="flex h-8 items-center justify-center">
             <span className="material-symbols-outlined">settings</span>
