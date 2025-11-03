@@ -3,12 +3,11 @@ import { Link } from "react-router-dom";
 import TopAppBar from "@/components/explore/TopAppBar";
 import FeedCard from "@/components/explore/FeedCard";
 import FloatingActionButton from "@/components/explore/FloatingActionButton";
-import { Button } from "@/components/ui/button"; // Button bileşenini import et
 
 const ExplorePage = () => {
-  const [navOpacity, setNavOpacity] = useState(1); // Başlangıç opaklığı
-  const scrollThreshold = 100; // Opaklığın tamamen değişeceği kaydırma pikseli
-  const minOpacity = 0.4; // Menü silikleştiğinde ulaşacağı minimum opaklık
+  const [showBottomNav, setShowBottomNav] = useState(true);
+  const scrollHideThreshold = 100; // Aşağı kaydırıldığında menüyü gizlemek için eşik
+  const scrollShowThreshold = 50; // Yukarı kaydırıldığında menüyü göstermek için eşik
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -16,21 +15,13 @@ const ExplorePage = () => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      if (currentScrollY > lastScrollY) {
-        // Aşağı kaydırılıyor: opaklığı azalt
-        const newOpacity = Math.max(minOpacity, 1 - (currentScrollY / scrollThreshold) * (1 - minOpacity));
-        setNavOpacity(newOpacity);
-      } else {
-        // Yukarı kaydırılıyor veya en üstte: opaklığı artır
-        const newOpacity = Math.min(1, minOpacity + ((scrollThreshold - currentScrollY) / scrollThreshold) * (1 - minOpacity));
-        setNavOpacity(newOpacity);
+      if (currentScrollY > lastScrollY && currentScrollY > scrollHideThreshold) {
+        // Aşağı kaydırılıyor ve gizleme eşiğini geçti
+        setShowBottomNav(false);
+      } else if (currentScrollY < lastScrollY || currentScrollY <= scrollShowThreshold) {
+        // Yukarı kaydırılıyor veya sayfanın başına yakın
+        setShowBottomNav(true);
       }
-
-      // En üstte olduğunda opaklığın tam olduğundan emin ol
-      if (currentScrollY === 0) {
-        setNavOpacity(1);
-      }
-
       lastScrollY = currentScrollY;
     };
 
@@ -38,14 +29,14 @@ const ExplorePage = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []); // Boş bağımlılık dizisi, bu hook'un yalnızca bileşen bağlandığında ve ayrıldığında çalışmasını sağlar.
+  }, []);
 
   return (
     <div className="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden bg-background-dark font-display text-text-light dark:text-text-dark">
       <TopAppBar />
 
       {/* Main Content Feed */}
-      <main className="flex-1 pb-24">
+      <main className="flex-1 pb-24"> {/* Alt navigasyon çubuğu için yeterli boşluk bırak */}
         {/* Card 1 */}
         <FeedCard
           avatarSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuDFxm-zLiQ27VEEr0FsHV0qjpNKRrvWKw7pps-ZSBICXRnAmobSVX9n7r3enaN8n1C-nV04ZQNERl8SF-vSQB3WswP6S2KtsM1EwnjbIc0yMp0Pdpfeon8b4oOVz85Iv6s-QBTwoyuH1ex3tcGXlwYoV6hK8LGz4zP5a8bTYfs8EI4G8V9QbQFv5bgP7uLPKInxBC-6abPUCxrEkEI4F4Jgzii3p_wThjJ0AiegACY98pFy7LJAYAL2Qxi_40nuWMEY4vwCiCcaWPw"
@@ -54,7 +45,7 @@ const ExplorePage = () => {
           timeAgo="1 saat önce"
           content="Haruki Murakami'nin en iyi kitabı sizce hangisi? Benim favorim '1Q84', ama 'Sahilde Kafka'nın da yeri ayrı. Sizin düşüncelerinizi merak ediyorum."
           hashtags="#Murakami #KitapÖnerisi"
-          imageSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuCoL9nQnNADN42ZgLp6yAkr4aWh9rz4c4A7NJOWJv5RYDRDt6ArEJVMpsHkx3K04haPeD8cqkrlr9l9elu1tgBilCKIq4oqUZYUmKnkXxti8uhURg9zz18y-X6aykEMybtzqFPlYpvdBQB5PJxphHJrTIMkrid6SC9MrtQONufbXysHVhS_lqJzd7o_iBChYrtDbfdOsURlP2q9eXL7OAII6YnlyTJ3i0jq8Vo_b7QnljJXB_98GWrRXfKlmLP3gZQ4BMNoIdAeZqY"
+          imageSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuCoL9nQnNADN42ZgLp6yAkr4aWh9rz4c4A7NJOWJv5RYDRDt6ArEJVMpsHkx3K04haPeD8cqkrlr9l9elu1tgBilCKIq4oqUZYUmKnkXxti8uhURg9zz18y-X6aykEMybtzqFPlYpvdBQB5PJxphHJrTIMkrid6SC9MrtQONufbXysHVhS_lqJzd7o_iBChYrtBbfdOsURlP2q9eXL7OAII6YnlyTJ3i0jq8Vo_b7QnljJXB_98GWrRXfKlmLP3gZQ4BMNoIdAeZqY"
           likes="1.2k"
           comments="251"
           shares="89"
@@ -86,12 +77,13 @@ const ExplorePage = () => {
         />
       </main>
 
-      <FloatingActionButton />
+      <FloatingActionButton isVisible={showBottomNav} />
 
       {/* Alt Navigasyon Çubuğu (BottomNavBar) */}
       <nav
-        className="fixed bottom-0 left-0 right-0 flex gap-2 border-t border-slate-200 dark:border-chip-dark-bg bg-background-light dark:bg-surface-dark px-4 pb-3 pt-2 transition-opacity duration-300 ease-in-out"
-        style={{ opacity: navOpacity }}
+        className={`fixed bottom-0 left-0 right-0 flex gap-2 border-t border-slate-200 dark:border-chip-dark-bg bg-background-light dark:bg-surface-dark px-4 pb-3 pt-2 transition-transform duration-300 ease-in-out ${
+          showBottomNav ? "translate-y-0" : "translate-y-full"
+        }`}
       >
         {/* Keşfet (Sol) */}
         <Link className="flex flex-1 flex-col items-center justify-end gap-1 rounded-full text-primary-app" to="/explore">
