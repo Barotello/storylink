@@ -118,7 +118,7 @@ const ExplorePage = () => {
         </Link>
 
         {/* Ayarlar */}
-        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="#">
+        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="/settings"> {/* Rota güncellendi */}
           <div className="flex h-8 items-center justify-center">
             <span className="material-symbols-outlined">settings</span>
           </div>
