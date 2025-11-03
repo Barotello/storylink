@@ -9,8 +9,8 @@ const SettingsPage = () => {
     <div className="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden font-display">
       <SettingsTopAppBar />
       <main className="flex-1 px-4 py-4">
-        {/* Profile Section */}
-        <section className="flex items-center gap-4 bg-background-light dark:bg-background-dark min-h-[72px] py-2 justify-between">
+        {/* Profile Section - Links to AccountSettingsPage */}
+        <Link to="/settings/account" className="flex items-center gap-4 bg-background-light dark:bg-background-dark min-h-[72px] py-2 justify-between">
           <div className="flex items-center gap-4">
             <div
               className="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-16 w-16"
@@ -29,52 +29,19 @@ const SettingsPage = () => {
               <span className="material-symbols-outlined">chevron_right</span>
             </div>
           </Button>
-        </section>
+        </Link>
         <div className="h-6"></div>
-        {/* HESAP YÖNETİMİ Section */}
-        <section>
-          <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-primary/70 px-4 pb-2 pt-4">HESAP YÖNETİMİ</h2>
+        
+        {/* Destek Section */}
+        <section className="mb-6">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-primary/70 px-4 pb-2 pt-4">Destek</h2>
           <div className="bg-slate-200/50 dark:bg-white/5 rounded-lg overflow-hidden">
             <div className="flex items-center gap-4 bg-transparent px-4 min-h-14 justify-between">
               <div className="flex items-center gap-4">
                 <div className="text-slate-800 dark:text-white flex items-center justify-center rounded-lg bg-slate-300/50 dark:bg-white/10 shrink-0 size-10">
-                  <span className="material-symbols-outlined">mail</span>
+                  <span className="material-symbols-outlined">help</span>
                 </div>
-                <p className="text-slate-800 dark:text-white text-base font-normal leading-normal flex-1 truncate">E-postayı Değiştir</p>
-              </div>
-              <div className="shrink-0">
-                <div className="text-slate-600 dark:text-white/70 flex size-7 items-center justify-center">
-                  <span className="material-symbols-outlined">chevron_right</span>
-                </div>
-              </div>
-            </div>
-            <hr className="border-slate-300/50 dark:border-white/10 ml-[4.5rem]" /> {/* ml-18 yerine ml-[4.5rem] */}
-            <div className="flex items-center gap-4 bg-transparent px-4 min-h-14 justify-between">
-              <div className="flex items-center gap-4">
-                <div className="text-slate-800 dark:text-white flex items-center justify-center rounded-lg bg-slate-300/50 dark:bg-white/10 shrink-0 size-10">
-                  <span className="material-symbols-outlined">lock</span>
-                </div>
-                <p className="text-slate-800 dark:text-white text-base font-normal leading-normal flex-1 truncate">Şifreyi Güncelle</p>
-              </div>
-              <div className="shrink-0">
-                <div className="text-slate-600 dark:text-white/70 flex size-7 items-center justify-center">
-                  <span className="material-symbols-outlined">chevron_right</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <div className="h-6"></div>
-        {/* TERCİHLER Section */}
-        <section>
-          <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-primary/70 px-4 pb-2 pt-4">TERCİHLER</h2>
-          <div className="bg-slate-200/50 dark:bg-white/5 rounded-lg overflow-hidden">
-            <div className="flex items-center gap-4 bg-transparent px-4 min-h-14 justify-between">
-              <div className="flex items-center gap-4">
-                <div className="text-slate-800 dark:text-white flex items-center justify-center rounded-lg bg-slate-300/50 dark:bg-white/10 shrink-0 size-10">
-                  <span className="material-symbols-outlined">movie</span>
-                </div>
-                <p className="text-slate-800 dark:text-white text-base font-normal leading-normal flex-1 truncate">Film Tercihlerim</p>
+                <p className="text-slate-800 dark:text-white text-base font-normal leading-normal flex-1 truncate">Yardım ve Destek</p>
               </div>
               <div className="shrink-0">
                 <div className="text-slate-600 dark:text-white/70 flex size-7 items-center justify-center">
@@ -86,59 +53,13 @@ const SettingsPage = () => {
             <div className="flex items-center gap-4 bg-transparent px-4 min-h-14 justify-between">
               <div className="flex items-center gap-4">
                 <div className="text-slate-800 dark:text-white flex items-center justify-center rounded-lg bg-slate-300/50 dark:bg-white/10 shrink-0 size-10">
-                  <span className="material-symbols-outlined">auto_stories</span>
+                  <span className="material-symbols-outlined">info</span>
                 </div>
-                <p className="text-slate-800 dark:text-white text-base font-normal leading-normal flex-1 truncate">Kitap Tercihlerim</p>
+                <p className="text-slate-800 dark:text-white text-base font-normal leading-normal flex-1 truncate">Hakkında</p>
               </div>
               <div className="shrink-0">
                 <div className="text-slate-600 dark:text-white/70 flex size-7 items-center justify-center">
                   <span className="material-symbols-outlined">chevron_right</span>
-                </div>
-              </div>
-            </div>
-            <hr className="border-slate-300/50 dark:border-white/10 ml-[4.5rem]" />
-            <div className="flex items-center gap-4 bg-transparent px-4 min-h-14 justify-between">
-              <div className="flex items-center gap-4">
-                <div className="text-slate-800 dark:text-white flex items-center justify-center rounded-lg bg-slate-300/50 dark:bg-white/10 shrink-0 size-10">
-                  <span className="material-symbols-outlined">notifications</span>
-                </div>
-                <p className="text-slate-800 dark:text-white text-base font-normal leading-normal flex-1 truncate">Bildirim Ayarları</p>
-              </div>
-              <div className="shrink-0">
-                <div className="text-slate-600 dark:text-white/70 flex size-7 items-center justify-center">
-                  <span className="material-symbols-outlined">chevron_right</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <div className="h-6"></div>
-        {/* GİZLİLİK VE GÜVENLİK Section */}
-        <section>
-          <h2 className="text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-primary/70 px-4 pb-2 pt-4">GİZLİLİK VE GÜVENLİK</h2>
-          <div className="bg-slate-200/50 dark:bg-white/5 rounded-lg overflow-hidden">
-            <div className="flex items-center gap-4 bg-transparent px-4 min-h-14 justify-between">
-              <div className="flex items-center gap-4">
-                <div className="text-slate-800 dark:text-white flex items-center justify-center rounded-lg bg-slate-300/50 dark:bg-white/10 shrink-0 size-10">
-                  <span className="material-symbols-outlined">visibility</span>
-                </div>
-                <p className="text-slate-800 dark:text-white text-base font-normal leading-normal flex-1 truncate">Profil Görünürlüğü</p>
-              </div>
-              <div className="shrink-0">
-                <div className="text-slate-600 dark:text-white/70 flex size-7 items-center justify-center">
-                  <span className="material-symbols-outlined">chevron_right</span>
-                </div>
-              </div>
-            </div>
-            <hr className="border-slate-300/50 dark:border-white/10 ml-[4.5rem]" />
-            <div className="flex items-center gap-4 bg-transparent px-4 min-h-14 justify-between">
-              <div className="flex items-center gap-4 w-full">
-                <div className="text-slate-800 dark:text-white flex items-center justify-center rounded-lg bg-slate-300/50 dark:bg-white/10 shrink-0 size-10">
-                  <span className="material-symbols-outlined">location_on</span>
-                </div>
-                <p className="text-slate-800 dark:text-white text-base font-normal leading-normal flex-1 truncate">Konum Paylaşımı</p>
-                <div className="shrink-0">
-                  <Switch defaultChecked={true} /> {/* shadcn/ui Switch bileşeni */}
                 </div>
               </div>
             </div>

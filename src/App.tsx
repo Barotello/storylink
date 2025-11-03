@@ -8,7 +8,8 @@ import RegisterPage from "./pages/RegisterPage";
 import ExplorePage from "./pages/ExplorePage";
 import UserProfilePage from "./pages/UserProfilePage";
 import MatchesPage from "./pages/MatchesPage";
-import SettingsPage from "./pages/SettingsPage"; // Yeni eklenen sayfa
+import SettingsPage from "./pages/SettingsPage";
+import AccountSettingsPage from "./pages/AccountSettingsPage"; // Yeni eklenen sayfa
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,7 +26,8 @@ const App = () => (
           <Route path="/explore" element={<ExplorePage />} />
           <Route path="/profile" element={<UserProfilePage />} />
           <Route path="/matches" element={<MatchesPage />} />
-          <Route path="/settings" element={<SettingsPage />} /> {/* Yeni ayarlar sayfası rotası */}
+          <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/settings/account" element={<AccountSettingsPage />} /> {/* Yeni hesap ayarları sayfası rotası */}
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
