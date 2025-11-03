@@ -1,10 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import TopAppBar from "@/components/explore/TopAppBar";
 import FeedCard from "@/components/explore/FeedCard";
 import FloatingActionButton from "@/components/explore/FloatingActionButton";
+import { Button } from "@/components/ui/button"; // Button bileşenini import et
 
 const ExplorePage = () => {
+  const [navOpacity, setNavOpacity] = useState(1); // Başlangıç opaklığı
+  const scrollThreshold = 100; // Opaklığın tamamen değişeceği kaydırma pikseli
+  const minOpacity = 0.4; // Menü silikleştiğinde ulaşacağı minimum opaklık
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY) {
+        // Aşağı kaydırılıyor: opaklığı azalt
+        const newOpacity = Math.max(minOpacity, 1 - (currentScrollY / scrollThreshold) * (1 - minOpacity));
+        setNavOpacity(newOpacity);
+      } else {
+        // Yukarı kaydırılıyor veya en üstte: opaklığı artır
+        const newOpacity = Math.min(1, minOpacity + ((scrollThreshold - currentScrollY) / scrollThreshold) * (1 - minOpacity));
+        setNavOpacity(newOpacity);
+      }
+
+      // En üstte olduğunda opaklığın tam olduğundan emin ol
+      if (currentScrollY === 0) {
+        setNavOpacity(1);
+      }
+
+      lastScrollY = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []); // Boş bağımlılık dizisi, bu hook'un yalnızca bileşen bağlandığında ve ayrıldığında çalışmasını sağlar.
+
   return (
     <div className="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden bg-background-dark font-display text-text-light dark:text-text-dark">
       <TopAppBar />
@@ -54,7 +89,10 @@ const ExplorePage = () => {
       <FloatingActionButton />
 
       {/* Alt Navigasyon Çubuğu (BottomNavBar) */}
-      <nav className="fixed bottom-0 left-0 right-0 flex gap-2 border-t border-slate-200 dark:border-chip-dark-bg bg-background-light dark:bg-surface-dark px-4 pb-3 pt-2">
+      <nav
+        className="fixed bottom-0 left-0 right-0 flex gap-2 border-t border-slate-200 dark:border-chip-dark-bg bg-background-light dark:bg-surface-dark px-4 pb-3 pt-2 transition-opacity duration-300 ease-in-out"
+        style={{ opacity: navOpacity }}
+      >
         {/* Keşfet (Sol) */}
         <Link className="flex flex-1 flex-col items-center justify-end gap-1 rounded-full text-primary-app" to="/explore">
           <div className="flex h-8 items-center justify-center">
