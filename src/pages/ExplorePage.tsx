@@ -83,7 +83,7 @@ const ExplorePage = () => {
             className={`flex flex-col items-center justify-center border-b-[3px] pb-[13px] pt-4 flex-1 h-auto rounded-none ${
               activeTab === "Sana Özel"
                 ? "border-b-primary-app text-white"
-                : "border-b-transparent text-nav-dark-text hover:text-white/80"
+                : "border-b-transparent text-nav-dark-text" // Hover stili kaldırıldı
             }`}
             onClick={() => setActiveTab("Sana Özel")}
           >
@@ -94,7 +94,7 @@ const ExplorePage = () => {
             className={`flex flex-col items-center justify-center border-b-[3px] pb-[13px] pt-4 flex-1 h-auto rounded-none ${
               activeTab === "Filmler"
                 ? "border-b-primary-app text-white"
-                : "border-b-transparent text-nav-dark-text hover:text-white/80"
+                : "border-b-transparent text-nav-dark-text" // Hover stili kaldırıldı
             }`}
             onClick={() => setActiveTab("Filmler")}
           >
@@ -105,7 +105,7 @@ const ExplorePage = () => {
             className={`flex flex-col items-center justify-center border-b-[3px] pb-[13px] pt-4 flex-1 h-auto rounded-none ${
               activeTab === "Kitaplar"
                 ? "border-b-primary-app text-white"
-                : "border-b-transparent text-nav-dark-text hover:text-white/80"
+                : "border-b-transparent text-nav-dark-text" // Hover stili kaldırıldı
             }`}
             onClick={() => setActiveTab("Kitaplar")}
           >
