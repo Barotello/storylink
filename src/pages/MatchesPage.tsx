@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerTrigger,
+  DrawerClose,
+} from "@/components/ui/drawer";
+import MatchedUserProfileDrawerContent from "@/components/matches/MatchedUserProfileDrawerContent";
 
 const MatchesPage = () => {
+  const [isProfileDrawerOpen, setIsProfileDrawerOpen] = useState(false);
+
   return (
     <div className="relative flex h-screen w-full flex-col group/design-root overflow-hidden bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
       {/* Üst Bilgi Çubuğu (TopAppBar) */}
@@ -32,23 +41,36 @@ const MatchesPage = () => {
 
       {/* Ana İçerik Alanı */}
       <main className="flex-grow flex flex-col p-4 pt-0">
-        {/* Profil Kartı (Card) */}
-        <div className="flex-grow bg-cover bg-center flex flex-col items-stretch justify-end rounded-xl" data-alt="Kitaplık önünde gülümseyen genç bir kadının portresi" style={{ backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 60%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuBsLCCx3O4jtAR9sTdeMBuCSUDyE6UQo-iwUPC4ECQf1ElR_zEp-wOdQ2mLWeYa5OT7UjiImwNllXz02qwHs-rvueotfUio49NpzvYpgI5itY8QSg-Bv-nFhS4seqRJROGV085QOLuACb8me9iUiQnYTy3LU-Pgji0jLauS4JzBKin8Zy1w6NnLr11zcvBn8d_CWiujeZsXndm5ppK_35d0KJMEyeThhgh02E54YrjEmOL_JLzFnnX7INR-9UdUcWsAum18qTWEYrM")` }}>
-          <div className="flex w-full items-end justify-between gap-4 p-4">
-            <div className="flex max-w-[440px] flex-1 flex-col gap-1">
-              <p className="text-white text-base font-normal leading-normal">Klasik sinema ve çağdaş kurguya olan sevgim hakkında kısa, esprili bir biyografi.</p>
-              <p className="text-white tracking-light text-3xl font-bold leading-tight max-w-[440px]">Jessica, 28</p>
-              <p className="text-white text-lg font-medium leading-normal">5 ortak film, 3 ortak kitap</p>
+        {/* Profil Kartı (Card) - DrawerTrigger olarak güncellendi */}
+        <Drawer open={isProfileDrawerOpen} onOpenChange={setIsProfileDrawerOpen}>
+          <DrawerTrigger asChild>
+            <div className="flex-grow bg-cover bg-center flex flex-col items-stretch justify-end rounded-xl cursor-pointer" data-alt="Kitaplık önünde gülümseyen genç bir kadının portresi" style={{ backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 60%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuBsLCCx3O4jtAR9sTdeMBuCSUDyE6UQo-iwUPC4ECQf1ElR_zEp-wOdQ2mLWeYa5OT7UjiImwNllXz02qwHs-rvueotfUio49NpzvYpgI5itY8QSg-Bv-nFhS4seqRJROGV085QOLuACb8me9iUiQnYTy3LU-Pgji0jLauS4JzBKin8Zy1w6NnLr11zcvBn8d_CWiujeZsXndm5ppK_35d0KJMEyeThhgh02E54YrjEmOL_JLzFnnX7INR-9UdUcWsAum18qTWEYrM")` }}>
+              <div className="flex w-full items-end justify-between gap-4 p-4">
+                <div className="flex max-w-[440px] flex-1 flex-col gap-1">
+                  <p className="text-white text-base font-normal leading-normal">Klasik sinema ve çağdaş kurguya olan sevgim hakkında kısa, esprili bir biyografi.</p>
+                  <p className="text-white tracking-light text-3xl font-bold leading-tight max-w-[440px]">Jessica, 28</p>
+                  <p className="text-white text-lg font-medium leading-normal">5 ortak film, 3 ortak kitap</p>
+                </div>
+                <div className="flex-shrink-0">
+                  <Button className="bg-white/20 backdrop-blur-sm rounded-full w-12 h-12 flex items-center justify-center">
+                    <span className="material-symbols-outlined text-white">info</span>
+                  </Button>
+                </div>
+              </div>
             </div>
-            <div className="flex-shrink-0">
-              <Link to="/profile">
-                <Button className="bg-white/20 backdrop-blur-sm rounded-full w-12 h-12 flex items-center justify-center">
-                  <span className="material-symbols-outlined text-white">info</span>
-                </Button>
-              </Link>
+          </DrawerTrigger>
+          <DrawerContent className="h-[90%] mt-24 rounded-t-[10px] flex flex-col">
+            <div className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-zinc-300 mb-8" />
+            <div className="flex-1 overflow-y-auto">
+              <MatchedUserProfileDrawerContent />
             </div>
-          </div>
-        </div>
+            <DrawerClose asChild>
+              <Button variant="ghost" className="absolute top-4 left-4 w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white">
+                <span className="material-symbols-outlined icon-outline">arrow_back</span>
+              </Button>
+            </DrawerClose>
+          </DrawerContent>
+        </Drawer>
       </main>
 
       {/* Eylem Butonları (ActionsBar) */}
@@ -87,14 +109,6 @@ const MatchesPage = () => {
           <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Keşfet</p>
         </Link>
 
-        {/* Sohbetler */}
-        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="#">
-          <div className="flex h-8 items-center justify-center">
-            <span className="material-symbols-outlined">chat_bubble</span>
-          </div>
-          <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Sohbetler</p>
-        </Link>
-
         {/* Eşleş (Kalp ikonu - Orta) */}
         <Link className="flex flex-1 flex-col items-center justify-end gap-1 rounded-full text-primary-app" to="/matches">
           <div className="flex h-8 items-center justify-center">
@@ -103,16 +117,24 @@ const MatchesPage = () => {
           <p className="text-primary-app text-xs font-medium leading-normal tracking-[0.015em]">Eşleş</p>
         </Link>
 
-        {/* Profil */}
+        {/* Profil (Sadece ikon) */}
         <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="/profile">
           <div className="flex h-8 items-center justify-center">
             <span className="material-symbols-outlined">person</span>
           </div>
-          <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Profil</p>
+          {/* Profil yazısı kaldırıldı */}
+        </Link>
+
+        {/* Sohbetler */}
+        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="#">
+          <div className="flex h-8 items-center justify-center">
+            <span className="material-symbols-outlined">chat_bubble</span>
+          </div>
+          <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Sohbetler</p>
         </Link>
 
         {/* Ayarlar */}
-        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="/settings"> {/* Rota güncellendi */}
+        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="/settings">
           <div className="flex h-8 items-center justify-center">
             <span className="material-symbols-outlined">settings</span>
           </div>

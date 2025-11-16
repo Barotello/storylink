@@ -2,9 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
-const UserProfilePage = () => {
+const MatchedUserProfileDrawerContent = () => {
   return (
-    <div className="relative min-h-screen w-full flex flex-col group/design-root overflow-x-hidden text-zinc-900 dark:text-zinc-50 pb-28">
+    <div className="relative w-full flex flex-col group/design-root overflow-x-hidden text-zinc-900 dark:text-zinc-50">
       {/* 1. Profil Fotoğraf Galerisi */}
       <div className="relative w-full h-[60vh] sm:h-[70vh]">
         <img className="absolute inset-0 w-full h-full object-cover" data-alt="A smiling woman with brown hair looking over her shoulder." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhchh8XKOBvLVWxmzCW5c_y0PfQeBS5WhgmYXE2vIuSnymS9N37M2ix1ei8H6spNwqq9wwLdDhof1HuO76ux5rqGvbd2F139s05f6g3KyR99BBoO12993l96oA7K0Icl6aVmNtZW-9yLoe1NuA3WZFlAymBE8Gmv08Slf3lq4BEH_MogeeLaLUAfv5lmVzsDrojkpbM9Hvc7usFsAdMeHLHYCH04NATdEKHb92eJ8LQiYes3_ZO60ltQzSgruj6e4WREdIYT363do"/>
@@ -14,13 +14,7 @@ const UserProfilePage = () => {
             <span className="material-symbols-outlined icon-outline">more_horiz</span>
           </Button>
         </div>
-        <div className="absolute top-4 left-4 z-10">
-          <Link to="/explore">
-            <Button className="w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white">
-              <span className="material-symbols-outlined icon-outline">arrow_back</span>
-            </Button>
-          </Link>
-        </div>
+        {/* Geri düğmesi çekmece tarafından sağlanacağı için kaldırıldı */}
       </div>
       <div className="p-5 -mt-20 relative z-10 space-y-6">
         {/* 2. Temel Bilgiler Kartı */}
@@ -60,7 +54,7 @@ const UserProfilePage = () => {
               <p className="text-white text-sm font-semibold mt-2 truncate">Yüzüklerin Efendisi</p>
             </div>
             <div className="flex-shrink-0 w-32">
-              <img className="w-full h-48 object-cover rounded-lg shadow-lg" data-alt="The Dark Knight movie poster." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKnSh8WeDT_M47G-246Dz21x1yp5qOBtu4HpD3b_hvXp96hZpfT60f_9VW7dY6dufCUApruO13A_f_NQTfDA1ld1MxPJ_MDpIggTl8XPpdo-fw55KQnuqTpiNmX6_NC134VUFdDhP41UculM1F3ZielwwacYp7XQb953GEf7eamkq5nZxhYP4xDjRrb70wFfl9NFpItXcU93slm2moqRtqC_ugvuqWTujKyNZGv5mczutcD15gj_3TpN-hsEbGim74Z7C2przFym0"/>
+              <img className="w-full h-48 object-cover rounded-lg shadow-lg" data-alt="The Dark Knight movie poster." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKnSh8WeDT_M47G-246Dz21x1yp5qOBtu4HpD3b_hvXp96hZpfT60f_9VW7dY6dufCUApruO13A_f_NQTfDA1ld1MxPJ_MDpIggTl8XPpdo-fw55KQnuqTpiNmX6_NC134VUFdDhP41UculM1F3ZielwwacYp7XQb953GEf7eamkq5nZxhYP4xDjRrb70wFfl9NFpItXcU93slm2moqRtqC2przFym0"/>
               <p className="text-white text-sm font-semibold mt-2 truncate">The Dark Knight</p>
             </div>
             <div className="flex-shrink-0 w-32">
@@ -126,8 +120,8 @@ const UserProfilePage = () => {
           </div>
         </div>
       </div>
-      {/* 7. Sabit Aksiyon Butonları */}
-      <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-background-dark via-background-dark to-transparent p-4 z-20">
+      {/* 7. Sabit Aksiyon Butonları (Çekmece içinde yapışkan) */}
+      <div className="sticky bottom-0 left-0 right-0 bg-gradient-to-t from-background-dark via-background-dark to-transparent p-4 z-20">
         <div className="max-w-md mx-auto flex justify-around items-center gap-4 bg-zinc-900/40 backdrop-blur-lg p-3 rounded-full border border-white/10">
           <Button className="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center text-zinc-300 hover:bg-white/20 transition-colors">
             <span className="material-symbols-outlined text-3xl">close</span>
@@ -144,4 +138,4 @@ const UserProfilePage = () => {
   );
 };
 
-export default UserProfilePage;
+export default MatchedUserProfileDrawerContent;

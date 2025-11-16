@@ -52,7 +52,7 @@ const ExplorePage = () => {
         />
         {/* Card 2 */}
         <FeedCard
-          avatarSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuComhxf3HOIfenjKAMlHypvc8eMRrMCRzDVrObFlVsfE0AeR-JzukjTK8_Oaf8avdwCTgrHJn1CDob1BaGpMGTnzuZwat6CCJroSiojxs2PeqIcegVxm0aid_n2kDw4Y0uRv5vIZJw4zjYRn2aTRCXUPXg9QEpZrVOJDu546ElbtReGsuEFFKNlGlpEQqCxHqtGyMRTG37FDuFLmXRXqF1WwPs8gslSokwzqe7fcYPf9NKVkFevEth44OA2BER01vhE5rqld2eVCnc"
+          avatarSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuComhxf3HOIfenjKAMlHypvc8eMRrMCRzDVrObFlVsfE0AeR-JzukjTK8_Oaf8avdwCTgrHJn1CDob1BaGpMGTnzuZwat6CCJroSiojxs1PeqIcegVxm0aid_n2kDw4Y0uRv5vIZJw4zjYRn2aTRCXUPXg9QEpZrVOJDu546ElbtReGsuEFFKNlGlpEQqCxHqtGyMRTG37FDuFLmXRXqF1WwPs8gslSokwzqe7fcYPf9NKVkFevEth44OA2BER01vhE5rqld2eVCnc"
           userName="Anna S."
           userHandle="@annas"
           timeAgo="5 dakika önce"
@@ -93,14 +93,6 @@ const ExplorePage = () => {
           <p className="text-primary-app text-xs font-medium leading-normal tracking-[0.015em]">Keşfet</p>
         </Link>
 
-        {/* Sohbetler */}
-        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="#">
-          <div className="flex h-8 items-center justify-center">
-            <span className="material-symbols-outlined">chat_bubble</span>
-          </div>
-          <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Sohbetler</p>
-        </Link>
-
         {/* Eşleş (Kalp ikonu - Orta) */}
         <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="/matches">
           <div className="flex h-8 items-center justify-center">
@@ -109,16 +101,24 @@ const ExplorePage = () => {
           <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Eşleş</p>
         </Link>
 
-        {/* Profil */}
+        {/* Profil (Sadece ikon) */}
         <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="/profile">
           <div className="flex h-8 items-center justify-center">
             <span className="material-symbols-outlined">person</span>
           </div>
-          <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Profil</p>
+          {/* Profil yazısı kaldırıldı */}
+        </Link>
+
+        {/* Sohbetler */}
+        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="#">
+          <div className="flex h-8 items-center justify-center">
+            <span className="material-symbols-outlined">chat_bubble</span>
+          </div>
+          <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Sohbetler</p>
         </Link>
 
         {/* Ayarlar */}
-        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="/settings"> {/* Rota güncellendi */}
+        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="/settings">
           <div className="flex h-8 items-center justify-center">
             <span className="material-symbols-outlined">settings</span>
           </div>
