@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // useNavigate hook'unu import et
+import { Link, useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { toast } from "sonner"; // Sonner toast'ı import et
 
 const RegisterPage = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -16,8 +17,9 @@ const RegisterPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedMedia, setSelectedMedia] = useState<string[]>(["Yüzüklerin Efendisi", "Dune"]);
   const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  const navigate = useNavigate(); // useNavigate hook'unu kullan
+  const navigate = useNavigate();
 
   const genres = [
     { name: "Bilim Kurgu", icon: "science" },
@@ -28,7 +30,44 @@ const RegisterPage = () => {
     { name: "Klasikler", icon: "history_edu" },
   ];
 
+  const validateStep1 = () => {
+    const newErrors: { [key: string]: string } = {};
+    if (!email) {
+      newErrors.email = "E-posta adresi boş bırakılamaz.";
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = "Geçerli bir e-posta adresi girin.";
+    }
+    if (!password) {
+      newErrors.password = "Şifre boş bırakılamaz.";
+    } else if (password.length < 6) {
+      newErrors.password = "Şifre en az 6 karakter olmalıdır.";
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const validateStep3 = () => {
+    const newErrors: { [key: string]: string } = {};
+    if (!name) {
+      newErrors.name = "Adınız boş bırakılamaz.";
+    }
+    if (!age) {
+      newErrors.age = "Yaşınız boş bırakılamaz.";
+    } else if (parseInt(age) < 18) {
+      newErrors.age = "Uygulamayı kullanmak için 18 yaşından büyük olmalısınız.";
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const nextStep = () => {
+    if (currentStep === 1 && !validateStep1()) {
+      toast.error("Lütfen e-posta ve şifre bilgilerinizi kontrol edin.");
+      return;
+    }
+    if (currentStep === 2 && selectedMedia.length < 6) {
+      toast.info("En az 6 film/kitap eklemeniz önerilir, ancak devam edebilirsiniz.");
+    }
     setCurrentStep((prev) => prev + 1);
   };
 
@@ -46,8 +85,12 @@ const RegisterPage = () => {
 
   const handleAddMedia = () => {
     if (searchQuery.trim() && !selectedMedia.includes(searchQuery.trim())) {
-      setSelectedMedia((prev) => [...prev, searchQuery.trim()]);
-      setSearchQuery("");
+      if (selectedMedia.length < 6) {
+        setSelectedMedia((prev) => [...prev, searchQuery.trim()]);
+        setSearchQuery("");
+      } else {
+        toast.info("En fazla 6 film veya kitap ekleyebilirsiniz.");
+      }
     }
   };
 
@@ -56,10 +99,13 @@ const RegisterPage = () => {
   };
 
   const handleSubmit = () => {
-    // Handle final submission logic here
+    if (!validateStep3()) {
+      toast.error("Lütfen profil bilgilerinizi kontrol edin.");
+      return;
+    }
     console.log("Form Submitted:", { email, password, name, age, gender, selectedGenres, selectedMedia });
-    alert("Kayıt Başarılı!");
-    navigate("/explore"); // Kayıt başarılı olduktan sonra /explore sayfasına yönlendir
+    toast.success("Kayıt Başarılı!");
+    navigate("/explore");
   };
 
   return (
@@ -138,22 +184,23 @@ const RegisterPage = () => {
               <Label className="flex flex-col flex-1">
                 <p className="text-text-light dark:text-text-dark text-base font-medium leading-normal pb-2">E-posta</p>
                 <Input
-                  className="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary-app/50 border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark h-14 placeholder:text-subtle-light dark:placeholder:text-subtle-dark p-[15px] text-base font-normal leading-normal"
+                  className={`flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary-app/50 border ${errors.email ? "border-destructive" : "border-border-light dark:border-border-dark"} bg-surface-light dark:bg-surface-dark h-14 placeholder:text-subtle-light dark:placeholder:text-subtle-dark p-[15px] text-base font-normal leading-normal`}
                   placeholder="E-posta adresinizi girin"
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => { setEmail(e.target.value); setErrors(prev => ({ ...prev, email: "" })); }}
                 />
+                {errors.email && <p className="text-destructive text-sm mt-1">{errors.email}</p>}
               </Label>
               <Label className="flex flex-col flex-1">
                 <p className="text-text-light dark:text-text-dark text-base font-medium leading-normal pb-2">Şifre</p>
                 <div className="flex w-full flex-1 items-stretch rounded-xl">
                   <Input
-                    className="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-l-xl text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary-app/50 border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark h-14 placeholder:text-subtle-light dark:placeholder:text-subtle-dark p-[15px] rounded-r-none border-r-0 pr-2 text-base font-normal leading-normal"
+                    className={`flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-l-xl text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary-app/50 border ${errors.password ? "border-destructive" : "border-border-light dark:border-border-dark"} bg-surface-light dark:bg-surface-dark h-14 placeholder:text-subtle-light dark:placeholder:text-subtle-dark p-[15px] rounded-r-none border-r-0 pr-2 text-base font-normal leading-normal`}
                     placeholder="Şifrenizi oluşturun"
                     type={showPassword ? "text" : "password"}
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) => { setPassword(e.target.value); setErrors(prev => ({ ...prev, password: "" })); }}
                   />
                   <div
                     className="text-subtle-light dark:text-subtle-dark flex border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark items-center justify-center pr-[15px] rounded-r-xl border-l-0 cursor-pointer"
@@ -162,6 +209,7 @@ const RegisterPage = () => {
                     <span className="material-symbols-outlined">{showPassword ? "visibility" : "visibility_off"}</span>
                   </div>
                 </div>
+                {errors.password && <p className="text-destructive text-sm mt-1">{errors.password}</p>}
               </Label>
             </div>
             <Button onClick={nextStep} className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-5 bg-primary-app text-white text-base font-bold leading-normal tracking-[0.015em] w-full shadow-lg shadow-primary-app/30 hover:bg-primary-app/90">
@@ -243,22 +291,24 @@ const RegisterPage = () => {
               <Label className="flex flex-col flex-1">
                 <p className="text-text-light dark:text-text-dark text-base font-medium leading-normal pb-2">Adın</p>
                 <Input
-                  className="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary-app/50 border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark h-14 placeholder:text-subtle-light dark:placeholder:text-subtle-dark p-[15px] text-base font-normal leading-normal"
+                  className={`flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary-app/50 border ${errors.name ? "border-destructive" : "border-border-light dark:border-border-dark"} bg-surface-light dark:bg-surface-dark h-14 placeholder:text-subtle-light dark:placeholder:text-subtle-dark p-[15px] text-base font-normal leading-normal`}
                   placeholder="Adını gir"
                   type="text"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => { setName(e.target.value); setErrors(prev => ({ ...prev, name: "" })); }}
                 />
+                {errors.name && <p className="text-destructive text-sm mt-1">{errors.name}</p>}
               </Label>
               <Label className="flex flex-col flex-1">
                 <p className="text-text-light dark:text-text-dark text-base font-medium leading-normal pb-2">Yaşın</p>
                 <Input
-                  className="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary-app/50 border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark h-14 placeholder:text-subtle-light dark:placeholder:text-subtle-dark p-[15px] text-base font-normal leading-normal"
+                  className={`flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-text-light dark:text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary-app/50 border ${errors.age ? "border-destructive" : "border-border-light dark:border-border-dark"} bg-surface-light dark:bg-surface-dark h-14 placeholder:text-subtle-light dark:placeholder:text-subtle-dark p-[15px] text-base font-normal leading-normal`}
                   placeholder="Yaşını gir"
                   type="number"
                   value={age}
-                  onChange={(e) => setAge(e.target.value)}
+                  onChange={(e) => { setAge(e.target.value); setErrors(prev => ({ ...prev, age: "" })); }}
                 />
+                {errors.age && <p className="text-destructive text-sm mt-1">{errors.age}</p>}
               </Label>
               <div>
                 <p className="text-text-light dark:text-text-dark text-base font-medium leading-normal pb-2">Cinsiyetin</p>
