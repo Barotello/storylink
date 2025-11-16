@@ -95,8 +95,6 @@ const ExplorePage = () => {
         />
       </main>
 
-      {/* FloatingActionButton kaldırıldı */}
-
       {/* Alt Navigasyon Çubuğu (BottomNavBar) */}
       <nav
         className={`fixed bottom-0 left-0 right-0 flex gap-2 border-t border-slate-200 dark:border-chip-dark-bg bg-background-light dark:bg-surface-dark px-4 pb-3 pt-2 transition-transform duration-300 ease-in-out ${
@@ -135,12 +133,12 @@ const ExplorePage = () => {
           <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Sohbetler</p>
         </Link>
 
-        {/* Ayarlar (Sağ) */}
-        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="/settings">
+        {/* Profil (Sağ) */}
+        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="/profile">
           <div className="flex h-8 items-center justify-center">
-            <span className="material-symbols-outlined">settings</span>
+            <span className="material-symbols-outlined">person</span>
           </div>
-          <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Ayarlar</p>
+          <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Profil</p>
         </Link>
       </nav>
     </div>

@@ -1,11 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import SettingsTopAppBar from "@/components/settings/SettingsTopAppBar"; // Genel üst çubuğu kullanabiliriz
+import { Button } from "@/components/ui/button"; // Button bileşenini import et
 
 const ProfilePage = () => {
   return (
     <div className="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-x-hidden font-display">
-      <SettingsTopAppBar /> {/* Kendi profil sayfanız için de genel bir üst çubuk kullanabiliriz */}
+      {/* Profil Sayfası için Özel Başlık Çubuğu */}
+      <header className="sticky top-0 z-10 flex items-center bg-background-light/80 dark:bg-background-dark/80 p-4 pb-2 backdrop-blur-sm justify-between">
+        <div className="size-10 shrink-0"></div> {/* Sol yer tutucu */}
+        <h1 className="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Profilim</h1>
+        <Link to="/settings" className="flex size-10 shrink-0 items-center justify-center p-0">
+          <Button variant="ghost" className="text-slate-800 dark:text-white p-0">
+            <span className="material-symbols-outlined">settings</span>
+          </Button>
+        </Link>
+      </header>
       <main className="flex-1 px-4 py-4 text-center">
         <h1 className="text-2xl font-bold text-text-light dark:text-text-dark mt-8">Kendi Profil Sayfanız</h1>
         <p className="text-subtle-light dark:text-subtle-dark mt-2">Burada kendi profil bilgilerinizi ve tercihlerinizi göreceksiniz.</p>
