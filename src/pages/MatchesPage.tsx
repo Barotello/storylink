@@ -44,7 +44,7 @@ const MatchesPage = () => {
         {/* Profil Kartı (Card) - DrawerTrigger olarak güncellendi */}
         <Drawer open={isProfileDrawerOpen} onOpenChange={setIsProfileDrawerOpen}>
           <DrawerTrigger asChild>
-            <div className="flex-grow bg-cover bg-center flex flex-col items-stretch justify-end rounded-xl cursor-pointer" data-alt="Kitaplık önünde gülümseyen genç bir kadının portresi" style={{ backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 60%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuBsLCCx3O4jtAR9sTdeMBuCSUDyE6UQo-iwUPC4ECQf1ElR_zEp-wOdQ2mLWeYa5OT7UjiImwNllXz02qwHs-rvueotfUio49NpzvYpgI5itY8QSg-Bv-nFhS4seqRJROGV085QOLuACb8me9iUiQnYTy3LU-Pgji0jLauS4JzBKin8Zy1w6NnLr11zcvBn8d_CWiujeZsXndm5ppK_35d0KJMEyeThhgh02E54YrjEmOL_JLzFnnX7INR-9UdUcWsAum18qTWEYrM")` }}>
+            <div className="flex-grow bg-cover bg-center flex flex-col items-stretch justify-end rounded-xl cursor-pointer" data-alt="Kitaplık önünde gülümseyen genç bir kadının portresi" style={{ backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 60%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuBsLCCx3O4jtAR9sTdeMBuCSUDyE6UQo-iwUPC4ECQf1ElR_zEp-wOdQ2mLWeYa5OT7UjiImwNllXz02qwHs-rvueotfUio49NpzvYpgI5itY8QSg-Bv-nFhS4seqRJROGV085QOLuACb8me9iUiQnYTy3LU-Pgji0jLauS4JzBKin8Zy1w6NnLr11zcvBn8d_CWiujeZsXndm5ppK_35d0KJMEyeThhgh02E54YrjEmOL_JLzFnnX7INR-9UdUcWsAum18yTWEYrM")` }}>
               <div className="flex w-full items-end justify-between gap-4 p-4">
                 <div className="flex max-w-[440px] flex-1 flex-col gap-1">
                   <p className="text-white text-base font-normal leading-normal">Klasik sinema ve çağdaş kurguya olan sevgim hakkında kısa, esprili bir biyografi.</p>
@@ -109,15 +109,23 @@ const MatchesPage = () => {
           <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Keşfet</p>
         </Link>
 
-        {/* Eşleş (Kalp ikonu - Orta) */}
-        <Link className="flex flex-1 flex-col items-center justify-end gap-1 rounded-full text-primary-app" to="/matches">
+        {/* Eşleş (Kalp ikonu - Sol Orta) */}
+        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="/matches">
           <div className="flex h-8 items-center justify-center">
-            <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>favorite</span>
+            <span className="material-symbols-outlined">favorite</span>
           </div>
-          <p className="text-primary-app text-xs font-medium leading-normal tracking-[0.015em]">Eşleş</p>
+          <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Eşleş</p>
         </Link>
 
-        {/* Sohbetler */}
+        {/* Arama (Orta) */}
+        <Link className="flex flex-1 flex-col items-center justify-end gap-1 rounded-full text-primary-app" to="/search">
+          <div className="flex h-8 items-center justify-center">
+            <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>search</span>
+          </div>
+          <p className="text-primary-app text-xs font-medium leading-normal tracking-[0.015em]">Arama</p>
+        </Link>
+
+        {/* Sohbetler (Sağ Orta) */}
         <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="#">
           <div className="flex h-8 items-center justify-center">
             <span className="material-symbols-outlined">chat_bubble</span>
@@ -125,7 +133,7 @@ const MatchesPage = () => {
           <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Sohbetler</p>
         </Link>
 
-        {/* Ayarlar */}
+        {/* Ayarlar (Sağ) */}
         <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="/settings">
           <div className="flex h-8 items-center justify-center">
             <span className="material-symbols-outlined">settings</span>

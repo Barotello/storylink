@@ -9,7 +9,8 @@ import ExplorePage from "./pages/ExplorePage";
 import MatchesPage from "./pages/MatchesPage";
 import SettingsPage from "./pages/SettingsPage";
 import AccountSettingsPage from "./pages/AccountSettingsPage";
-import ProfilePage from "./pages/ProfilePage"; // Yeni eklenen kendi profil sayfası
+import ProfilePage from "./pages/ProfilePage";
+import SearchPage from "./pages/SearchPage"; // Yeni eklenen arama sayfası
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,7 +28,8 @@ const App = () => (
           <Route path="/matches" element={<MatchesPage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/settings/account" element={<AccountSettingsPage />} />
-          <Route path="/profile" element={<ProfilePage />} /> {/* Kendi profil sayfası rotası */}
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/search" element={<SearchPage />} /> {/* Yeni arama sayfası rotası */}
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

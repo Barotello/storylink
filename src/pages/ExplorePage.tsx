@@ -38,7 +38,7 @@ const ExplorePage = () => {
       <StoryCarousel />
 
       {/* Tabs */}
-      <div className="pb-3 sticky top-[132px] z-10 bg-background-dark"> {/* Arka plan rengi güncellendi */}
+      <div className="pb-3 sticky top-[72px] z-10 bg-background-dark"> {/* TopAppBar'dan arama çubuğu kalktığı için top değeri güncellendi */}
         <div className="flex border-b border-border-dark px-4 justify-between">
           <Link className="flex flex-col items-center justify-center border-b-[3px] border-b-primary-app text-white pb-[13px] pt-4 flex-1" to="#">
             <p className="text-white text-sm font-bold leading-normal tracking-[0.015em]">Sana Özel</p>
@@ -104,14 +104,14 @@ const ExplorePage = () => {
         }`}
       >
         {/* Keşfet (Sol) */}
-        <Link className="flex flex-1 flex-col items-center justify-end gap-1 rounded-full text-primary-app" to="/explore">
+        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="/explore">
           <div className="flex h-8 items-center justify-center">
-            <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>travel_explore</span>
+            <span className="material-symbols-outlined">travel_explore</span>
           </div>
-          <p className="text-primary-app text-xs font-medium leading-normal tracking-[0.015em]">Keşfet</p>
+          <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Keşfet</p>
         </Link>
 
-        {/* Eşleş (Kalp ikonu - Orta) */}
+        {/* Eşleş (Kalp ikonu - Sol Orta) */}
         <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="/matches">
           <div className="flex h-8 items-center justify-center">
             <span className="material-symbols-outlined">favorite</span>
@@ -119,7 +119,15 @@ const ExplorePage = () => {
           <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Eşleş</p>
         </Link>
 
-        {/* Sohbetler */}
+        {/* Arama (Orta) */}
+        <Link className="flex flex-1 flex-col items-center justify-end gap-1 rounded-full text-primary-app" to="/search">
+          <div className="flex h-8 items-center justify-center">
+            <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>search</span>
+          </div>
+          <p className="text-primary-app text-xs font-medium leading-normal tracking-[0.015em]">Arama</p>
+        </Link>
+
+        {/* Sohbetler (Sağ Orta) */}
         <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="#">
           <div className="flex h-8 items-center justify-center">
             <span className="material-symbols-outlined">chat_bubble</span>
@@ -127,7 +135,7 @@ const ExplorePage = () => {
           <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Sohbetler</p>
         </Link>
 
-        {/* Ayarlar */}
+        {/* Ayarlar (Sağ) */}
         <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="/settings">
           <div className="flex h-8 items-center justify-center">
             <span className="material-symbols-outlined">settings</span>
