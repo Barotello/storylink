@@ -7,7 +7,7 @@ const MatchedUserProfileDrawerContent = () => {
     <div className="relative w-full flex flex-col group/design-root overflow-x-hidden text-zinc-900 dark:text-zinc-50">
       {/* 1. Profil Fotoğraf Galerisi */}
       <div className="relative w-full h-[60vh] sm:h-[70vh]">
-        <img className="absolute inset-0 w-full h-full object-cover" data-alt="A smiling woman with brown hair looking over her shoulder." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhchh8XKOBvLVWxmzCW5c_y0PfQeBS5WhgmYXE2vIuSnymS9N37M2ix1ei8H6spNwqq9wwLdDhof1HuO76ux5rqGvbd2F139s05f6g3KyR99BBoO12993l96oA7K0Icl6aVmNtZW-9yLoe1NuA3WZFlAymBE8Gmv08Slf3lq4BEH_MogeeLaLUAfv5lmVzsDrojkpbM9Hvc7usFsAdMeHLHYCH04NATdEKHb92eJ8LQiYes3_ZO60ltQzSgruj6e4WREdIYT363do"/>
+        <img className="absolute inset-0 w-full h-full object-cover" data-alt="A smiling woman with brown hair looking over her shoulder." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhchh8XKOBvLVWxmzCW5c_y0PfQeBS5WhgmYXE2vIuSnymS9N37M2ix1ei8H6spNwqq9wwLdDhof1HuO76ux5rqGvbd2F139s05f6g3KyR99BBoO12993l96oA7K0Icl6aVmNtZW-9yLoe1NuA3WZFlAymBE8Gmv08Slf3l4BEH_MogeeLaLUAfv5lmVzsDrojkpbM9Hvc7usFsAdMeHLHYCH04NATdEKHb92eJ8LQiYes3_ZO60ltQzSgruj6e4WREdIYT363do"/>
         <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/50 to-transparent"></div>
         <div className="absolute top-4 right-4 z-10">
           <Button className="w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white">
@@ -18,7 +18,7 @@ const MatchedUserProfileDrawerContent = () => {
       </div>
       <div className="p-5 -mt-20 relative z-10 space-y-6">
         {/* 2. Temel Bilgiler Kartı */}
-        <div className="bg-zinc-100/10 dark:bg-zinc-900/20 backdrop-blur-xl p-5 rounded-lg border border-white/10 shadow-lg">
+        <div className="bg-surface-light dark:bg-surface-dark backdrop-blur-xl p-5 rounded-lg border border-white/10 shadow-lg">
           <div className="flex justify-between items-start">
             <div>
               <h1 className="text-white tracking-tight text-3xl font-bold leading-tight">Jessica, 29</h1>
@@ -121,8 +121,8 @@ const MatchedUserProfileDrawerContent = () => {
         </div>
       </div>
       {/* 7. Sabit Aksiyon Butonları (Çekmece içinde yapışkan) */}
-      <div className="sticky bottom-0 left-0 right-0 bg-gradient-to-t from-background-dark via-background-dark to-transparent p-4 z-20">
-        <div className="max-w-md mx-auto flex justify-around items-center gap-4 bg-zinc-900/40 backdrop-blur-lg p-3 rounded-full border border-white/10">
+      <div className="sticky bottom-0 left-0 right-0 bg-gradient-to-t from-background-light via-background-light to-transparent dark:from-background-dark dark:via-background-dark p-4 z-20">
+        <div className="max-w-md mx-auto flex justify-around items-center gap-4 bg-surface-light/40 dark:bg-surface-dark/40 backdrop-blur-lg p-3 rounded-full border border-white/10">
           <Button className="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center text-zinc-300 hover:bg-white/20 transition-colors">
             <span className="material-symbols-outlined text-3xl">close</span>
           </Button>
