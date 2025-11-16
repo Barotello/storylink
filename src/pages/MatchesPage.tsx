@@ -100,13 +100,13 @@ const MatchesPage = () => {
       </div>
 
       {/* Alt Navigasyon Çubuğu (BottomNavBar) */}
-      <nav className="flex gap-2 border-t border-border-light dark:border-chip-dark-bg bg-background-light dark:bg-surface-dark px-4 pb-3 pt-2">
+      <nav className="flex gap-2 border-t border-slate-200 dark:border-chip-dark-bg bg-background-light dark:bg-surface-dark px-4 pb-3 pt-2">
         {/* Keşfet (Sol) */}
-        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-subtle-light dark:text-nav-dark-text" to="/explore">
+        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="/explore">
           <div className="flex h-8 items-center justify-center">
             <span className="material-symbols-outlined">travel_explore</span>
           </div>
-          <p className="text-subtle-light dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Keşfet</p>
+          <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Keşfet</p>
         </Link>
 
         {/* Eşleş (Kalp ikonu - Orta) */}
@@ -118,19 +118,19 @@ const MatchesPage = () => {
         </Link>
 
         {/* Sohbetler */}
-        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-subtle-light dark:text-nav-dark-text" to="#">
+        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="#">
           <div className="flex h-8 items-center justify-center">
             <span className="material-symbols-outlined">chat_bubble</span>
           </div>
-          <p className="text-subtle-light dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Sohbetler</p>
+          <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Sohbetler</p>
         </Link>
 
         {/* Ayarlar */}
-        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-subtle-light dark:text-nav-dark-text" to="/settings">
+        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="/settings">
           <div className="flex h-8 items-center justify-center">
             <span className="material-symbols-outlined">settings</span>
           </div>
-          <p className="text-subtle-light dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Ayarlar</p>
+          <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Ayarlar</p>
         </Link>
       </nav>
     </div>
