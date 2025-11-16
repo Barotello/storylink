@@ -40,7 +40,7 @@ const ExplorePage = () => {
             />
             {/* Post Card 3 */}
             <PostCard
-              avatarSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuBSfVVOzvBmiJ5IseGK7PZJwncH52ZNwM5DhknI1JcqeH71iNEdtzA-BqVK98lPQNCOfzEzPPSfYVlpD7CzyHWoDdtLCsSM2RLVk74wK-QpA-37U6g-iO3YdeXmGUZ0QV2xArBUhIk8Zk2YW3LCSDZsvWZdOTnuwJGa-mrfyvpRSV-h0z3s6NlSxnKLLCylTJCED7KdVRrmbnfsDW86uhOzz648rrA-q4fxyTtDv3hd7F8WjrRjpPjSMFWmpR3TuTSsv6XgGk-4ifo"
+              avatarSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuBSfVVOzvBmiJ5IseGK7PZJwncH52ZNwM5DhknI1JcqeH71iNEdtzA-BqVK98lPQNCOfzEzPPSfYVlpD7CzyHWoDdtLCsSM2RLVk74wK-QpA-37U6g-iO3YdeXmGUZ0QV2xArBUhIk8Zk2YW3LCSDZsvWZdOTnuwJGa-mrfyvpRSV-h0z3s6NlSxnKLLCylTJCED6KdVRrmbnfsDW86uhOzz648rrA-q4fxyTtDv3hd7F8WjrRjpPjSMFWmpR3TuTSsv6XgGk-4ifo"
               userName="Emre Tekin"
               userHandle="@emretekin"
               timeAgo="5sa önce"
@@ -83,7 +83,7 @@ const ExplorePage = () => {
             className={`flex flex-col items-center justify-center border-b-[3px] pb-[13px] pt-4 flex-1 h-auto rounded-none ${
               activeTab === "Sana Özel"
                 ? "border-b-primary-app text-white"
-                : "border-b-transparent text-nav-dark-text hover:text-white/80"
+                : "border-b-transparent text-nav-dark-text" // Hover efekti kaldırıldı
             }`}
             onClick={() => setActiveTab("Sana Özel")}
           >
@@ -94,7 +94,7 @@ const ExplorePage = () => {
             className={`flex flex-col items-center justify-center border-b-[3px] pb-[13px] pt-4 flex-1 h-auto rounded-none ${
               activeTab === "Filmler"
                 ? "border-b-primary-app text-white"
-                : "border-b-transparent text-nav-dark-text hover:text-white/80"
+                : "border-b-transparent text-nav-dark-text" // Hover efekti kaldırıldı
             }`}
             onClick={() => setActiveTab("Filmler")}
           >
@@ -105,7 +105,7 @@ const ExplorePage = () => {
             className={`flex flex-col items-center justify-center border-b-[3px] pb-[13px] pt-4 flex-1 h-auto rounded-none ${
               activeTab === "Kitaplar"
                 ? "border-b-primary-app text-white"
-                : "border-b-transparent text-nav-dark-text hover:text-white/80"
+                : "border-b-transparent text-nav-dark-text" // Hover efekti kaldırıldı
             }`}
             onClick={() => setActiveTab("Kitaplar")}
           >
