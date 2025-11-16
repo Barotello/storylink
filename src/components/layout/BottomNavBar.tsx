@@ -38,7 +38,7 @@ const BottomNavBar = () => {
         showBottomNav ? "translate-y-0" : "translate-y-full"
       } z-50`}
     >
-      {/* Keşfet (Sol) */}
+      {/* Keşfet */}
       <Link className={`flex flex-1 flex-col items-center justify-end gap-1 ${isActive("/explore") ? "text-primary-app" : "text-slate-500 dark:text-nav-dark-text"}`} to="/explore">
         <div className="flex h-8 items-center justify-center">
           <span className="material-symbols-outlined" style={{ fontVariationSettings: isActive("/explore") ? "'FILL' 1" : "'FILL' 0" }}>travel_explore</span>
@@ -46,7 +46,7 @@ const BottomNavBar = () => {
         <p className="text-xs font-medium leading-normal tracking-[0.015em]">Keşfet</p>
       </Link>
 
-      {/* Eşleş (Kalp ikonu - Sol Orta) */}
+      {/* Eşleş */}
       <Link className={`flex flex-1 flex-col items-center justify-end gap-1 ${isActive("/matches") ? "text-primary-app" : "text-slate-500 dark:text-nav-dark-text"}`} to="/matches">
         <div className="flex h-8 items-center justify-center">
           <span className="material-symbols-outlined" style={{ fontVariationSettings: isActive("/matches") ? "'FILL' 1" : "'FILL' 0" }}>favorite</span>
@@ -54,7 +54,15 @@ const BottomNavBar = () => {
         <p className="text-xs font-medium leading-normal tracking-[0.015em]">Eşleş</p>
       </Link>
 
-      {/* Arama (Orta) */}
+      {/* Bildirimler (Yeni Eklendi) */}
+      <Link className={`flex flex-1 flex-col items-center justify-end gap-1 ${isActive("/notifications") ? "text-primary-app" : "text-slate-500 dark:text-nav-dark-text"}`} to="/notifications">
+        <div className="flex h-8 items-center justify-center">
+          <span className="material-symbols-outlined" style={{ fontVariationSettings: isActive("/notifications") ? "'FILL' 1" : "'FILL' 0" }}>notifications</span>
+        </div>
+        <p className="text-xs font-medium leading-normal tracking-[0.015em]">Bildirimler</p>
+      </Link>
+
+      {/* Arama */}
       <Link className={`flex flex-1 flex-col items-center justify-end gap-1 rounded-full ${isActive("/search") ? "text-primary-app" : "text-slate-500 dark:text-nav-dark-text"}`} to="/search">
         <div className="flex h-8 items-center justify-center">
           <span className="material-symbols-outlined" style={{ fontVariationSettings: isActive("/search") ? "'FILL' 1" : "'FILL' 0" }}>search</span>
@@ -62,7 +70,7 @@ const BottomNavBar = () => {
         <p className="text-xs font-medium leading-normal tracking-[0.015em]">Arama</p>
       </Link>
 
-      {/* Sohbetler (Sağ Orta) */}
+      {/* Sohbetler */}
       <Link className={`flex flex-1 flex-col items-center justify-end gap-1 ${isActive("/chats") ? "text-primary-app" : "text-slate-500 dark:text-nav-dark-text"}`} to="/chats">
         <div className="flex h-8 items-center justify-center">
           <span className="material-symbols-outlined" style={{ fontVariationSettings: isActive("/chats") ? "'FILL' 1" : "'FILL' 0" }}>chat_bubble</span>
@@ -70,7 +78,7 @@ const BottomNavBar = () => {
         <p className="text-xs font-medium leading-normal tracking-[0.015em]">Sohbetler</p>
       </Link>
 
-      {/* Profil (Sağ) */}
+      {/* Profil */}
       <Link className={`flex flex-1 flex-col items-center justify-end gap-1 ${isActive("/profile") ? "text-primary-app" : "text-slate-500 dark:text-nav-dark-text"}`} to="/profile">
         <div className="flex h-8 items-center justify-center">
           <span className="material-symbols-outlined" style={{ fontVariationSettings: isActive("/profile") ? "'FILL' 1" : "'FILL' 0" }}>person</span>

@@ -9,9 +9,11 @@ const ExploreHeader = () => {
         {/* Sol taraftaki profil bağlantısı kaldırıldı */}
         <div className="flex size-12 shrink-0 items-center"></div> {/* Yer tutucu */}
         <div className="flex w-12 items-center justify-end">
-          <Button variant="ghost" className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 bg-transparent text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
-            <span className="material-symbols-outlined text-subtle-dark">notifications</span>
-          </Button>
+          <Link to="/search"> {/* Arama sayfasına yönlendirme */}
+            <Button variant="ghost" className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 bg-transparent text-white gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+              <span className="material-symbols-outlined text-subtle-dark">search</span> {/* Arama ikonu */}
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

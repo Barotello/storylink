@@ -12,8 +12,9 @@ import ProfilePage from "./pages/ProfilePage";
 import SearchPage from "./pages/SearchPage";
 import ChatsPage from "./pages/ChatsPage";
 import ChatDetailPage from "./pages/ChatDetailPage";
+import NotificationsPage from "./pages/NotificationsPage"; // Yeni Bildirimler sayfasını import et
 import NotFound from "./pages/NotFound";
-import MainLayout from "./components/layout/MainLayout"; // MainLayout'u import et
+import MainLayout from "./components/layout/MainLayout";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,7 @@ const App = () => (
             <Route path="/search" element={<SearchPage />} />
             <Route path="/chats" element={<ChatsPage />} />
             <Route path="/chats/:id" element={<ChatDetailPage />} />
+            <Route path="/notifications" element={<NotificationsPage />} /> {/* Yeni Bildirimler rotası */}
           </Route>
           
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
