@@ -40,7 +40,7 @@ const MatchesPage = () => {
       </div>
 
       {/* Ana İçerik Alanı */}
-      <main className="flex-grow flex flex-col p-4 pt-0">
+      <main className="flex-grow flex flex-col p-4 pt-0 pb-24"> {/* Alt navigasyon çubuğu için yeterli boşluk bırak */}
         {/* Profil Kartı (Card) - DrawerTrigger olarak güncellendi */}
         <Drawer open={isProfileDrawerOpen} onOpenChange={setIsProfileDrawerOpen}>
           <DrawerTrigger asChild>
@@ -98,49 +98,6 @@ const MatchesPage = () => {
           </div>
         </div>
       </div>
-
-      {/* Alt Navigasyon Çubuğu (BottomNavBar) */}
-      <nav className="flex gap-2 border-t border-slate-200 dark:border-chip-dark-bg bg-background-light dark:bg-surface-dark px-4 pb-3 pt-2">
-        {/* Keşfet (Sol) */}
-        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="/explore">
-          <div className="flex h-8 items-center justify-center">
-            <span className="material-symbols-outlined">travel_explore</span>
-          </div>
-          <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Keşfet</p>
-        </Link>
-
-        {/* Eşleş (Kalp ikonu - Sol Orta) */}
-        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="/matches">
-          <div className="flex h-8 items-center justify-center">
-            <span className="material-symbols-outlined">favorite</span>
-          </div>
-          <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Eşleş</p>
-        </Link>
-
-        {/* Arama (Orta) */}
-        <Link className="flex flex-1 flex-col items-center justify-end gap-1 rounded-full text-primary-app" to="/search">
-          <div className="flex h-8 items-center justify-center">
-            <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>search</span>
-          </div>
-          <p className="text-primary-app text-xs font-medium leading-normal tracking-[0.015em]">Arama</p>
-        </Link>
-
-        {/* Sohbetler (Sağ Orta) */}
-        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="/chats">
-          <div className="flex h-8 items-center justify-center">
-            <span className="material-symbols-outlined">chat_bubble</span>
-          </div>
-          <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Sohbetler</p>
-        </Link>
-
-        {/* Profil (Sağ) - Ayarlar yerine Profil eklendi */}
-        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="/profile">
-          <div className="flex h-8 items-center justify-center">
-            <span className="material-symbols-outlined">person</span>
-          </div>
-          <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Profil</p>
-        </Link>
-      </nav>
     </div>
   );
 };

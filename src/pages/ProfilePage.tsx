@@ -15,7 +15,7 @@ const ProfilePage = () => {
           </Button>
         </Link>
       </header>
-      <main className="flex-1 px-4 py-4 text-center">
+      <main className="flex-1 px-4 py-4 text-center pb-24"> {/* Alt navigasyon çubuğu için yeterli boşluk bırak */}
         <h1 className="text-2xl font-bold text-text-light dark:text-text-dark mt-8">Kendi Profil Sayfanız</h1>
         <p className="text-subtle-light dark:text-subtle-dark mt-2">Burada kendi profil bilgilerinizi ve tercihlerinizi göreceksiniz.</p>
         <div className="mt-8">

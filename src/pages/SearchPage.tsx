@@ -19,7 +19,7 @@ const SearchPage = () => {
         <h1 className="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Arama</h1>
         <div className="size-10 shrink-0"></div>
       </header>
-      <main className="flex-1 px-4 py-4">
+      <main className="flex-1 px-4 py-4 pb-24"> {/* Alt navigasyon çubuğu için yeterli boşluk bırak */}
         <label className="flex flex-col min-w-40 h-12 w-full">
           <div className="flex w-full flex-1 items-stretch rounded-xl h-full">
             <div className="text-nav-dark-text flex border-none bg-chip-dark-bg items-center justify-center pl-4 rounded-l-xl border-r-0">

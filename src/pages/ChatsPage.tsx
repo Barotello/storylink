@@ -86,7 +86,7 @@ const ChatsPage = () => {
         </label>
       </div>
       {/* Chat List */}
-      <div className="flex flex-col flex-1 pb-24">
+      <div className="flex flex-col flex-1 pb-24"> {/* Alt navigasyon çubuğu için yeterli boşluk bırak */}
         {filteredChats.map((chat) => (
           <ChatListItem
             key={chat.id}
@@ -104,7 +104,7 @@ const ChatsPage = () => {
         )}
       </div>
       {/* Floating Action Button for New Chat */}
-      <Button className="fixed bottom-6 right-6 flex items-center justify-center w-14 h-14 bg-primary-app text-white rounded-full shadow-lg">
+      <Button className="fixed bottom-20 right-6 flex items-center justify-center w-14 h-14 bg-primary-app text-white rounded-full shadow-lg z-40"> {/* FAB'ı BottomNavBar'ın üzerine taşıdık */}
         <span className="material-symbols-outlined text-3xl">add</span>
       </Button>
     </div>

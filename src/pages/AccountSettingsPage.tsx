@@ -9,13 +9,13 @@ const AccountSettingsPage = () => {
   const userProfile = {
     name: "Elif Yılmaz",
     handle: "@elifyilmaz",
-    avatarSrc: "https://lh3.googleusercontent.com/aida-public/AB6AXuCOxi_CQu8qdHRc62SS1DZs_4lDZEA3AwgiBhzfNNbB-BICmymjcFM86f8BU03ywrE0DFw-J9dYJ8jD84i4bu9BE-bITUCiu_wbrK9ZzWXsODnx0fJMuANYaHJ7jLX2UoV4DszW8gm9UYsoq60LbXKJcjHO1epXTFD7ZWVOIb6hRAWczXIfdzDzcjNSHU37y9XPsBojFKfMdqGpk2y2nileJe0",
+    avatarSrc: "https://lh3.googleusercontent.com/aida-public/AB6AXuCOxi_CQu8qdHRc62SS1DZs_4lDZEA3AwgiBhzfNNbB-BICmymjcFM86f8BU03ywrK9ZzWXsODnx0fJMuANYaHJ7jLX2UoV4DszW8gm9UYsoq60LbKkjHO1epXTFD7ZWVOIb6hRAWczXIfdzDzcjNSHU37y9XPsBojFKfMdqGpk2y2nileJe0",
   };
 
   return (
     <div className="relative mx-auto flex h-auto min-h-screen w-full max-w-md flex-col overflow-x-hidden bg-background-light dark:bg-background-dark font-display">
       <SettingsSubPageAppBar title="Ayarlar" />
-      <main className="flex-1 px-4 py-2">
+      <main className="flex-1 px-4 py-2 pb-24"> {/* Alt navigasyon çubuğu için yeterli boşluk bırak */}
         {/* Kullanıcı Profil Özeti Kartı */}
         <section className="mb-6">
           <div className="flex flex-col items-center justify-center p-6 rounded-lg bg-surface-light dark:bg-surface-dark shadow-sm">

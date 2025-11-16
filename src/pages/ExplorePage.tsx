@@ -6,31 +6,9 @@ import PostCard from "@/components/explore/PostCard";
 // import FloatingActionButton from "@/components/explore/FloatingActionButton"; // Kaldırıldı
 
 const ExplorePage = () => {
-  const [showBottomNav, setShowBottomNav] = useState(true);
-  const scrollHideThreshold = 100; // Aşağı kaydırıldığında menüyü gizlemek için eşik
-  const scrollShowThreshold = 50; // Yukarı kaydırıldığında menüyü göstermek için eşik
-
-  useEffect(() => {
-    let lastScrollY = window.scrollY;
-
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      if (currentScrollY > lastScrollY && currentScrollY > scrollHideThreshold) {
-        // Aşağı kaydırılıyor ve gizleme eşiğini geçti
-        setShowBottomNav(false);
-      } else if (currentScrollY < lastScrollY || currentScrollY <= scrollShowThreshold) {
-        // Yukarı kaydırılıyor veya sayfanın başına yakın
-        setShowBottomNav(true);
-      }
-      lastScrollY = currentScrollY;
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  // showBottomNav state'i ve useEffect'i BottomNavBar bileşenine taşındığı için burada artık gerekli değil.
+  // Ancak, eğer bu sayfaya özel bir scroll davranışı istenirse burada tutulabilir.
+  // Şu an için global BottomNavBar'ın scroll davranışını kullanacağız.
 
   return (
     <div className="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden bg-background-dark font-display text-text-light dark:text-text-dark">
@@ -94,53 +72,6 @@ const ExplorePage = () => {
           likes="35"
         />
       </main>
-
-      {/* Alt Navigasyon Çubuğu (BottomNavBar) */}
-      <nav
-        className={`fixed bottom-0 left-0 right-0 flex gap-2 border-t border-slate-200 dark:border-chip-dark-bg bg-background-light dark:bg-surface-dark px-4 pb-3 pt-2 transition-transform duration-300 ease-in-out ${
-          showBottomNav ? "translate-y-0" : "translate-y-full"
-        }`}
-      >
-        {/* Keşfet (Sol) */}
-        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="/explore">
-          <div className="flex h-8 items-center justify-center">
-            <span className="material-symbols-outlined">travel_explore</span>
-          </div>
-          <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Keşfet</p>
-        </Link>
-
-        {/* Eşleş (Kalp ikonu - Sol Orta) */}
-        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="/matches">
-          <div className="flex h-8 items-center justify-center">
-            <span className="material-symbols-outlined">favorite</span>
-          </div>
-          <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Eşleş</p>
-        </Link>
-
-        {/* Arama (Orta) */}
-        <Link className="flex flex-1 flex-col items-center justify-end gap-1 rounded-full text-primary-app" to="/search">
-          <div className="flex h-8 items-center justify-center">
-            <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>search</span>
-          </div>
-          <p className="text-primary-app text-xs font-medium leading-normal tracking-[0.015em]">Arama</p>
-        </Link>
-
-        {/* Sohbetler (Sağ Orta) */}
-        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="/chats">
-          <div className="flex h-8 items-center justify-center">
-            <span className="material-symbols-outlined">chat_bubble</span>
-          </div>
-          <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Sohbetler</p>
-        </Link>
-
-        {/* Profil (Sağ) */}
-        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="/profile">
-          <div className="flex h-8 items-center justify-center">
-            <span className="material-symbols-outlined">person</span>
-          </div>
-          <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Profil</p>
-        </Link>
-      </nav>
     </div>
   );
 };

@@ -11,8 +11,9 @@ import AccountSettingsPage from "./pages/AccountSettingsPage";
 import ProfilePage from "./pages/ProfilePage";
 import SearchPage from "./pages/SearchPage";
 import ChatsPage from "./pages/ChatsPage";
-import ChatDetailPage from "./pages/ChatDetailPage"; // Yeni ChatDetailPage'i import et
+import ChatDetailPage from "./pages/ChatDetailPage";
 import NotFound from "./pages/NotFound";
+import MainLayout from "./components/layout/MainLayout"; // MainLayout'u import et
 
 const queryClient = new QueryClient();
 
@@ -23,15 +24,21 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
+          {/* Giriş ve Kayıt sayfaları BottomNavBar olmadan */}
           <Route path="/" element={<Index />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/explore" element={<ExplorePage />} />
-          <Route path="/matches" element={<MatchesPage />} />
-          <Route path="/settings" element={<AccountSettingsPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/search" element={<SearchPage />} />
-          <Route path="/chats" element={<ChatsPage />} />
-          <Route path="/chats/:id" element={<ChatDetailPage />} /> {/* Yeni sohbet detay rotası */}
+
+          {/* Diğer tüm sayfalar MainLayout içinde BottomNavBar ile */}
+          <Route element={<MainLayout />}>
+            <Route path="/explore" element={<ExplorePage />} />
+            <Route path="/matches" element={<MatchesPage />} />
+            <Route path="/settings" element={<AccountSettingsPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/search" element={<SearchPage />} />
+            <Route path="/chats" element={<ChatsPage />} />
+            <Route path="/chats/:id" element={<ChatDetailPage />} />
+          </Route>
+          
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
