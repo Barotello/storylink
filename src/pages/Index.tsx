@@ -13,7 +13,7 @@ const Index = () => {
         {/* Header Image with Logo */}
         <div className="w-full px-4 pt-6 z-10 flex items-center justify-center gap-2">
           <span className="material-symbols-outlined text-white text-3xl">movie_filter</span>
-          <span className="font-display text-white text-2xl font-bold">CineMatch</span>
+          <span className="font-display text-white text-2xl font-bold">StoryLink</span>
         </div>
 
         {/* Content Section */}

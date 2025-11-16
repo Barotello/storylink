@@ -69,7 +69,7 @@ const RegisterPage = () => {
         <div className="text-center">
           <Link to="/" className="flex flex-col items-center">
             <span className="material-symbols-outlined text-primary-app text-5xl">movie</span>
-            <h1 className="text-2xl font-bold tracking-tight mt-2 text-text-light dark:text-text-dark">CineMatch</h1>
+            <h1 className="text-2xl font-bold tracking-tight mt-2 text-text-light dark:text-text-dark">StoryLink</h1>
           </Link>
           <p className="text-subtle-light dark:text-subtle-dark mt-1">Hikayeni paylaşacak birini bul.</p>
         </div>
