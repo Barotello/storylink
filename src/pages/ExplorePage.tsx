@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import ExploreHeader from "@/components/explore/ExploreHeader";
 import StoryCarousel from "@/components/explore/StoryCarousel";
 import PostCard from "@/components/explore/PostCard";
-import FloatingActionButton from "@/components/explore/FloatingActionButton";
+// import FloatingActionButton from "@/components/explore/FloatingActionButton"; // Kaldırıldı
 
 const ExplorePage = () => {
   const [showBottomNav, setShowBottomNav] = useState(true);
@@ -66,14 +66,14 @@ const ExplorePage = () => {
           content="Az önce Dune: Part Two'yu bitirdim, filmin sonu hakkındaki düşünceleriniz neler?"
           mediaType="film"
           mediaTitle="Dune: Part Two"
-          mediaImageSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuAa-flcZ06vYMzJ9yWygSKsmGRBXWQlmbnkTCo7UKGZfQVTe8hy3QXCtvnk7fX95836UY1h3zVYYr9V12tmSK_V-lvkisu83c3eZH2rUgjLrRZS3Ry6bdET86-3Jq0zTfRVZSP8JTdWw0gMVxvHc7MQW0wsOakUynwRlgBbSVvdT8CpicnT1CnPZI_vto7x0jUqC3uMdos4HqEgOOCNvPyI05nbMxD2-r78dkkqSTC61oT_JzDrj3__N7iaXpGLmv9uf2u-ECXFmhM"
+          mediaImageSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuAa-flcZ06vYMzJ9yWygSKsmGRBXWQlmbnkTCo7UKGZfQVTe8hy3QXCtvnk7fX95836UY1h3zVYYr9V12tmSK_V-lvkisu83c3eZH2rUgjLrRZS3Ry6bdET86-3Jq0zTfRVZSP8JTdWw0gMVxvHc7MQW0wsOakUynRlgBbSVvdT8CpicnT1CnPZI_vto7x0jUqC3uMdos4HqEgOOCNvPyI05nbMxD2-r78dkkqSTC61oT_JzDrj3__N7iaXpGLmv9uf2u-ECXFmhM"
           comments="12"
           reposts="3"
           likes="47"
         />
         {/* Post Card 2 */}
         <PostCard
-          avatarSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuAKGB2oZEPf4p3zu7WpYbCn3dWTC49agopcubP9E3VHzrdHVIpqWMhR45VJOpgVW90-uLwU1I4TV7fRj-44q37dfP1vAf3En1XrRLTqkEI9k4Bp0riDz2UHEKIuoxoscUR4a2PNq6hyPC7lXU9X_0TS0JoUevqNTxXlq4Sn6nxipHZ7uBILzPsAOz7CZLe8ds4gqKS9EhXxmcepArkF35kLk3YNV_qcwemRyOmOQxyGQA3HNfIwcB-gY6zkglB2lC68iVuUOP9XMQ8"
+          avatarSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuAKGB2oZEPf4p3zu7WpYbCn3dWTC49agopcubP9E3VHzrdHVIpqWMhR45VJOpgVW90-uLwU1I4TV7fRj-44q37dfP1vAf3En1XrRLTqkEI9k4Bp0riDz2UHEKIUoxoscUR4a2PNq6hyPC7lXU9X_0TS0JoUevqNTxXlq4Sn6nxipHZ7uBILzPsAOz7CZLe8ds4gqKS9EhXxmcepArkF35kLk3YNV_qcwemRyOmOQxyGQA3HNfIwcB-gY6zkglB2lC68iVuUOP9XMQ8"
           userName="Ayşe Kaya"
           userHandle="@aysekaya"
           timeAgo="1sa önce"
@@ -95,7 +95,7 @@ const ExplorePage = () => {
         />
       </main>
 
-      <FloatingActionButton isVisible={showBottomNav} />
+      {/* FloatingActionButton kaldırıldı */}
 
       {/* Alt Navigasyon Çubuğu (BottomNavBar) */}
       <nav
