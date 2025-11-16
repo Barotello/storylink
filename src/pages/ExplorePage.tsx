@@ -38,19 +38,19 @@ const ExplorePage = () => {
       <StoryCarousel />
 
       {/* Tabs */}
-      <div className="pb-3 sticky top-[132px] z-10 bg-primary-app">
-        <div className="flex border-b border-white/20 px-4 justify-between">
-          <Link className="flex flex-col items-center justify-center border-b-[3px] border-b-white text-white pb-[13px] pt-4 flex-1" to="#">
+      <div className="pb-3 sticky top-[132px] z-10 bg-background-light dark:bg-background-dark">
+        <div className="flex border-b border-border-dark px-4 justify-between">
+          <Link className="flex flex-col items-center justify-center border-b-[3px] border-b-primary-app text-white pb-[13px] pt-4 flex-1" to="#">
             <p className="text-white text-sm font-bold leading-normal tracking-[0.015em]">Sana Özel</p>
           </Link>
-          <Link className="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-white/70 pb-[13px] pt-4 flex-1" to="#">
-            <p className="text-white/70 text-sm font-bold leading-normal tracking-[0.015em]">Trendler</p>
+          <Link className="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-nav-dark-text pb-[13px] pt-4 flex-1" to="#">
+            <p className="text-nav-dark-text text-sm font-bold leading-normal tracking-[0.015em]">Trendler</p>
           </Link>
-          <Link className="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-white/70 pb-[13px] pt-4 flex-1" to="#">
-            <p className="text-white/70 text-sm font-bold leading-normal tracking-[0.015em]">Filmler</p>
+          <Link className="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-nav-dark-text pb-[13px] pt-4 flex-1" to="#">
+            <p className="text-nav-dark-text text-sm font-bold leading-normal tracking-[0.015em]">Filmler</p>
           </Link>
-          <Link className="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-white/70 pb-[13px] pt-4 flex-1" to="#">
-            <p className="text-white/70 text-sm font-bold leading-normal tracking-[0.015em]">Kitaplar</p>
+          <Link className="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-nav-dark-text pb-[13px] pt-4 flex-1" to="#">
+            <p className="text-nav-dark-text text-sm font-bold leading-normal tracking-[0.015em]">Kitaplar</p>
           </Link>
         </div>
       </div>
@@ -73,7 +73,7 @@ const ExplorePage = () => {
         />
         {/* Post Card 2 */}
         <PostCard
-          avatarSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuAKGB2oZEPf4p3zu7WpYbCn3dWTC49agopcubP9E3VHzrdHVIpqWMhR45VJOpgVW90-uLwU1I4TV7fRj-44q37dfP1vAf3En1XrRLTqkEI9k4Bp0riDz2UHEKIuoxoscUR4a2PNq6hyPC7lXU9X_0TS0JoUqC3uMdos4HqEgOOCNvPyI05nbMxD2-r78dkkqSTC61oT_JzDrj3__N7iaXpGLmv9uf2u-ECXFmhM"
+          avatarSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuAKGB2oZEPf4p3zu7WpYbCn3dWTC49agopcubP9E3VHzrdHVIpqWMhR45VJOpgVW90-uLwU1I4TV7fRj-44q37dfP1vAf3En1XrRLTqkEI9k4Bp0riDz2UHEKIuoxoscUR4a2PNq6hyPC7lXU9X_0TS0JoUevqNTxXlq4Sn6nxipHZ7uBILzPsAOz7CZLe8ds4gqKS9EhXxmcepArkF35kLk3YNV_qcwemRyOmOQxyGQA3HNfIwcB-gY6zkglB2lC68iVuUOP9XMQ8"
           userName="Ayşe Kaya"
           userHandle="@aysekaya"
           timeAgo="1sa önce"
