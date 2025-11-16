@@ -27,9 +27,7 @@ const ProfilePage = () => {
           <h2 className="text-xl font-semibold text-text-light dark:text-text-dark mt-4">Elif Yılmaz</h2>
           <p className="text-subtle-light dark:text-subtle-dark">elif.yilmaz@eposta.com</p>
         </div>
-        <Link to="/settings/account" className="mt-6 inline-block text-primary-app hover:underline">
-          Profilimi Düzenle
-        </Link>
+        {/* "Profili Düzenle" bağlantısı kaldırıldı */}
       </main>
     </div>
   );

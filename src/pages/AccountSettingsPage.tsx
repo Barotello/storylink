@@ -26,11 +26,7 @@ const AccountSettingsPage = () => {
             />
             <h2 className="text-xl font-bold text-text-light dark:text-text-dark mt-4">{userProfile.name}</h2>
             <p className="text-subtle-light dark:text-subtle-dark mt-1">{userProfile.handle}</p>
-            <Link to="/profile" className="mt-4">
-              <Button variant="outline" className="rounded-full border-primary-app text-primary-app hover:bg-primary-app/10">
-                Profili Düzenle
-              </Button>
-            </Link>
+            {/* "Profili Düzenle" bağlantısı kaldırıldı */}
           </div>
         </section>
 
