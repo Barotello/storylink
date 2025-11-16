@@ -38,7 +38,7 @@ const ExplorePage = () => {
       <StoryCarousel />
 
       {/* Tabs */}
-      <div className="pb-3 sticky top-[132px] z-10 bg-background-light dark:bg-background-dark">
+      <div className="pb-3 sticky top-[132px] z-10 bg-background-dark"> {/* Arka plan rengi güncellendi */}
         <div className="flex border-b border-border-dark px-4 justify-between">
           <Link className="flex flex-col items-center justify-center border-b-[3px] border-b-primary-app text-white pb-[13px] pt-4 flex-1" to="#">
             <p className="text-white text-sm font-bold leading-normal tracking-[0.015em]">Sana Özel</p>

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const ExploreHeader = () => {
   return (
-    <div className="sticky top-0 z-10 bg-background-light dark:bg-background-dark/80 backdrop-blur-sm">
+    <div className="sticky top-0 z-10 bg-background-dark"> {/* Arka plan rengi güncellendi ve blur kaldırıldı */}
       <div className="flex items-center p-4 pb-2 justify-between">
         <Link to="/profile" className="flex size-12 shrink-0 items-center">
           <div
