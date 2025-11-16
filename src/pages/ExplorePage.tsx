@@ -73,7 +73,7 @@ const ExplorePage = () => {
         />
         {/* Post Card 2 */}
         <PostCard
-          avatarSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuAKGB2oZEPf4p3zu7WpYbCn3dWTC49agopcubP9E3VHzrdHVIpqWMhR45VJOpgVW90-uLwU1I4TV7fRj-44q37dfP1vAf3En1XrRLTqkEI9k4Bp0riDz2UHEKIUoxoscUR4a2PNq6hyPC7lXU9X_0TS0JoUevqNTxXlq4Sn6nxipHZ7uBILzPsAOz7CZLe8ds4gqKS9EhXxmcepArkF35kLk3YNV_qcwemRyOmOQxyGQA3HNfIwcB-gY6zkglB2lC68iVuUOP9XMQ8"
+          avatarSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuAKGB2oZEPf4p2zu7WpYbCn3dWTC49agopcubP9E3VHzrdHVIpqWMhR45VJOpgVW90-uLwU1I4TV7fRj-44q37dfP1vAf3En1XrRLTqkEI9k4Bp0riDz2UHEKIUoxoscUR4a2PNq6hyPC7lXU9X_0TS0JoUevqNTxXlq4Sn6nxipHZ7uBILzPsAOz7CZLe8ds4gqKS9EhXxmcepArkF35kLk3YNV_qcwemRyOmOQxyGQA3HNfIwcB-gY6zkglB2lC68iVuUOP9XMQR"
           userName="Ayşe Kaya"
           userHandle="@aysekaya"
           timeAgo="1sa önce"
@@ -126,7 +126,7 @@ const ExplorePage = () => {
         </Link>
 
         {/* Sohbetler (Sağ Orta) */}
-        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="#">
+        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="/chats">
           <div className="flex h-8 items-center justify-center">
             <span className="material-symbols-outlined">chat_bubble</span>
           </div>

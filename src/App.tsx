@@ -7,9 +7,11 @@ import Index from "./pages/Index";
 import RegisterPage from "./pages/RegisterPage";
 import ExplorePage from "./pages/ExplorePage";
 import MatchesPage from "./pages/MatchesPage";
-import AccountSettingsPage from "./pages/AccountSettingsPage"; // SettingsPage yerine AccountSettingsPage'i import et
+import AccountSettingsPage from "./pages/AccountSettingsPage";
 import ProfilePage from "./pages/ProfilePage";
 import SearchPage from "./pages/SearchPage";
+import ChatListPage from "./pages/ChatListPage"; // Yeni ChatListPage'i import et
+import SingleChatPage from "./pages/SingleChatPage"; // Yeniden adlandırılan SingleChatPage'i import et
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,10 +27,11 @@ const App = () => (
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/explore" element={<ExplorePage />} />
           <Route path="/matches" element={<MatchesPage />} />
-          <Route path="/settings" element={<AccountSettingsPage />} /> {/* /settings rotasını AccountSettingsPage'e yönlendir */}
-          {/* <Route path="/settings/account" element={<AccountSettingsPage />} /> Bu rota artık /settings tarafından karşılandığı için kaldırıldı */}
+          <Route path="/settings" element={<AccountSettingsPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/search" element={<SearchPage />} />
+          <Route path="/chats" element={<ChatListPage />} /> {/* Sohbet listesi rotası */}
+          <Route path="/chat" element={<SingleChatPage />} /> {/* Tekli sohbet rotası */}
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
