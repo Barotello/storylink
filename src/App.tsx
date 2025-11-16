@@ -7,10 +7,9 @@ import Index from "./pages/Index";
 import RegisterPage from "./pages/RegisterPage";
 import ExplorePage from "./pages/ExplorePage";
 import MatchesPage from "./pages/MatchesPage";
-import SettingsPage from "./pages/SettingsPage";
-import AccountSettingsPage from "./pages/AccountSettingsPage";
+import AccountSettingsPage from "./pages/AccountSettingsPage"; // SettingsPage yerine AccountSettingsPage'i import et
 import ProfilePage from "./pages/ProfilePage";
-import SearchPage from "./pages/SearchPage"; // Yeni eklenen arama sayfası
+import SearchPage from "./pages/SearchPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,10 +25,10 @@ const App = () => (
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/explore" element={<ExplorePage />} />
           <Route path="/matches" element={<MatchesPage />} />
-          <Route path="/settings" element={<SettingsPage />} />
-          <Route path="/settings/account" element={<AccountSettingsPage />} />
+          <Route path="/settings" element={<AccountSettingsPage />} /> {/* /settings rotasını AccountSettingsPage'e yönlendir */}
+          {/* <Route path="/settings/account" element={<AccountSettingsPage />} /> Bu rota artık /settings tarafından karşılandığı için kaldırıldı */}
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/search" element={<SearchPage />} /> {/* Yeni arama sayfası rotası */}
+          <Route path="/search" element={<SearchPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

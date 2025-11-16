@@ -133,12 +133,12 @@ const MatchesPage = () => {
           <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Sohbetler</p>
         </Link>
 
-        {/* Ayarlar (Sağ) */}
-        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="/settings">
+        {/* Profil (Sağ) - Ayarlar yerine Profil eklendi */}
+        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="/profile">
           <div className="flex h-8 items-center justify-center">
-            <span className="material-symbols-outlined">settings</span>
+            <span className="material-symbols-outlined">person</span>
           </div>
-          <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Ayarlar</p>
+          <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Profil</p>
         </Link>
       </nav>
     </div>
