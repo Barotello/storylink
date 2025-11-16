@@ -45,6 +45,7 @@ const ChatsPage = () => {
           timeAgo="5 dk önce"
           unreadCount={2}
           isOnline={true}
+          chatId="1"
         />
         <ChatListItem
           avatarSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuB2rTVZXZobu5chgbvCcwT4vJAoOFgJKLZ9zy955xKBqvdRHDiC90wHaXom-MzOFe8Y_ozoT0fT75s6vRFt3VtbDrDxCRVyeZgPZ3h7PQWupDMNHopKyAC93Ln9xkdx13lxXSkMr1RLnElHRwkpVjQ9b-4s42OP_4QlBtVb6ivxQlwRpqF8_FkjkeH581XlChFxu0WE70gVnNDJuTx6K_Lalhz17D2p97v_TL2M6UqeCcMgaWIupDISzk5ymcYuGwhbPRmLDNUCvhE"
@@ -52,6 +53,7 @@ const ChatsPage = () => {
           lastMessage="En sevdiğin yönetmen kim?"
           timeAgo="1 saat önce"
           isOnline={false}
+          chatId="2"
         />
         <ChatListItem
           avatarSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuAMjX94WCsy0Q1N-a_GzEGJkUhrgGHpTok6i_2juCE95bNBt_R6GeEtfdmBEf6a93aLzEN7oDNso41eLsAKG3z3sPkMHYEtHwm3XBxuvN14fJl2Lb2hTKo6m4Zk98HRJMZNJnm-Rfp5Hz9nhR6gX-vBy1x5hm-5PVRiGB0gUT9DmkTAzPCoQGtJXBER0PmnMnWCoO7NnZTNWXMxaHpgLzzRegOCLADi_YL81LPDl_3DLJjTclekrSHHAumrqSa9_D5l2uthE4GH72I"
@@ -59,6 +61,7 @@ const ChatsPage = () => {
           lastMessage="O kitabı ben de çok sevmiştim."
           timeAgo="Dün"
           isOnline={false}
+          chatId="3"
         />
         <ChatListItem
           avatarSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuAYwWLmIfPmPaALLSnORAXjZ3Va5M8xYETtbPN90RpH5ph9NrSryn-HHw_iU58VuKU4v1N1aXUqbezHhLVEdHoPXZAnm7Jj0ru91S6iWVUrZ6xpbPkABY6Pqt_87zzLidvF8DB-ThDHkuv7i3zCy_zoF23Q-bLDIptCHt-ACAvHSgYD3iY2SvJi3zcRgP2Pc2SKBi32S5qE3ok0h64wLjm0rZX7qro3QvkoaZ3U7JsXmuIurSupFw6ZqWV68VlBO2OkqW_zN7nWwE"
@@ -66,6 +69,7 @@ const ChatsPage = () => {
           lastMessage="Dune serisini okudun mu?"
           timeAgo="2 gün önce"
           isOnline={false}
+          chatId="4"
         />
       </div>
       {/* Floating Action Button for New Chat */}

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom"; // Link bileşenini import et
 
 interface ChatListItemProps {
   avatarSrc: string;
@@ -7,6 +8,7 @@ interface ChatListItemProps {
   timeAgo: string;
   unreadCount?: number;
   isOnline?: boolean;
+  chatId: string; // chatId prop'unu ekle
 }
 
 const ChatListItem: React.FC<ChatListItemProps> = ({
@@ -16,9 +18,10 @@ const ChatListItem: React.FC<ChatListItemProps> = ({
   timeAgo,
   unreadCount,
   isOnline,
+  chatId, // chatId prop'unu al
 }) => {
   return (
-    <div className="flex items-center gap-4 px-4 min-h-[72px] py-2 justify-between cursor-pointer hover:bg-black/5 dark:hover:bg-white/5">
+    <Link to={`/chats/${chatId}`} className="flex items-center gap-4 px-4 min-h-[72px] py-2 justify-between cursor-pointer hover:bg-black/5 dark:hover:bg-white/5">
       <div className="flex items-center gap-4 flex-1 min-w-0">
         <div className="relative">
           <div
@@ -41,7 +44,7 @@ const ChatListItem: React.FC<ChatListItemProps> = ({
           <div className="flex size-6 items-center justify-center rounded-full bg-primary-app text-white text-xs font-bold">{unreadCount}</div>
         )}
       </div>
-    </div>
+    </Link>
   );
 };
 

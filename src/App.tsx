@@ -10,7 +10,8 @@ import MatchesPage from "./pages/MatchesPage";
 import AccountSettingsPage from "./pages/AccountSettingsPage";
 import ProfilePage from "./pages/ProfilePage";
 import SearchPage from "./pages/SearchPage";
-import ChatsPage from "./pages/ChatsPage"; // Yeni ChatsPage'i import et
+import ChatsPage from "./pages/ChatsPage";
+import ChatDetailPage from "./pages/ChatDetailPage"; // Yeni ChatDetailPage'i import et
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,7 +30,8 @@ const App = () => (
           <Route path="/settings" element={<AccountSettingsPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/search" element={<SearchPage />} />
-          <Route path="/chats" element={<ChatsPage />} /> {/* Yeni sohbetler rotası */}
+          <Route path="/chats" element={<ChatsPage />} />
+          <Route path="/chats/:id" element={<ChatDetailPage />} /> {/* Yeni sohbet detay rotası */}
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
