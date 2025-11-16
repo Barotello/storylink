@@ -45,7 +45,7 @@ const ExplorePage = () => {
           timeAgo="1 saat önce"
           content="Haruki Murakami'nin en iyi kitabı sizce hangisi? Benim favorim '1Q84', ama 'Sahilde Kafka'nın da yeri ayrı. Sizin düşüncelerinizi merak ediyorum."
           hashtags="#Murakami #KitapÖnerisi"
-          imageSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuCoL9nQnNADN42ZgLp6yAkr4aWh9rz4c4A7NJOWJv5RYDRDt6ArEJVMpsHkx3K04haPeD8cqkrlr9l9elu1tgBilCKIq4oqUZYUmKnkXxti8uhURg9zz18y-X6aykEMybtzqFPlYpvdBQB5PJxphHJrTIMkrid6SC9MrtQONufbXysHVhS_lqJzd7o_iBChYrtBbfdOsURlP2q9eXL7OAII6YnlyTJ3i0jq8Vo_b7QnljJXB_98GWrRXfKlmLP3gZQ4BMNoIdAeZqY"
+          imageSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuCoL9nQnNADN42ZgLp6yAkr4aWh9rz4c4A7NJOWJv5RYDRDt6ArEJVMpsHkx3K04haPeD8cqkrlr9l9elu1tgBilCKIq4oqUZYUmKnkXxti8uhURg9zz18y-X6aykEMybtzqFPlYpvdBQB5PJxphHJrTIMkrid6SC9MrtQONufbXysHVhS_lqJzd7o_iBChYrtBbfdOsURg9zz18y-X6aykEMybtzqFPlYpvdBQB5PJxphHJrTIMkrid6SC9MrtQONufbXysHVhS_lqJzd7o_iBChYrtBbfdOsURlP2q9eXL7OAII6YnlyTJ3i0jq8Vo_b7QnljJXB_98GWrRXfKlmLP3gZQ4BMNoIdAeZqY"
           likes="1.2k"
           comments="251"
           shares="89"
@@ -99,14 +99,6 @@ const ExplorePage = () => {
             <span className="material-symbols-outlined">favorite</span>
           </div>
           <p className="text-slate-500 dark:text-nav-dark-text text-xs font-medium leading-normal tracking-[0.015em]">Eşleş</p>
-        </Link>
-
-        {/* Profil (Sadece ikon) */}
-        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="/profile">
-          <div className="flex h-8 items-center justify-center">
-            <span className="material-symbols-outlined">person</span>
-          </div>
-          {/* Profil yazısı kaldırıldı */}
         </Link>
 
         {/* Sohbetler */}

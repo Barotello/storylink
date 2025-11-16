@@ -117,14 +117,6 @@ const MatchesPage = () => {
           <p className="text-primary-app text-xs font-medium leading-normal tracking-[0.015em]">Eşleş</p>
         </Link>
 
-        {/* Profil (Sadece ikon) */}
-        <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="/profile">
-          <div className="flex h-8 items-center justify-center">
-            <span className="material-symbols-outlined">person</span>
-          </div>
-          {/* Profil yazısı kaldırıldı */}
-        </Link>
-
         {/* Sohbetler */}
         <Link className="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-nav-dark-text" to="#">
           <div className="flex h-8 items-center justify-center">
