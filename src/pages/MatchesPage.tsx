@@ -44,7 +44,7 @@ const MatchesPage = () => {
         {/* Profil Kartı (Card) - DrawerTrigger olarak güncellendi */}
         <Drawer open={isProfileDrawerOpen} onOpenChange={setIsProfileDrawerOpen}>
           <DrawerTrigger asChild>
-            <div className="flex-grow bg-cover bg-center flex flex-col items-stretch justify-end rounded-xl cursor-pointer" data-alt="Kitaplık önünde gülümseyen genç bir kadının portresi" style={{ backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 60%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuBsLCCx3O4jtAR9sTdeMBuCSUDyE6UQo-iwUPC4ECQf1ElR_zEp-wOdQ2mLWeYa5OT7UjiImwNllXz02qwHs-rvueotfUio49NpzvYpgI5itY8QSg-Bv-nFhS4seqRJROGV085QOLuACb8me9iUiQnYTy3LU-Pgji0jLauS4JzBKin8Zy1w6NnLr11zcvBn8d_CWiujeZsXnuXndm5ppK_35d0KJMEyeThhgh02E54YrjEmOL_JLzFnnX7INR-9UdUcWsAum18yTWEYrM")` }}>
+            <div className="flex-grow bg-cover bg-center flex flex-col items-stretch justify-end rounded-xl cursor-pointer" data-alt="Kitaplık önünde gülümseyen genç bir kadının portresi" style={{ backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 60%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuBsLCCx3O4jtAR9sTdeMBuCSUDyE6UQo-iwUPC4ECQf1ElR_zEp-wOdQ2mLWeYa5OT7UjiImwNllXz02qwHs-rvueotfUio49NpzvYpgI5itY8QSg-Bv-nFhS4seqRJROGV085QOLuACb8me9iUiQnYTy3LU-Pgji0jLauS4JzBKin8Zy1w6NnLr11zcvBn8d_CWiujeZsXndm5ppK_35d0KJMEyeThhgh02E54YrjEmOL_JLzFnnX7INR-9UdUcWsAum18yTWEYrM")` }}>
               <div className="flex w-full items-end justify-between gap-4 p-4">
                 <div className="flex max-w-[440px] flex-1 flex-col gap-1">
                   <p className="text-white text-base font-normal leading-normal">Klasik sinema ve çağdaş kurguya olan sevgim hakkında kısa, esprili bir biyografi.</p>
@@ -59,7 +59,7 @@ const MatchesPage = () => {
               </div>
             </div>
           </DrawerTrigger>
-          <DrawerContent className="h-[90%] mt-24 rounded-t-[10px] flex flex-col bg-background-light dark:bg-background-dark">
+          <DrawerContent className="h-[90%] mt-24 rounded-t-[10px] flex flex-col">
             <div className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-zinc-300 mb-8" />
             <div className="flex-1 overflow-y-auto">
               <MatchedUserProfileDrawerContent />
