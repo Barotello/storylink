@@ -73,7 +73,7 @@ const ExplorePage = () => {
         />
         {/* Post Card 2 */}
         <PostCard
-          avatarSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuAKGB2oZEPf4p3zu7WpYbCn3dWTC49agopcubP9E3VHzrdHVIpqWMhR45VJOpgVW90-uLwU1I4TV7fRj-44q37dfP1vAf3En1XrRLTqkEI9k4Bp0riDz2UHEKIuoxoscUR4a2PNq6hyPC7lXU9X_0TS0JoUevqNTxXlq4Sn6nxipHZ7uBILzPsAOz7CZLe8ds4gqKS9EhXxmcepArkF35kLk3YNV_qcwemRyOmOQxyGQA3HN3IwcB-gY6zkglB2lC68iVuUOP9XMQ8"
+          avatarSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuAKGB2oZEPf4p3zu7WpYbCn3dWTC49agopcubP9E3VHzrdHVIpqWMhR45VJOpgVW90-uLwU1I4TV7fRj-44q37dfP1vAf3En1XrRLTqkEI9k4Bp0riDz2UHEKIuoxoscUR4a2PNq6hyPC7lXU9X_0TS0JoUevqNTxXlq4Sn6nxipHZ7uBILzPsAOz7CZLe8ds4gqKS9EhXxmcepArkF35kLk3YNV_qcwemRyOmOQxyGQA3HNfIwcB-gY6zkglB2lC68iVuUOP9XMQ8"
           userName="Ayşe Kaya"
           userHandle="@aysekaya"
           timeAgo="1sa önce"
@@ -99,7 +99,7 @@ const ExplorePage = () => {
 
       {/* Alt Navigasyon Çubuğu (BottomNavBar) */}
       <nav
-        className={`fixed bottom-0 left-0 right-0 flex gap-2 border-t border-slate-200 dark:border-chip-dark-bg bg-background-light dark:bg-surface-dark px-4 pb-3 pt-2 transition-transform duration-300 ease-in-out z-40 ${
+        className={`fixed bottom-0 left-0 right-0 flex gap-2 border-t border-slate-200 dark:border-chip-dark-bg bg-background-light dark:bg-surface-dark px-4 pb-3 pt-2 transition-transform duration-300 ease-in-out ${
           showBottomNav ? "translate-y-0" : "translate-y-full"
         }`}
       >
