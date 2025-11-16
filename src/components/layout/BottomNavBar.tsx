@@ -54,20 +54,12 @@ const BottomNavBar = () => {
         <p className="text-xs font-medium leading-normal tracking-[0.015em]">Eşleş</p>
       </Link>
 
-      {/* Bildirimler (Yeni Eklendi) */}
+      {/* Bildirimler */}
       <Link className={`flex flex-1 flex-col items-center justify-end gap-1 ${isActive("/notifications") ? "text-primary-app" : "text-slate-500 dark:text-nav-dark-text"}`} to="/notifications">
         <div className="flex h-8 items-center justify-center">
           <span className="material-symbols-outlined" style={{ fontVariationSettings: isActive("/notifications") ? "'FILL' 1" : "'FILL' 0" }}>notifications</span>
         </div>
         <p className="text-xs font-medium leading-normal tracking-[0.015em]">Bildirimler</p>
-      </Link>
-
-      {/* Arama */}
-      <Link className={`flex flex-1 flex-col items-center justify-end gap-1 rounded-full ${isActive("/search") ? "text-primary-app" : "text-slate-500 dark:text-nav-dark-text"}`} to="/search">
-        <div className="flex h-8 items-center justify-center">
-          <span className="material-symbols-outlined" style={{ fontVariationSettings: isActive("/search") ? "'FILL' 1" : "'FILL' 0" }}>search</span>
-        </div>
-        <p className="text-xs font-medium leading-normal tracking-[0.015em]">Arama</p>
       </Link>
 
       {/* Sohbetler */}
