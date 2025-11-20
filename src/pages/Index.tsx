@@ -35,9 +35,11 @@ const Index = () => {
                 <span className="truncate">Yeni Bir Hikayeye Başla</span>
               </button>
             </Link>
-            <button className="font-display flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-5 bg-primary-app/20 text-primary-app text-base font-bold leading-normal tracking-[0.015em] w-full transition-transform active:scale-95 hover:bg-primary-app/30">
-              <span className="truncate">Giriş Yap</span>
-            </button>
+            <Link to="/login" className="w-full">
+              <button className="font-display flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-5 bg-primary-app/20 text-primary-app text-base font-bold leading-normal tracking-[0.015em] w-full transition-transform active:scale-95 hover:bg-primary-app/30">
+                <span className="truncate">Giriş Yap</span>
+              </button>
+            </Link>
           </div>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 export default {
   darkMode: ["class"],
@@ -63,20 +64,20 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
         // Custom colors from user's request
-        "primary-app": "#a413ec",
-        "background-light": "#f7f6f8",
-        "background-dark": "#1c1022",
-        "text-light": "#1f2937",
-        "text-dark": "#e5e7eb",
-        "subtle-light": "#6b7280",
-        "subtle-dark": "#9ca3af",
-        "surface-light": "#ffffff",
-        "surface-dark": "#2b1933",
-        "border-light": "#e5e7eb",
-        "border-dark": "#553267",
+        "primary-app": "#6366f1", // Indigo 500
+        "background-light": "#f8fafc", // Slate 50
+        "background-dark": "#0f172a", // Slate 900
+        "text-light": "#0f172a", // Slate 900
+        "text-dark": "#f1f5f9", // Slate 100
+        "subtle-light": "#94a3b8", // Slate 400
+        "subtle-dark": "#94a3b8", // Slate 400
+        "surface-light": "#ffffff", // White
+        "surface-dark": "#1e293b", // Slate 800
+        "border-light": "#e2e8f0", // Slate 200
+        "border-dark": "#334155", // Slate 700
         "accent-app": "#FF6F61", // Canlı mercan rengi
-        "chip-dark-bg": "#3c2348", // Koyu mod çip arka planı
-        "nav-dark-text": "#b792c9", // Koyu mod alt navigasyon metin rengi
+        "chip-dark-bg": "#1e293b", // Slate 800
+        "nav-dark-text": "#94a3b8", // Slate 400
         "profile-accent-red": "#E50914", // Profil sayfasındaki kırmızı vurgu
       },
       fontFamily: {
@@ -115,5 +116,5 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [tailwindcssAnimate],
 } satisfies Config;

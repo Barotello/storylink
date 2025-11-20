@@ -10,9 +10,11 @@ interface PostCardProps {
   mediaType?: "film" | "book";
   mediaTitle?: string;
   mediaImageSrc?: string;
-  comments: string;
-  reposts: string;
-  likes: string;
+  comments: number;
+  reposts: number;
+  likes: number;
+  onCommentClick?: () => void;
+  onLikeClick?: () => void;
 }
 
 const PostCard: React.FC<PostCardProps> = ({
@@ -27,6 +29,8 @@ const PostCard: React.FC<PostCardProps> = ({
   comments,
   reposts,
   likes,
+  onCommentClick,
+  onLikeClick,
 }) => {
   return (
     <div className="p-4 @container border-b border-border">
@@ -52,7 +56,7 @@ const PostCard: React.FC<PostCardProps> = ({
             </div>
           )}
           <div className="flex items-center justify-between text-muted-foreground mt-3">
-            <Button variant="ghost" className="flex items-center gap-2 group p-0 h-auto hover:bg-transparent">
+            <Button variant="ghost" onClick={onCommentClick} className="flex items-center gap-2 group p-0 h-auto hover:bg-transparent">
               <span className="material-symbols-outlined !text-xl group-hover:text-sky-500">chat_bubble_outline</span>
               <span className="text-sm group-hover:text-sky-500">{comments}</span>
             </Button>
@@ -60,7 +64,7 @@ const PostCard: React.FC<PostCardProps> = ({
               <span className="material-symbols-outlined !text-xl group-hover:text-emerald-500">repeat</span>
               <span className="text-sm group-hover:text-emerald-500">{reposts}</span>
             </Button>
-            <Button variant="ghost" className="flex items-center gap-2 group p-0 h-auto hover:bg-transparent">
+            <Button variant="ghost" onClick={onLikeClick} className="flex items-center gap-2 group p-0 h-auto hover:bg-transparent">
               <span className="material-symbols-outlined !text-xl group-hover:text-red-500">favorite_border</span>
               <span className="text-sm group-hover:text-red-500">{likes}</span>
             </Button>

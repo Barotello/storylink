@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
@@ -13,90 +12,112 @@ const MatchesPage = () => {
   const [isProfileDrawerOpen, setIsProfileDrawerOpen] = useState(false);
 
   return (
-    <div className="relative flex h-screen w-full flex-col group/design-root overflow-hidden bg-background font-display text-foreground">
-      {/* Üst Bilgi Çubuğu (TopAppBar) */}
-      <header className="flex items-center bg-background p-4 pb-2 justify-between">
-        <div className="text-primary-app flex size-12 shrink-0 items-center justify-start">
-          <span className="material-symbols-outlined text-4xl">movie_filter</span>
+    <div className="relative flex h-screen w-full flex-col overflow-hidden bg-background font-display text-foreground">
+      {/* Header */}
+      <header className="flex items-center justify-between p-4 z-10">
+        <div className="flex items-center gap-2">
+          <span className="material-symbols-outlined text-primary-app text-3xl">movie_filter</span>
+          <span className="font-bold text-xl tracking-tight">StoryLink</span>
         </div>
-        <h1 className="text-foreground text-2xl font-bold leading-tight tracking-[-0.015em] flex-1">Encore</h1>
-        <div className="flex w-12 items-center justify-end">
-          <Button variant="ghost" className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 bg-transparent text-foreground gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
-            <span className="material-symbols-outlined">tune</span>
-          </Button>
-        </div>
+        <Button variant="ghost" size="icon" className="rounded-full">
+          <span className="material-symbols-outlined">tune</span>
+        </Button>
       </header>
 
-      {/* Filtre ve Beğeni Sayacı (Chips) */}
-      <div className="flex gap-3 px-4 pb-4 overflow-x-auto">
-        <div className="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-full bg-chip-dark-bg pl-2 pr-4 opacity-60 cursor-not-allowed">
-          <span className="material-symbols-outlined text-foreground" style={{ fontSize: "20px" }}>lock</span>
-          <p className="text-foreground text-sm font-medium leading-normal">Konum</p>
+      {/* Main Content - Card Stack */}
+      <main className="flex-1 relative px-4 pb-24 flex flex-col">
+        {/* Filter Chips */}
+        <div className="flex gap-2 mb-4 overflow-x-auto no-scrollbar py-1">
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted/50 border border-border/50 backdrop-blur-sm">
+            <span className="material-symbols-outlined text-muted-foreground text-sm">location_on</span>
+            <span className="text-xs font-medium">İstanbul</span>
+          </div>
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary-app/10 border border-primary-app/20 backdrop-blur-sm">
+            <span className="material-symbols-outlined text-primary-app text-sm">favorite</span>
+            <span className="text-xs font-medium text-primary-app">10 Beğeni Kaldı</span>
+          </div>
         </div>
-        <div className="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-full bg-chip-dark-bg pl-2 pr-4">
-          <span className="material-symbols-outlined text-accent-app" style={{ fontSize: "20px" }}>favorite</span>
-          <p className="text-foreground text-sm font-medium leading-normal">Beğeni Kaldı: 10</p>
-        </div>
-      </div>
 
-      {/* Ana İçerik Alanı */}
-      <main className="flex-grow flex flex-col p-4 pt-0 pb-24">
-        {/* Profil Kartı (Card) - DrawerTrigger olarak güncellendi */}
+        {/* Profile Card */}
         <Drawer open={isProfileDrawerOpen} onOpenChange={setIsProfileDrawerOpen}>
           <DrawerTrigger asChild>
-            <div className="flex-grow bg-cover bg-center flex flex-col items-stretch justify-end rounded-xl cursor-pointer" data-alt="Kitaplık önünde gülümseyen genç bir kadının portresi" style={{ backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 60%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuBsLCCx3O4jtAR9sTdeMBuCSUDyE6UQo-iwUPC4ECQf1ElR_zEp-wOdQ2mLWeYa5OT7UjiImwNllXz02qwHs-rvueotfUio49NpzvYpgI5itY8QSg-Bv-nFhS4seqRJROGV085OQLuACb8me9iUiQnYTy3LU-Pgji0jLauS4JzBKin8Zy1w6NnLr11zcvBn8d_CWiujeZsXndm5ppK_35d0KJMEyeThhgh02E54YrjEmOL_JLzFnnX7INR-9UdUcWsAum18yTWEYrM")` }}>
-              <div className="flex w-full items-end justify-between gap-4 p-4">
-                <div className="flex max-w-[440px] flex-1 flex-col gap-1">
-                  <p className="text-foreground text-base font-normal leading-normal">Klasik sinema ve çağdaş kurguya olan sevgim hakkında kısa, esprili bir biyografi.</p>
-                  <p className="text-foreground tracking-light text-3xl font-bold leading-tight max-w-[440px]">Jessica, 28</p>
-                  <p className="text-foreground text-lg font-medium leading-normal">5 ortak film, 3 ortak kitap</p>
+            <div className="flex-1 relative rounded-3xl overflow-hidden shadow-xl cursor-pointer group transition-transform active:scale-[0.98]">
+              {/* Background Image */}
+              <img
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsLCCx3O4jtAR9sTdeMBuCSUDyE6UQo-iwUPC4ECQf1ElR_zEp-wOdQ2mLWeYa5OT7UjiImwNllXz02qwHs-rvueotfUio49NpzvYpgI5itY8QSg-Bv-nFhS4seqRJROGV085OQLuACb8me9iUiQnYTy3LU-Pgji0jLauS4JzBKin8Zy1w6NnLr11zcvBn8d_CWiujeZsXndm5ppK_35d0KJMEyeThhgh02E54YrjEmOL_JLzFnnX7INR-9UdUcWsAum18yTWEYrM"
+                alt="Profile"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+
+              {/* Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/80" />
+
+              {/* Content Overlay */}
+              <div className="absolute bottom-0 left-0 right-0 p-6 text-white space-y-3">
+                {/* Match Badge */}
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-accent-app/90 backdrop-blur-md shadow-lg mb-2">
+                  <span className="material-symbols-outlined text-sm">auto_awesome</span>
+                  <span className="text-xs font-bold">%95 Eşleşme</span>
                 </div>
-                <div className="flex-shrink-0">
-                  <Button className="bg-card/20 backdrop-blur-sm rounded-full w-12 h-12 flex items-center justify-center">
-                    <span className="material-symbols-outlined text-foreground">info</span>
-                  </Button>
+
+                <div>
+                  <h2 className="text-3xl font-bold flex items-end gap-2">
+                    Jessica <span className="text-xl font-medium opacity-90">28</span>
+                  </h2>
+                  <p className="text-white/90 text-sm line-clamp-2 mt-1 font-medium leading-relaxed">
+                    Klasik sinema ve çağdaş kurguya olan sevgim hakkında kısa, esprili bir biyografi. 🎬📚
+                  </p>
+                </div>
+
+                {/* Shared Interests */}
+                <div className="flex flex-wrap gap-2 pt-2">
+                  <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/20 backdrop-blur-md border border-white/10">
+                    <span className="material-symbols-outlined text-[18px]">movie</span>
+                    <span className="text-xs font-semibold">5 Ortak Film</span>
+                  </div>
+                  <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/20 backdrop-blur-md border border-white/10">
+                    <span className="material-symbols-outlined text-[18px]">menu_book</span>
+                    <span className="text-xs font-semibold">3 Ortak Kitap</span>
+                  </div>
                 </div>
               </div>
             </div>
           </DrawerTrigger>
-          <DrawerContent className="h-[90%] mt-24 rounded-t-[10px] flex flex-col">
-            <div className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-muted mb-8" />
-            <div className="flex-1 overflow-y-auto">
+
+          <DrawerContent className="h-[92%] mt-24 rounded-t-[20px]">
+            <div className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-muted/50 my-4" />
+            <div className="flex-1 overflow-y-auto px-4 pb-8">
               <ProfilePage isDrawer={true} />
             </div>
-            <DrawerClose asChild>
-              <Button variant="ghost" className="absolute top-4 left-4 w-10 h-10 rounded-full bg-background/40 backdrop-blur-sm flex items-center justify-center text-foreground">
-                <span className="material-symbols-outlined icon-outline">arrow_back</span>
-              </Button>
-            </DrawerClose>
           </DrawerContent>
         </Drawer>
       </main>
 
-      {/* Eylem Butonları (ActionsBar) */}
-      <div className="py-4">
-        <div className="@container">
-          <div className="gap-4 px-4 grid-cols-[repeat(auto-fit,minmax(80px,_1fr))] grid">
-            <div className="flex flex-col items-center gap-2 py-2.5 text-center">
-              <Button className="rounded-full bg-card p-4 flex items-center justify-center w-16 h-16">
-                <span className="material-symbols-outlined text-foreground text-3xl">close</span>
-              </Button>
-              <p className="text-foreground text-sm font-medium leading-normal">Geç</p>
-            </div>
-            <div className="flex flex-col items-center gap-2 py-2.5 text-center">
-              <Button className="rounded-full bg-primary-app/20 p-3 flex items-center justify-center w-14 h-14">
-                <span className="material-symbols-outlined text-primary-app text-2xl">star</span>
-              </Button>
-              <p className="text-foreground text-sm font-medium leading-normal">Süper Beğeni</p>
-            </div>
-            <div className="flex flex-col items-center gap-2 py-2.5 text-center">
-              <Button className="rounded-full bg-accent-app/20 p-4 flex items-center justify-center w-16 h-16">
-                <span className="material-symbols-outlined text-accent-app text-3xl">favorite</span>
-              </Button>
-              <p className="text-foreground text-sm font-medium leading-normal">Beğen</p>
-            </div>
-          </div>
-        </div>
+      {/* Floating Action Buttons */}
+      <div className="absolute bottom-6 left-0 right-0 flex justify-center items-center gap-6 z-20 pointer-events-none">
+        {/* Pass Button */}
+        <Button
+          variant="outline"
+          className="w-16 h-16 rounded-full border-2 border-red-500 bg-background/80 backdrop-blur-md text-red-500 hover:bg-red-500 hover:text-white hover:border-red-500 transition-all duration-300 shadow-lg pointer-events-auto"
+        >
+          <span className="material-symbols-outlined text-3xl">close</span>
+        </Button>
+
+        {/* Super Like Button */}
+        <Button
+          variant="outline"
+          className="w-12 h-12 rounded-full border-2 border-blue-500 bg-background/80 backdrop-blur-md text-blue-500 hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-all duration-300 shadow-lg pointer-events-auto mb-4"
+        >
+          <span className="material-symbols-outlined text-2xl">star</span>
+        </Button>
+
+        {/* Like Button */}
+        <Button
+          variant="outline"
+          className="w-16 h-16 rounded-full border-2 border-green-500 bg-background/80 backdrop-blur-md text-green-500 hover:bg-green-500 hover:text-white hover:border-green-500 transition-all duration-300 shadow-lg pointer-events-auto"
+        >
+          <span className="material-symbols-outlined text-3xl">favorite</span>
+        </Button>
       </div>
     </div>
   );

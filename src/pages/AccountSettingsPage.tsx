@@ -3,11 +3,14 @@ import { Link } from "react-router-dom";
 import SettingsSubPageAppBar from "@/components/settings/SettingsSubPageAppBar";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
+import { useTheme } from "next-themes";
 
 const AccountSettingsPage = () => {
+  const { theme, setTheme } = useTheme();
+
   const userProfile = {
-    name: "Elif Yılmaz",
-    handle: "@elifyilmaz",
+    name: "Baran",
+    handle: "@baran",
     avatarSrc: "https://lh3.googleusercontent.com/aida-public/AB6AXuCOxi_CQu8qdHRc62SS1DZs_4lDZEA3AwgiBhzfNNbB-BICmymjcFM86f8BU03ywrK9ZzWXsODnx0fJMuANYaHJ7jLX2UoV4DszW8gm9UYsoq60LbKkjHO1epXTFD7ZWVOIb6hRAWczXIfdzDzcjNSHU37y9XPsBojFKfMdqGpk2y2nileJe0",
   };
 
@@ -34,6 +37,19 @@ const AccountSettingsPage = () => {
           <div className="flex flex-col overflow-hidden rounded-lg bg-card shadow-sm">
             <div className="flex items-center gap-4 p-4 min-h-14">
               <div className="flex items-center justify-center rounded-full bg-primary-app/10 text-primary-app shrink-0 size-10">
+                <span className="material-symbols-outlined">dark_mode</span>
+              </div>
+              <p className="flex-1 truncate text-base font-medium text-foreground">Karanlık Mod</p>
+              <div className="shrink-0">
+                <Switch
+                  checked={theme === "dark"}
+                  onCheckedChange={(checked) => setTheme(checked ? "dark" : "light")}
+                />
+              </div>
+            </div>
+            <hr className="border-border ml-14" />
+            <div className="flex items-center gap-4 p-4 min-h-14">
+              <div className="flex items-center justify-center rounded-full bg-primary-app/10 text-primary-app shrink-0 size-10">
                 <span className="material-symbols-outlined">notifications</span>
               </div>
               <p className="flex-1 truncate text-base font-medium text-foreground">Bildirimler</p>
@@ -41,7 +57,7 @@ const AccountSettingsPage = () => {
                 <Switch defaultChecked={true} />
               </div>
             </div>
-            <hr className="border-border ml-14"/>
+            <hr className="border-border ml-14" />
             <Link className="flex items-center gap-4 p-4 min-h-14 transition-colors hover:bg-accent/10" to="#">
               <div className="flex items-center justify-center rounded-full bg-primary-app/10 text-primary-app shrink-0 size-10">
                 <span className="material-symbols-outlined">lock</span>
@@ -49,7 +65,7 @@ const AccountSettingsPage = () => {
               <p className="flex-1 truncate text-base font-medium text-foreground">Gizlilik ve Güvenlik</p>
               <span className="material-symbols-outlined text-muted-foreground shrink-0">chevron_right</span>
             </Link>
-            <hr className="border-border ml-14"/>
+            <hr className="border-border ml-14" />
             <Link className="flex items-center gap-4 p-4 min-h-14 transition-colors hover:bg-accent/10" to="#">
               <div className="flex items-center justify-center rounded-full bg-primary-app/10 text-primary-app shrink-0 size-10">
                 <span className="material-symbols-outlined">auto_stories</span>
@@ -70,7 +86,7 @@ const AccountSettingsPage = () => {
               <p className="flex-1 truncate text-base font-medium text-foreground">Yardım ve Destek</p>
               <span className="material-symbols-outlined text-muted-foreground shrink-0">chevron_right</span>
             </Link>
-            <hr className="border-border ml-14"/>
+            <hr className="border-border ml-14" />
             <Link className="flex items-center gap-4 p-4 min-h-14 transition-colors hover:bg-accent/10" to="#">
               <div className="flex items-center justify-center rounded-full bg-primary-app/10 text-primary-app shrink-0 size-10">
                 <span className="material-symbols-outlined">info</span>

@@ -1,283 +1,219 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+
+import { SearchSelect } from "@/components/register/SearchSelect";
+import { searchMovies, searchTVSeries, MediaItem } from "@/services/tmdbService";
+import { searchBooks, BookItem } from "@/services/booksService";
+import { useData } from "@/context/DataContext";
 
 const RegisterPage = () => {
-  const [currentStep, setCurrentStep] = useState(1);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [age, setAge] = useState("");
-  const [gender, setGender] = useState("Kadın");
-  const [selectedGenres, setSelectedGenres] = useState<string[]>([]);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedMedia, setSelectedMedia] = useState<string[]>(["Yüzüklerin Efendisi", "Dune"]);
-  const [showPassword, setShowPassword] = useState(false);
-
   const navigate = useNavigate();
+  const { updateUserFavorites } = useData();
+  const [step, setStep] = useState(1);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    name: "",
+    age: "",
+    gender: "",
+    genres: [] as string[],
+    movies: [] as MediaItem[],
+    series: [] as MediaItem[],
+    books: [] as BookItem[],
+  });
 
-  const genres = [
-    { name: "Bilim Kurgu", icon: "science" },
-    { name: "Romantik", icon: "favorite" },
-    { name: "Polisiye", icon: "local_police" },
-    { name: "Fantastik", icon: "neurology" },
-    { name: "Komedi", icon: "theater_comedy" },
-    { name: "Klasikler", icon: "history_edu" },
-  ];
-
-  const nextStep = () => {
-    setCurrentStep((prev) => prev + 1);
+  const handleNext = () => {
+    if (step < 3) setStep(step + 1);
   };
 
-  const prevStep = () => {
-    setCurrentStep((prev) => prev - 1);
+  const handleBack = () => {
+    if (step > 1) setStep(step - 1);
   };
 
-  const handleGenreToggle = (genreName: string) => {
-    setSelectedGenres((prev) =>
-      prev.includes(genreName)
-        ? prev.filter((name) => name !== genreName)
-        : [...prev, genreName]
-    );
-  };
+  const handleRegister = () => {
+    // Save favorites to context (simulating registration)
+    updateUserFavorites("movie", formData.movies);
+    updateUserFavorites("tv", formData.series);
+    updateUserFavorites("book", formData.books);
 
-  const handleAddMedia = () => {
-    if (searchQuery.trim() && !selectedMedia.includes(searchQuery.trim())) {
-      setSelectedMedia((prev) => [...prev, searchQuery.trim()]);
-      setSearchQuery("");
-    }
-  };
-
-  const handleRemoveMedia = (mediaToRemove: string) => {
-    setSelectedMedia((prev) => prev.filter((media) => media !== mediaToRemove));
-  };
-
-  const handleSubmit = () => {
-    console.log("Form Submitted:", { email, password, name, age, gender, selectedGenres, selectedMedia });
-    alert("Kayıt Başarılı!");
+    // Navigate to explore
     navigate("/explore");
   };
 
-  return (
-    <div className="relative flex min-h-screen w-full flex-col items-center overflow-x-hidden p-4 font-display text-foreground">
-      <div className="w-full max-w-md space-y-8 py-8">
-        {/* Logo and Slogan */}
-        <div className="text-center">
-          <Link to="/" className="flex flex-col items-center">
-            <span className="material-symbols-outlined text-primary-app text-5xl">movie</span>
-            <h1 className="text-2xl font-bold tracking-tight mt-2 text-foreground">StoryLink</h1>
-          </Link>
-          <p className="text-muted-foreground mt-1">Hikayeni paylaşacak birini bul.</p>
-        </div>
+  const renderStep3 = () => (
+    <div className="space-y-6 animate-in fade-in slide-in-from-right-8 duration-500">
+      <div className="text-center space-y-2">
+        <h1 className="text-2xl font-bold tracking-tight">Favorilerin</h1>
+        <p className="text-muted-foreground">
+          Seni daha iyi tanımamız için sevdiğin yapımları seç.
+        </p>
+      </div>
 
-        {/* Progress Indicator */}
-        <div className="w-full px-2">
-          <div className="flex items-center">
-            <div className="flex flex-col items-center relative">
-              <div
-                className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                  currentStep >= 1 ? "bg-primary-app text-white" : "bg-card border-2 border-border text-muted-foreground"
-                }`}
-              >
-                1
+      <div className="space-y-6">
+        {/* Movies */}
+        <div className="space-y-2">
+          <Label>En Sevdiğin Filmler</Label>
+          <SearchSelect
+            placeholder="Film ara..."
+            onSearch={searchMovies}
+            selectedItems={formData.movies}
+            onSelect={(item) => setFormData({ ...formData, movies: [...formData.movies, item] })}
+            onRemove={(item) => setFormData({ ...formData, movies: formData.movies.filter((i) => i.id !== item.id) })}
+            renderItem={(item) => (
+              <div className="w-20 flex flex-col gap-1">
+                <img src={item.posterPath || "https://via.placeholder.com/100x150"} alt={item.title} className="w-full h-28 object-cover rounded-md shadow-sm" />
+                <span className="text-xs truncate text-center">{item.title}</span>
               </div>
-              <p className={`text-xs mt-1 font-semibold ${currentStep >= 1 ? "text-primary-app" : "text-muted-foreground"}`}>Hesap</p>
-            </div>
-            <div className="flex-auto border-t-2 border-border mx-2"></div>
-            <div className="flex flex-col items-center relative">
-              <div
-                className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                  currentStep >= 2 ? "bg-primary-app text-white" : "bg-card border-2 border-border text-muted-foreground"
-                }`}
-              >
-                2
-              </div>
-              <p className={`text-xs mt-1 font-semibold ${currentStep >= 2 ? "text-primary-app" : "text-muted-foreground"}`}>Zevkler</p>
-            </div>
-            <div className="flex-auto border-t-2 border-border mx-2"></div>
-            <div className="flex flex-col items-center relative">
-              <div
-                className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                  currentStep >= 3 ? "bg-primary-app text-white" : "bg-card border-2 border-border text-muted-foreground"
-                }`}
-              >
-                3
-              </div>
-              <p className={`text-xs mt-1 font-semibold ${currentStep >= 3 ? "text-primary-app" : "text-muted-foreground"}`}>Profil</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Step 1: Account Creation */}
-        {currentStep === 1 && (
-          <div className="space-y-6">
-            <h2 className="text-foreground tracking-light text-[28px] font-bold leading-tight text-center">Hesap Oluştur</h2>
-            <div className="flex flex-col items-stretch gap-3">
-              <Button className="flex min-w-[84px] cursor-pointer items-center justify-center gap-3 overflow-hidden rounded-full h-12 px-5 bg-card text-foreground text-base font-bold leading-normal tracking-[0.015em] w-full border border-border shadow-sm hover:bg-card/90">
-                <svg className="w-5 h-5" viewBox="0 0 48 48">
-                  <path d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z" fill="#FFC107"></path>
-                  <path d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z" fill="#FF3D00"></path>
-                  <path d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z" fill="#4CAF50"></path>
-                  <path d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571l6.19,5.238C41.38,36.41,44,30.668,44,24C44,22.659,43.862,21.35,43.611,20.083z" fill="#1976D2"></path>
-                </svg>
-                <span className="truncate">Google ile Kaydol</span>
-              </Button>
-              <Button className="flex min-w-[84px] cursor-pointer items-center justify-center gap-3 overflow-hidden rounded-full h-12 px-5 bg-card text-foreground text-base font-bold leading-normal tracking-[0.015em] w-full border border-border shadow-sm hover:bg-card/90">
-                <svg className="w-5 h-5 text-foreground" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M17.222,12.02c0.05-0.71,0.28-2.5-1.9-2.5c-1.78,0-2.88,1.07-3.64,1.07c-0.78,0-1.57-1.05-3.12-1.05c-2.14,0-3.64,2.02-3.64,4.72c0,3.42,2.5,7.72,4.92,7.72c0.71,0,1.21-0.36,2.21-0.36c1.02,0,1.41,0.36,2.23,0.36c2.45,0,4.7-4.25,4.7-7.96Zm-5.832,7.06c-0.02,0-0.03,0-0.05,0c-0.91,0.02-1.9-0.62-2.21-1.74c-0.69-2.5,0.91-4.27,2.14-4.27c0.16,0,0.3,0.02,0.43,0.04c-0.14,1.04,0.39,2.83,0.73,3.71c-0.45,0.88-1.02,2.24-1.04,2.26Zm4.43-5.26c-0.52-0.04-1.55-0.18-2.3-1.09c0.71-0.81,1.71-1.21,2.41-1.21c0.11,0,0.21,0,0.3,0.02c-0.14,0.73-0.23,1.52-0.41,2.28Z"></path>
-                </svg>
-                <span className="truncate">Apple ile Kaydol</span>
-              </Button>
-            </div>
-            <p className="text-muted-foreground text-sm font-normal leading-normal text-center">Veya e-posta ile devam et</p>
-            <div className="space-y-4">
-              <Label className="flex flex-col flex-1">
-                <p className="text-foreground text-base font-medium leading-normal pb-2">E-posta</p>
-                <Input
-                  className="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-foreground focus:outline-0 focus:ring-2 focus:ring-primary-app/50 border border-border bg-card h-14 placeholder:text-muted-foreground p-[15px] text-base font-normal leading-normal"
-                  placeholder="E-posta adresinizi girin"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </Label>
-              <Label className="flex flex-col flex-1">
-                <p className="text-foreground text-base font-medium leading-normal pb-2">Şifre</p>
-                <div className="flex w-full flex-1 items-stretch rounded-xl">
-                  <Input
-                    className="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-l-xl text-foreground focus:outline-0 focus:ring-2 focus:ring-primary-app/50 border border-border bg-card h-14 placeholder:text-muted-foreground p-[15px] rounded-r-none border-r-0 pr-2 text-base font-normal leading-normal"
-                    placeholder="Şifrenizi oluşturun"
-                    type={showPassword ? "text" : "password"}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <div
-                    className="text-muted-foreground flex border border-border bg-card items-center justify-center pr-[15px] rounded-r-xl border-l-0 cursor-pointer"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    <span className="material-symbols-outlined">{showPassword ? "visibility" : "visibility_off"}</span>
-                  </div>
+            )}
+            renderResult={(item) => (
+              <>
+                <img src={item.posterPath || "https://via.placeholder.com/40x60"} alt={item.title} className="w-10 h-14 object-cover rounded" />
+                <div className="flex flex-col">
+                  <span className="font-medium text-sm">{item.title}</span>
+                  <span className="text-xs text-muted-foreground">{item.releaseDate?.split("-")[0]}</span>
                 </div>
-              </Label>
+              </>
+            )}
+          />
+        </div>
+
+        {/* Series */}
+        <div className="space-y-2">
+          <Label>En Sevdiğin Diziler</Label>
+          <SearchSelect
+            placeholder="Dizi ara..."
+            onSearch={searchTVSeries}
+            selectedItems={formData.series}
+            onSelect={(item) => setFormData({ ...formData, series: [...formData.series, item] })}
+            onRemove={(item) => setFormData({ ...formData, series: formData.series.filter((i) => i.id !== item.id) })}
+            renderItem={(item) => (
+              <div className="w-20 flex flex-col gap-1">
+                <img src={item.posterPath || "https://via.placeholder.com/100x150"} alt={item.title} className="w-full h-28 object-cover rounded-md shadow-sm" />
+                <span className="text-xs truncate text-center">{item.title}</span>
+              </div>
+            )}
+            renderResult={(item) => (
+              <>
+                <img src={item.posterPath || "https://via.placeholder.com/40x60"} alt={item.title} className="w-10 h-14 object-cover rounded" />
+                <div className="flex flex-col">
+                  <span className="font-medium text-sm">{item.title}</span>
+                  <span className="text-xs text-muted-foreground">{item.releaseDate?.split("-")[0]}</span>
+                </div>
+              </>
+            )}
+          />
+        </div>
+
+        {/* Books */}
+        <div className="space-y-2">
+          <Label>En Sevdiğin Kitaplar</Label>
+          <SearchSelect
+            placeholder="Kitap ara..."
+            onSearch={searchBooks}
+            selectedItems={formData.books}
+            onSelect={(item) => setFormData({ ...formData, books: [...formData.books, item] })}
+            onRemove={(item) => setFormData({ ...formData, books: formData.books.filter((i) => i.id !== item.id) })}
+            renderItem={(item) => (
+              <div className="w-20 flex flex-col gap-1">
+                <img src={item.coverPath || "https://via.placeholder.com/100x150"} alt={item.title} className="w-full h-28 object-cover rounded-md shadow-sm" />
+                <span className="text-xs truncate text-center">{item.title}</span>
+              </div>
+            )}
+            renderResult={(item) => (
+              <>
+                <img src={item.coverPath || "https://via.placeholder.com/40x60"} alt={item.title} className="w-10 h-14 object-cover rounded" />
+                <div className="flex flex-col">
+                  <span className="font-medium text-sm">{item.title}</span>
+                  <span className="text-xs text-muted-foreground">{item.authors?.join(", ")}</span>
+                </div>
+              </>
+            )}
+          />
+        </div>
+      </div>
+
+      <div className="flex gap-4 pt-4">
+        <Button variant="outline" className="flex-1" onClick={handleBack}>
+          Geri
+        </Button>
+        <Button className="flex-1 bg-primary-app hover:bg-primary-app/90" onClick={handleRegister}>
+          Kaydı Tamamla
+        </Button>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-background p-4">
+      <div className="w-full max-w-md space-y-8">
+        {/* Progress Bar */}
+        <div className="flex gap-2 mb-8">
+          {[1, 2, 3].map((i) => (
+            <div
+              key={i}
+              className={`h-1 flex-1 rounded-full transition-colors ${step >= i ? "bg-primary-app" : "bg-muted"
+                }`}
+            />
+          ))}
+        </div>
+
+        {step === 1 && (
+          <div className="space-y-6 animate-in fade-in slide-in-from-right-8 duration-500">
+            <div className="text-center space-y-2">
+              <h1 className="text-2xl font-bold tracking-tight">Hesap Oluştur</h1>
+              <p className="text-muted-foreground">StoryLink dünyasına katıl.</p>
             </div>
-            <Button onClick={nextStep} className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-5 bg-primary-app text-white text-base font-bold leading-normal tracking-[0.015em] w-full shadow-lg shadow-primary-app/30 hover:bg-primary-app/90">
-              <span className="truncate">Devam Et</span>
-            </Button>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email">E-posta</Label>
+                <Input id="email" placeholder="ornek@email.com" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="password">Şifre</Label>
+                <Input id="password" type="password" value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} />
+              </div>
+              <Button className="w-full bg-primary-app hover:bg-primary-app/90" onClick={handleNext}>Devam Et</Button>
+            </div>
+            <div className="text-center text-sm">
+              Zaten hesabın var mı?{" "}
+              <Link to="/login" className="text-primary-app hover:underline font-medium">Giriş Yap</Link>
+            </div>
           </div>
         )}
 
-        {/* Step 2: Preferences */}
-        {currentStep === 2 && (
-          <div className="space-y-8">
-            <div className="text-center">
-              <h2 className="text-foreground tracking-light text-[28px] font-bold leading-tight">Zevklerini Belirle</h2>
-              <p className="text-muted-foreground mt-1">Sana en uygun kişiyi bulmamıza yardım et.</p>
+        {step === 2 && (
+          <div className="space-y-6 animate-in fade-in slide-in-from-right-8 duration-500">
+            <div className="text-center space-y-2">
+              <h1 className="text-2xl font-bold tracking-tight">Profil Bilgileri</h1>
+              <p className="text-muted-foreground">Kendinden bahset.</p>
             </div>
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-foreground">Favori Türlerin Hangileri?</h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                {genres.map((genre) => (
-                  <Button
-                    key={genre.name}
-                    onClick={() => handleGenreToggle(genre.name)}
-                    className={`flex flex-col items-center justify-center gap-2 p-4 rounded-xl border bg-card transition-all h-auto ${
-                      selectedGenres.includes(genre.name)
-                        ? "border-primary-app bg-primary-app/10 text-primary-app"
-                        : "border-border hover:border-primary-app focus:border-primary-app focus:ring-2 focus:ring-primary-app/50 text-foreground"
-                    }`}
-                  >
-                    <span className="material-symbols-outlined text-primary-app">{genre.icon}</span>
-                    <span className="text-sm font-medium">{genre.name}</span>
-                  </Button>
-                ))}
+              <div className="space-y-2">
+                <Label htmlFor="name">Ad Soyad</Label>
+                <Input id="name" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
               </div>
-            </div>
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-foreground">En Sevdiğin 3 Film ve 3 Kitabı Ekle</h3>
-              <div className="relative">
-                <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground">search</span>
-                <Input
-                  className="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-full text-foreground focus:outline-0 focus:ring-2 focus:ring-primary-app/50 border border-border bg-card h-14 placeholder:text-muted-foreground pl-12 pr-4 py-2 text-base font-normal"
-                  placeholder="Film veya kitap ara..."
-                  type="search"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && handleAddMedia()}
-                />
+              <div className="flex gap-4">
+                <div className="space-y-2 flex-1">
+                  <Label htmlFor="age">Yaş</Label>
+                  <Input id="age" type="number" value={formData.age} onChange={(e) => setFormData({ ...formData, age: e.target.value })} />
+                </div>
+                <div className="space-y-2 flex-1">
+                  <Label htmlFor="gender">Cinsiyet</Label>
+                  <Input id="gender" value={formData.gender} onChange={(e) => setFormData({ ...formData, gender: e.target.value })} />
+                </div>
               </div>
-              <div className="flex flex-wrap gap-2 pt-2">
-                {selectedMedia.map((media) => (
-                  <span key={media} className="flex items-center gap-2 bg-primary-app/20 text-primary-app text-sm font-medium px-3 py-1.5 rounded-full">
-                    {media}
-                    <span className="material-symbols-outlined text-base cursor-pointer" onClick={() => handleRemoveMedia(media)}>close</span>
-                  </span>
-                ))}
-                {selectedMedia.length < 6 && searchQuery.trim() && (
-                    <Button variant="ghost" onClick={handleAddMedia} className="text-primary-app text-sm font-medium px-3 py-1.5 rounded-full border border-primary-app/50">
-                        Ekle: {searchQuery}
-                    </Button>
-                )}
+              <div className="flex gap-4 pt-4">
+                <Button variant="outline" className="flex-1" onClick={handleBack}>Geri</Button>
+                <Button className="flex-1 bg-primary-app hover:bg-primary-app/90" onClick={handleNext}>Devam Et</Button>
               </div>
-            </div>
-            <div className="flex justify-between items-center pt-4">
-              <Button variant="link" onClick={nextStep} className="text-sm font-semibold text-muted-foreground hover:text-primary-app">Daha Sonra Ekle</Button>
-              <Button onClick={nextStep} className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-primary-app text-white text-base font-bold leading-normal tracking-[0.015em] shadow-lg shadow-primary-app/30 hover:bg-primary-app/90">
-                <span className="truncate">Devam Et</span>
-              </Button>
             </div>
           </div>
         )}
 
-        {/* Step 3: Profile Info */}
-        {currentStep === 3 && (
-          <div className="space-y-8">
-            <div className="text-center">
-              <h2 className="text-foreground tracking-light text-[28px] font-bold leading-tight">Biraz da Senden Bahsedelim</h2>
-              <p className="text-muted-foreground mt-1">Profilini tamamla ve eşleşmeye başla.</p>
-            </div>
-            <div className="space-y-4">
-              <Label className="flex flex-col flex-1">
-                <p className="text-foreground text-base font-medium leading-normal pb-2">Adın</p>
-                <Input
-                  className="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-foreground focus:outline-0 focus:ring-2 focus:ring-primary-app/50 border border-border bg-card h-14 placeholder:text-muted-foreground p-[15px] text-base font-normal leading-normal"
-                  placeholder="Adını gir"
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-              </Label>
-              <Label className="flex flex-col flex-1">
-                <p className="text-foreground text-base font-medium leading-normal pb-2">Yaşın</p>
-                <Input
-                  className="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-foreground focus:outline-0 focus:ring-2 focus:ring-primary-app/50 border border-border bg-card h-14 placeholder:text-muted-foreground p-[15px] text-base font-normal leading-normal"
-                  placeholder="Yaşını gir"
-                  type="number"
-                  value={age}
-                  onChange={(e) => setAge(e.target.value)}
-                />
-              </Label>
-              <div>
-                <p className="text-foreground text-base font-medium leading-normal pb-2">Cinsiyetin</p>
-                <RadioGroup defaultValue={gender} onValueChange={setGender} className="grid grid-cols-2 gap-3">
-                  <Label className="flex items-center p-4 rounded-xl border border-border bg-card has-[:checked]:border-primary-app has-[:checked]:bg-primary-app/10 cursor-pointer">
-                    <RadioGroupItem value="Kadın" id="gender-female" className="text-primary-app focus:ring-primary-app/50" />
-                    <span className="ml-3 font-medium text-foreground">Kadın</span>
-                  </Label>
-                  <Label className="flex items-center p-4 rounded-xl border border-border bg-card has-[:checked]:border-primary-app has-[:checked]:bg-primary-app/10 cursor-pointer">
-                    <RadioGroupItem value="Erkek" id="gender-male" className="text-primary-app focus:ring-primary-app/50" />
-                    <span className="ml-3 font-medium text-foreground">Erkek</span>
-                  </Label>
-                </RadioGroup>
-              </div>
-            </div>
-            <Button onClick={handleSubmit} className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-5 bg-primary-app text-white text-base font-bold leading-normal tracking-[0.015em] w-full mt-6 shadow-lg shadow-primary-app/30 hover:bg-primary-app/90">
-              <span className="truncate">Profili Oluştur ve Bitir</span>
-            </Button>
-          </div>
-        )}
+        {step === 3 && renderStep3()}
       </div>
     </div>
   );

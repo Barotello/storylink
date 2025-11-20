@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import ChatListItem from "@/components/chats/ChatListItem";
@@ -47,6 +46,12 @@ const ChatsPage = () => {
     },
   ];
 
+  const newMatches = [
+    { id: "nm1", name: "Selin", img: "https://i.pravatar.cc/150?u=selin" },
+    { id: "nm2", name: "Burak", img: "https://i.pravatar.cc/150?u=burak" },
+    { id: "nm3", name: "Ayşe", img: "https://i.pravatar.cc/150?u=ayse" },
+  ];
+
   const filteredChats = chatData.filter(
     (chat) =>
       chat.userName.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -54,59 +59,88 @@ const ChatsPage = () => {
   );
 
   return (
-    <div className="relative flex h-auto min-h-screen w-full flex-col bg-background font-display">
-      {/* Top App Bar */}
-      <div className="sticky top-0 z-10 flex flex-col bg-background pt-4">
-        <div className="flex items-center px-4 pb-2 justify-between">
-          <div className="flex size-12 shrink-0 items-center justify-start">
-            {/* Placeholder for potential back button or menu */}
+    <div className="relative flex h-screen w-full flex-col bg-background font-display overflow-hidden">
+      {/* Header */}
+      <header className="flex items-center justify-between p-4 pb-2 z-10 bg-background/80 backdrop-blur-md sticky top-0">
+        <h1 className="text-2xl font-bold tracking-tight text-foreground">Sohbetler</h1>
+        <Button variant="ghost" size="icon" className="rounded-full text-muted-foreground hover:text-foreground">
+          <span className="material-symbols-outlined">edit_square</span>
+        </Button>
+      </header>
+
+      {/* Search Bar */}
+      <div className="px-4 py-2">
+        <div className="relative">
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground material-symbols-outlined text-[20px]">
+            search
+          </span>
+          <Input
+            className="pl-10 h-11 bg-muted/50 border-none rounded-xl focus-visible:ring-1 focus-visible:ring-primary-app/50 transition-all"
+            placeholder="Sohbetlerde ara..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+      </div>
+
+      <div className="flex-1 overflow-y-auto pb-24">
+        {/* New Matches Section */}
+        <div className="px-4 py-4 space-y-3">
+          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Yeni Eşleşmeler</h3>
+          <div className="flex gap-4 overflow-x-auto no-scrollbar pb-2">
+            {newMatches.map((match) => (
+              <div key={match.id} className="flex flex-col items-center gap-1.5 cursor-pointer group">
+                <div className="relative">
+                  <div className="w-16 h-16 rounded-full p-0.5 bg-gradient-to-tr from-primary-app to-accent-app">
+                    <img
+                      src={match.img}
+                      alt={match.name}
+                      className="w-full h-full rounded-full object-cover border-2 border-background"
+                    />
+                  </div>
+                  <div className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-background rounded-full"></div>
+                </div>
+                <span className="text-xs font-medium text-foreground/90 group-hover:text-primary-app transition-colors">{match.name}</span>
+              </div>
+            ))}
+            {/* Likes You Placeholder */}
+            <div className="flex flex-col items-center gap-1.5 cursor-pointer group">
+              <div className="relative flex items-center justify-center w-16 h-16 rounded-full bg-muted/50 border-2 border-dashed border-muted-foreground/30">
+                <span className="material-symbols-outlined text-muted-foreground">favorite</span>
+              </div>
+              <span className="text-xs font-medium text-muted-foreground">Beğeniler</span>
+            </div>
           </div>
-          <h2 className="text-foreground text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Sohbetler</h2>
-          <div className="flex w-12 items-center justify-end">
-            <Button variant="ghost" className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 bg-transparent text-muted-foreground gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
-              <span className="material-symbols-outlined text-2xl">more_vert</span>
-            </Button>
+        </div>
+
+        {/* Messages Section */}
+        <div className="px-4 pt-2 space-y-1">
+          <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Mesajlar</h3>
+          <div className="flex flex-col gap-1">
+            {filteredChats.map((chat) => (
+              <ChatListItem
+                key={chat.id}
+                chatId={chat.id}
+                avatarSrc={chat.avatarSrc}
+                userName={chat.userName}
+                lastMessage={chat.lastMessage}
+                timeAgo={chat.timeAgo}
+                unreadCount={chat.unreadCount}
+                isOnline={chat.isOnline}
+              />
+            ))}
+            {filteredChats.length === 0 && (
+              <div className="flex flex-col items-center justify-center py-12 text-center space-y-3">
+                <div className="w-16 h-16 bg-muted/30 rounded-full flex items-center justify-center">
+                  <span className="material-symbols-outlined text-3xl text-muted-foreground">chat_bubble_outline</span>
+                </div>
+                <p className="text-muted-foreground font-medium">Henüz bir mesaj yok.</p>
+                <p className="text-xs text-muted-foreground/60 max-w-[200px]">Eşleşmelerinle sohbet etmeye başlamak için birine merhaba de!</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
-      {/* Search Bar */}
-      <div className="px-4 py-3">
-        <label className="flex flex-col min-w-40 h-12 w-full">
-          <div className="flex w-full flex-1 items-stretch rounded-lg h-full">
-            <div className="text-muted-foreground flex border-none bg-card items-center justify-center pl-4 rounded-l-lg border-r-0">
-              <span className="material-symbols-outlined text-2xl">search</span>
-            </div>
-            <Input
-              className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg text-foreground focus:outline-0 focus:ring-0 border-none bg-card focus:border-none h-full placeholder:text-muted-foreground px-4 pl-2 text-base font-normal leading-normal"
-              placeholder="Sohbetlerde ara"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
-        </label>
-      </div>
-      {/* Chat List */}
-      <div className="flex flex-col flex-1 pb-24">
-        {filteredChats.map((chat) => (
-          <ChatListItem
-            key={chat.id}
-            chatId={chat.id}
-            avatarSrc={chat.avatarSrc}
-            userName={chat.userName}
-            lastMessage={chat.lastMessage}
-            timeAgo={chat.timeAgo}
-            unreadCount={chat.unreadCount}
-            isOnline={chat.isOnline}
-          />
-        ))}
-        {filteredChats.length === 0 && (
-          <p className="text-center text-muted-foreground mt-8">Eşleşen sohbet bulunamadı.</p>
-        )}
-      </div>
-      {/* Floating Action Button for New Chat */}
-      <Button className="fixed bottom-20 right-6 flex items-center justify-center w-14 h-14 bg-primary-app text-white rounded-full shadow-lg z-40">
-        <span className="material-symbols-outlined text-3xl">add</span>
-      </Button>
     </div>
   );
 };

@@ -5,13 +5,14 @@
 @layer base {
   :root {
     /* Custom HSL values for light mode */
-    --primary-app-hsl: 285 85% 50%; /* #a413ec */
-    --background-light-hsl: 270 10% 97%; /* #f7f6f8 */
-    --text-light-hsl: 216 21% 17%; /* #1f2937 */
-    --subtle-light-hsl: 218 10% 46%; /* #6b7280 */
-    --surface-light-hsl: 0 0% 100%; /* #ffffff */
-    --border-light-hsl: 210 17% 91%; /* #e5e7eb */
-    --accent-app-hsl: 5 100% 70%; /* #FF6F61 */
+    --primary-app-hsl: 239 84% 67%; /* #6366f1 Indigo 500 */
+    --background-light-hsl: 210 40% 98%; /* #f8fafc Slate 50 */
+    --text-light-hsl: 222 47% 11%; /* #0f172a Slate 900 */
+    --subtle-light-hsl: 215 20% 65%; /* #94a3b8 Slate 400 */
+    --surface-light-hsl: 0 0% 100%; /* #ffffff White */
+    --border-light-hsl: 214 32% 91%; /* #e2e8f0 Slate 200 */
+    --accent-app-hsl: 239 84% 67%; /* #6366f1 Indigo 500 (using primary as accent for now or keep existing?) User didn't specify accent, but primary is Indigo. Let's keep accent as is or match primary? User said "Marka Rengi (Primary Color)... #6366f1". The existing accent was "Canlı mercan". I'll stick to the plan which didn't explicitly change accent but the user request implies a theme overhaul. Let's keep the old accent for now to avoid removing potential brand colors not mentioned, OR update it if it clashes. Indigo and Coral are okay. I'll leave accent alone unless it was in my plan. My plan didn't explicitly mention accent. I'll leave it as is to be safe, or update if it uses the old primary. Old primary was purple. */
+    --accent-app-hsl: 5 100% 70%; /* #FF6F61 - Keeping existing accent */
 
     /* Shadcn/ui variables for light mode */
     --background: var(--background-light-hsl);
@@ -56,15 +57,15 @@
 
   .dark {
     /* Custom HSL values for dark mode */
-    --primary-app-hsl: 285 85% 50%; /* #a413ec */
-    --background-dark-hsl: 285 35% 9.8%; /* #1c1022 */
-    --text-dark-hsl: 210 17% 91%; /* #e5e7eb */
-    --subtle-dark-hsl: 216 13% 65%; /* #9ca3af */
-    --surface-dark-hsl: 285 35% 15%; /* #2b1933 */
-    --border-dark-hsl: 285 35% 30%; /* #553267 */
+    --primary-app-hsl: 239 84% 67%; /* #6366f1 Indigo 500 */
+    --background-dark-hsl: 222 47% 11%; /* #0f172a Slate 900 */
+    --text-dark-hsl: 210 40% 96%; /* #f1f5f9 Slate 100 */
+    --subtle-dark-hsl: 215 20% 65%; /* #94a3b8 Slate 400 */
+    --surface-dark-hsl: 215 28% 17%; /* #1e293b Slate 800 */
+    --border-dark-hsl: 215 25% 27%; /* #334155 Slate 700 */
     --accent-app-hsl: 5 100% 70%; /* #FF6F61 */
-    --chip-dark-bg-hsl: 285 35% 20%; /* #3c2348 */
-    --nav-dark-text-hsl: 285 35% 70%; /* #b792c9 */
+    --chip-dark-bg-hsl: 215 28% 17%; /* #1e293b Slate 800 (Match surface) */
+    --nav-dark-text-hsl: 215 20% 65%; /* #94a3b8 Slate 400 */
     --profile-accent-red-hsl: 357 89% 48%; /* #E50914 */
 
     /* Shadcn/ui variables for dark mode */
