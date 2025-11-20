@@ -7,7 +7,7 @@ import {
   DrawerTrigger,
   DrawerClose,
 } from "@/components/ui/drawer";
-import MatchedUserProfileDrawerContent from "@/components/matches/MatchedUserProfileDrawerContent";
+import ProfilePage from "@/pages/ProfilePage"; // Yeni ProfilePage'i import et
 
 const MatchesPage = () => {
   const [isProfileDrawerOpen, setIsProfileDrawerOpen] = useState(false);
@@ -62,10 +62,10 @@ const MatchesPage = () => {
           <DrawerContent className="h-[90%] mt-24 rounded-t-[10px] flex flex-col">
             <div className="mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-zinc-300 mb-8" />
             <div className="flex-1 overflow-y-auto">
-              <MatchedUserProfileDrawerContent />
+              <ProfilePage isDrawer={true} /> {/* isDrawer prop'unu true olarak geçirdik */}
             </div>
             <DrawerClose asChild>
-              <Button variant="ghost" className="absolute top-4 left-4 w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white">
+              <Button variant="ghost" className="absolute top-4 left-4 w-10 h-10 rounded-full bg-background-dark/40 backdrop-blur-sm flex items-center justify-center text-white">
                 <span className="material-symbols-outlined icon-outline">arrow_back</span>
               </Button>
             </DrawerClose>
