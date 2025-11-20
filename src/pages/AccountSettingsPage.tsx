@@ -2,10 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import SettingsSubPageAppBar from "@/components/settings/SettingsSubPageAppBar";
 import { Switch } from "@/components/ui/switch";
-import { Button } from "@/components/ui/button"; // Button bileşenini import et
+import { Button } from "@/components/ui/button";
 
 const AccountSettingsPage = () => {
-  // Örnek profil verileri
   const userProfile = {
     name: "Elif Yılmaz",
     handle: "@elifyilmaz",
@@ -15,70 +14,69 @@ const AccountSettingsPage = () => {
   return (
     <div className="relative mx-auto flex h-auto min-h-screen w-full max-w-md flex-col overflow-x-hidden font-display">
       <SettingsSubPageAppBar title="Ayarlar" />
-      <main className="flex-1 px-4 py-2 pb-24"> {/* Alt navigasyon çubuğu için yeterli boşluk bırak */}
+      <main className="flex-1 px-4 py-2 pb-24">
         {/* Kullanıcı Profil Özeti Kartı */}
         <section className="mb-6">
-          <div className="flex flex-col items-center justify-center p-6 rounded-lg bg-surface-dark shadow-sm">
+          <div className="flex flex-col items-center justify-center p-6 rounded-lg bg-card shadow-sm">
             <img
               src={userProfile.avatarSrc}
               alt={`${userProfile.name}'s profile picture`}
               className="w-24 h-24 rounded-full object-cover border-4 border-primary-app/20"
             />
-            <h2 className="text-xl font-bold text-text-dark mt-4">{userProfile.name}</h2>
-            <p className="text-subtle-dark mt-1">{userProfile.handle}</p>
-            {/* "Profili Düzenle" bağlantısı kaldırıldı */}
+            <h2 className="text-xl font-bold text-foreground mt-4">{userProfile.name}</h2>
+            <p className="text-muted-foreground mt-1">{userProfile.handle}</p>
           </div>
         </section>
 
         {/* Tercihler ve Ayarlar Bölümü */}
         <section className="mb-6">
-          <h2 className="px-4 pb-2 text-sm font-bold uppercase tracking-wider text-subtle-dark">Tercihler ve Ayarlar</h2>
-          <div className="flex flex-col overflow-hidden rounded-lg bg-surface-dark shadow-sm">
+          <h2 className="px-4 pb-2 text-sm font-bold uppercase tracking-wider text-muted-foreground">Tercihler ve Ayarlar</h2>
+          <div className="flex flex-col overflow-hidden rounded-lg bg-card shadow-sm">
             <div className="flex items-center gap-4 p-4 min-h-14">
               <div className="flex items-center justify-center rounded-full bg-primary-app/10 text-primary-app shrink-0 size-10">
                 <span className="material-symbols-outlined">notifications</span>
               </div>
-              <p className="flex-1 truncate text-base font-medium text-text-dark">Bildirimler</p>
+              <p className="flex-1 truncate text-base font-medium text-foreground">Bildirimler</p>
               <div className="shrink-0">
                 <Switch defaultChecked={true} />
               </div>
             </div>
-            <hr className="border-border-dark ml-14"/>
-            <Link className="flex items-center gap-4 p-4 min-h-14 transition-colors hover:bg-white/5" to="#">
+            <hr className="border-border ml-14"/>
+            <Link className="flex items-center gap-4 p-4 min-h-14 transition-colors hover:bg-accent/10" to="#">
               <div className="flex items-center justify-center rounded-full bg-primary-app/10 text-primary-app shrink-0 size-10">
                 <span className="material-symbols-outlined">lock</span>
               </div>
-              <p className="flex-1 truncate text-base font-medium text-text-dark">Gizlilik ve Güvenlik</p>
-              <span className="material-symbols-outlined text-subtle-dark shrink-0">chevron_right</span>
+              <p className="flex-1 truncate text-base font-medium text-foreground">Gizlilik ve Güvenlik</p>
+              <span className="material-symbols-outlined text-muted-foreground shrink-0">chevron_right</span>
             </Link>
-            <hr className="border-border-dark ml-14"/>
-            <Link className="flex items-center gap-4 p-4 min-h-14 transition-colors hover:bg-white/5" to="#">
+            <hr className="border-border ml-14"/>
+            <Link className="flex items-center gap-4 p-4 min-h-14 transition-colors hover:bg-accent/10" to="#">
               <div className="flex items-center justify-center rounded-full bg-primary-app/10 text-primary-app shrink-0 size-10">
                 <span className="material-symbols-outlined">auto_stories</span>
               </div>
-              <p className="flex-1 truncate text-base font-medium text-text-dark">Film ve Kitap Listem</p>
-              <span className="material-symbols-outlined text-subtle-dark shrink-0">chevron_right</span>
+              <p className="flex-1 truncate text-base font-medium text-foreground">Film ve Kitap Listem</p>
+              <span className="material-symbols-outlined text-muted-foreground shrink-0">chevron_right</span>
             </Link>
           </div>
         </section>
         {/* Uygulama Bilgileri ve Destek Bölümü */}
         <section className="mb-6">
-          <h2 className="px-4 pb-2 text-sm font-bold uppercase tracking-wider text-subtle-dark">Destek</h2>
-          <div className="flex flex-col overflow-hidden rounded-lg bg-surface-dark shadow-sm">
-            <Link className="flex items-center gap-4 p-4 min-h-14 transition-colors hover:bg-white/5" to="#">
+          <h2 className="px-4 pb-2 text-sm font-bold uppercase tracking-wider text-muted-foreground">Destek</h2>
+          <div className="flex flex-col overflow-hidden rounded-lg bg-card shadow-sm">
+            <Link className="flex items-center gap-4 p-4 min-h-14 transition-colors hover:bg-accent/10" to="#">
               <div className="flex items-center justify-center rounded-full bg-primary-app/10 text-primary-app shrink-0 size-10">
                 <span className="material-symbols-outlined">help</span>
               </div>
-              <p className="flex-1 truncate text-base font-medium text-text-dark">Yardım ve Destek</p>
-              <span className="material-symbols-outlined text-subtle-dark shrink-0">chevron_right</span>
+              <p className="flex-1 truncate text-base font-medium text-foreground">Yardım ve Destek</p>
+              <span className="material-symbols-outlined text-muted-foreground shrink-0">chevron_right</span>
             </Link>
-            <hr className="border-border-dark ml-14"/>
-            <Link className="flex items-center gap-4 p-4 min-h-14 transition-colors hover:bg-white/5" to="#">
+            <hr className="border-border ml-14"/>
+            <Link className="flex items-center gap-4 p-4 min-h-14 transition-colors hover:bg-accent/10" to="#">
               <div className="flex items-center justify-center rounded-full bg-primary-app/10 text-primary-app shrink-0 size-10">
                 <span className="material-symbols-outlined">info</span>
               </div>
-              <p className="flex-1 truncate text-base font-medium text-text-dark">Hakkında</p>
-              <span className="material-symbols-outlined text-subtle-dark shrink-0">chevron_right</span>
+              <p className="flex-1 truncate text-base font-medium text-foreground">Hakkında</p>
+              <span className="material-symbols-outlined text-muted-foreground shrink-0">chevron_right</span>
             </Link>
           </div>
         </section>

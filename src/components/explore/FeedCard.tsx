@@ -27,16 +27,16 @@ const FeedCard: React.FC<FeedCardProps> = ({
   shares,
 }) => {
   return (
-    <div className="border-b border-white/10">
+    <div className="border-b border-border">
       <div className="p-4 @container">
         <div className="flex items-start justify-start gap-4">
           <img className="h-12 w-12 rounded-full object-cover" data-alt="User avatar" src={avatarSrc} />
           <div className="flex w-full min-w-0 grow flex-col items-stretch justify-center gap-2">
             <div className="flex items-center gap-2">
-              <p className="text-white text-base font-bold leading-tight tracking-[-0.015em] truncate">{userName}</p>
-              <p className="text-white/60 text-sm font-normal leading-normal">{userHandle} • {timeAgo}</p>
+              <p className="text-foreground text-base font-bold leading-tight tracking-[-0.015em] truncate">{userName}</p>
+              <p className="text-muted-foreground text-sm font-normal leading-normal">{userHandle} • {timeAgo}</p>
             </div>
-            <p className="text-white/90 text-base font-normal leading-normal">
+            <p className="text-foreground text-base font-normal leading-normal">
               {content}
             </p>
             <p className="text-primary/80 text-sm font-normal leading-normal">{hashtags}</p>
@@ -45,15 +45,15 @@ const FeedCard: React.FC<FeedCardProps> = ({
             )}
             <div className="flex items-center justify-between -ml-3 mt-1">
               <div className="flex flex-wrap gap-1">
-                <Button variant="ghost" className="flex items-center justify-center gap-2 px-3 py-2 text-white/60 hover:text-primary rounded-full transition-colors">
+                <Button variant="ghost" className="flex items-center justify-center gap-2 px-3 py-2 text-muted-foreground hover:text-primary rounded-full transition-colors">
                   <span className="material-symbols-outlined">favorite</span>
                   <p className="text-sm font-bold leading-normal tracking-[0.015em]">{likes}</p>
                 </Button>
-                <Button variant="ghost" className="flex items-center justify-center gap-2 px-3 py-2 text-white/60 hover:text-primary rounded-full transition-colors">
+                <Button variant="ghost" className="flex items-center justify-center gap-2 px-3 py-2 text-muted-foreground hover:text-primary rounded-full transition-colors">
                   <span className="material-symbols-outlined">chat_bubble</span>
                   <p className="text-sm font-bold leading-normal tracking-[0.015em]">{comments}</p>
                 </Button>
-                <Button variant="ghost" className="flex items-center justify-center gap-2 px-3 py-2 text-white/60 hover:text-primary rounded-full transition-colors">
+                <Button variant="ghost" className="flex items-center justify-center gap-2 px-3 py-2 text-muted-foreground hover:text-primary rounded-full transition-colors">
                   <span className="material-symbols-outlined">share</span>
                   <p className="text-sm font-bold leading-normal tracking-[0.015em]">{shares}</p>
                 </Button>

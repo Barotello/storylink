@@ -40,7 +40,7 @@ const ExplorePage = () => {
             />
             {/* Post Card 3 */}
             <PostCard
-              avatarSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuBSfVVOzvBmiJ5IseGK7PZJwncH52ZNwM5DhknI1JcqeH71iNEdtzA-BqVK98lPQNCOfzEzPPSfYVlpD7CzyHWoDdtLCsSM2RLVk74wK-QpA-37U6g-iO3YdeXmGUZ0QV2xArBUhIk8Zk2YW3LCSDZsvWZdOTnuwJGa-mrfyvpRSV-h0z3s6NlSxnKLLCylTJCED6KdVRrmbnfsDW86uhOzz648rrA-q4fxyTtDv3hd7F8WjrRjpPjSMFWmpR3TuTSsv6XgGk-4ifo"
+              avatarSrc="https://lh3.googleusercontent.com/aida-public/AB6AXuBSfVVOzvBmiJ5IseGK7PZJwncH52ZNwM5DhknI1JcqeH71iNEdtzA-BqVK98lPQNCOfzEzPPSfYVlpD7CzyHWoDdtLCsSM2RLVk74wK-QpA-37U6g-iO3YdeXmGUZ0QV2xArBUhIk8Zk2YW3LCSDZsvWZdOTnuwK-QpA-37U6g-iO3YdeXmGUZ0QV2xArBUhIk8Zk2YW3LCSDZsvWZdOTnuwKrlYaEdyoancsCUvr-luz1rYX1_jMwmbVychHj0ucxSWPToJdNh1p7nj94Ft3wQxDHviY7TGGcY3NGY7v_MMRJPl0ZS9BMuXB2zRvNzSphl1ZIV79387E7zgoFJNMdTzJpy4TqeCFItcUOs9pErLGyye_ptrenv-ZIWkApYA"
               userName="Emre Tekin"
               userHandle="@emretekin"
               timeAgo="5sa önce"
@@ -53,14 +53,14 @@ const ExplorePage = () => {
         );
       case "Filmler":
         return (
-          <div className="p-4 text-center text-text-dark">
+          <div className="p-4 text-center text-foreground">
             <h2 className="text-xl font-bold">Filmler Sekmesi</h2>
             <p className="mt-2">Burada film gönderileri listelenecek.</p>
           </div>
         );
       case "Kitaplar":
         return (
-          <div className="p-4 text-center text-text-dark">
+          <div className="p-4 text-center text-foreground">
             <h2 className="text-xl font-bold">Kitaplar Sekmesi</h2>
             <p className="mt-2">Burada kitap gönderileri listelenecek.</p>
           </div>
@@ -71,19 +71,19 @@ const ExplorePage = () => {
   };
 
   return (
-    <div className="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden bg-background-dark font-display text-text-light dark:text-text-dark">
+    <div className="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden bg-background font-display text-foreground">
       <ExploreHeader />
       <StoryCarousel />
 
       {/* Tabs */}
-      <div className="pb-3 sticky top-[72px] z-10 bg-background-dark">
-        <div className="flex border-b border-border-dark px-4 justify-between">
+      <div className="pb-3 sticky top-[72px] z-10 bg-background">
+        <div className="flex border-b border-border px-4 justify-between">
           <Button
             variant="ghost"
             className={`flex flex-col items-center justify-center border-b-[3px] pb-[13px] pt-4 flex-1 h-auto rounded-none ${
               activeTab === "Sana Özel"
-                ? "border-b-primary-app text-white"
-                : "border-b-transparent text-nav-dark-text" // Hover efekti kaldırıldı
+                ? "border-b-primary-app text-foreground"
+                : "border-b-transparent text-muted-foreground"
             }`}
             onClick={() => setActiveTab("Sana Özel")}
           >
@@ -93,8 +93,8 @@ const ExplorePage = () => {
             variant="ghost"
             className={`flex flex-col items-center justify-center border-b-[3px] pb-[13px] pt-4 flex-1 h-auto rounded-none ${
               activeTab === "Filmler"
-                ? "border-b-primary-app text-white"
-                : "border-b-transparent text-nav-dark-text" // Hover efekti kaldırıldı
+                ? "border-b-primary-app text-foreground"
+                : "border-b-transparent text-muted-foreground"
             }`}
             onClick={() => setActiveTab("Filmler")}
           >
@@ -104,8 +104,8 @@ const ExplorePage = () => {
             variant="ghost"
             className={`flex flex-col items-center justify-center border-b-[3px] pb-[13px] pt-4 flex-1 h-auto rounded-none ${
               activeTab === "Kitaplar"
-                ? "border-b-primary-app text-white"
-                : "border-b-transparent text-nav-dark-text" // Hover efekti kaldırıldı
+                ? "border-b-primary-app text-foreground"
+                : "border-b-transparent text-muted-foreground"
             }`}
             onClick={() => setActiveTab("Kitaplar")}
           >

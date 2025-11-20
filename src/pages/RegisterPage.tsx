@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // useNavigate hook'unu import et
+import { Link, useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -17,7 +17,7 @@ const RegisterPage = () => {
   const [selectedMedia, setSelectedMedia] = useState<string[]>(["Yüzüklerin Efendisi", "Dune"]);
   const [showPassword, setShowPassword] = useState(false);
 
-  const navigate = useNavigate(); // useNavigate hook'unu kullan
+  const navigate = useNavigate();
 
   const genres = [
     { name: "Bilim Kurgu", icon: "science" },
@@ -56,22 +56,21 @@ const RegisterPage = () => {
   };
 
   const handleSubmit = () => {
-    // Handle final submission logic here
     console.log("Form Submitted:", { email, password, name, age, gender, selectedGenres, selectedMedia });
     alert("Kayıt Başarılı!");
-    navigate("/explore"); // Kayıt başarılı olduktan sonra /explore sayfasına yönlendir
+    navigate("/explore");
   };
 
   return (
-    <div className="relative flex min-h-screen w-full flex-col items-center overflow-x-hidden p-4 font-display text-text-dark">
+    <div className="relative flex min-h-screen w-full flex-col items-center overflow-x-hidden p-4 font-display text-foreground">
       <div className="w-full max-w-md space-y-8 py-8">
         {/* Logo and Slogan */}
         <div className="text-center">
           <Link to="/" className="flex flex-col items-center">
             <span className="material-symbols-outlined text-primary-app text-5xl">movie</span>
-            <h1 className="text-2xl font-bold tracking-tight mt-2 text-text-dark">StoryLink</h1>
+            <h1 className="text-2xl font-bold tracking-tight mt-2 text-foreground">StoryLink</h1>
           </Link>
-          <p className="text-subtle-dark mt-1">Hikayeni paylaşacak birini bul.</p>
+          <p className="text-muted-foreground mt-1">Hikayeni paylaşacak birini bul.</p>
         </div>
 
         {/* Progress Indicator */}
@@ -80,34 +79,34 @@ const RegisterPage = () => {
             <div className="flex flex-col items-center relative">
               <div
                 className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                  currentStep >= 1 ? "bg-primary-app text-white" : "bg-surface-dark border-2 border-border-dark text-subtle-dark"
+                  currentStep >= 1 ? "bg-primary-app text-white" : "bg-card border-2 border-border text-muted-foreground"
                 }`}
               >
                 1
               </div>
-              <p className={`text-xs mt-1 font-semibold ${currentStep >= 1 ? "text-primary-app" : "text-subtle-dark"}`}>Hesap</p>
+              <p className={`text-xs mt-1 font-semibold ${currentStep >= 1 ? "text-primary-app" : "text-muted-foreground"}`}>Hesap</p>
             </div>
-            <div className="flex-auto border-t-2 border-border-dark mx-2"></div>
+            <div className="flex-auto border-t-2 border-border mx-2"></div>
             <div className="flex flex-col items-center relative">
               <div
                 className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                  currentStep >= 2 ? "bg-primary-app text-white" : "bg-surface-dark border-2 border-border-dark text-subtle-dark"
+                  currentStep >= 2 ? "bg-primary-app text-white" : "bg-card border-2 border-border text-muted-foreground"
                 }`}
               >
                 2
               </div>
-              <p className={`text-xs mt-1 font-semibold ${currentStep >= 2 ? "text-primary-app" : "text-subtle-dark"}`}>Zevkler</p>
+              <p className={`text-xs mt-1 font-semibold ${currentStep >= 2 ? "text-primary-app" : "text-muted-foreground"}`}>Zevkler</p>
             </div>
-            <div className="flex-auto border-t-2 border-border-dark mx-2"></div>
+            <div className="flex-auto border-t-2 border-border mx-2"></div>
             <div className="flex flex-col items-center relative">
               <div
                 className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                  currentStep >= 3 ? "bg-primary-app text-white" : "bg-surface-dark border-2 border-border-dark text-subtle-dark"
+                  currentStep >= 3 ? "bg-primary-app text-white" : "bg-card border-2 border-border text-muted-foreground"
                 }`}
               >
                 3
               </div>
-              <p className={`text-xs mt-1 font-semibold ${currentStep >= 3 ? "text-primary-app" : "text-subtle-dark"}`}>Profil</p>
+              <p className={`text-xs mt-1 font-semibold ${currentStep >= 3 ? "text-primary-app" : "text-muted-foreground"}`}>Profil</p>
             </div>
           </div>
         </div>
@@ -115,9 +114,9 @@ const RegisterPage = () => {
         {/* Step 1: Account Creation */}
         {currentStep === 1 && (
           <div className="space-y-6">
-            <h2 className="text-text-dark tracking-light text-[28px] font-bold leading-tight text-center">Hesap Oluştur</h2>
+            <h2 className="text-foreground tracking-light text-[28px] font-bold leading-tight text-center">Hesap Oluştur</h2>
             <div className="flex flex-col items-stretch gap-3">
-              <Button className="flex min-w-[84px] cursor-pointer items-center justify-center gap-3 overflow-hidden rounded-full h-12 px-5 bg-surface-dark text-text-dark text-base font-bold leading-normal tracking-[0.015em] w-full border border-border-dark shadow-sm hover:bg-surface-dark/90">
+              <Button className="flex min-w-[84px] cursor-pointer items-center justify-center gap-3 overflow-hidden rounded-full h-12 px-5 bg-card text-foreground text-base font-bold leading-normal tracking-[0.015em] w-full border border-border shadow-sm hover:bg-card/90">
                 <svg className="w-5 h-5" viewBox="0 0 48 48">
                   <path d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z" fill="#FFC107"></path>
                   <path d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z" fill="#FF3D00"></path>
@@ -126,19 +125,19 @@ const RegisterPage = () => {
                 </svg>
                 <span className="truncate">Google ile Kaydol</span>
               </Button>
-              <Button className="flex min-w-[84px] cursor-pointer items-center justify-center gap-3 overflow-hidden rounded-full h-12 px-5 bg-surface-dark text-text-dark text-base font-bold leading-normal tracking-[0.015em] w-full border border-border-dark shadow-sm hover:bg-surface-dark/90">
-                <svg className="w-5 h-5 text-text-dark" fill="currentColor" viewBox="0 0 24 24">
+              <Button className="flex min-w-[84px] cursor-pointer items-center justify-center gap-3 overflow-hidden rounded-full h-12 px-5 bg-card text-foreground text-base font-bold leading-normal tracking-[0.015em] w-full border border-border shadow-sm hover:bg-card/90">
+                <svg className="w-5 h-5 text-foreground" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M17.222,12.02c0.05-0.71,0.28-2.5-1.9-2.5c-1.78,0-2.88,1.07-3.64,1.07c-0.78,0-1.57-1.05-3.12-1.05c-2.14,0-3.64,2.02-3.64,4.72c0,3.42,2.5,7.72,4.92,7.72c0.71,0,1.21-0.36,2.21-0.36c1.02,0,1.41,0.36,2.23,0.36c2.45,0,4.7-4.25,4.7-7.96Zm-5.832,7.06c-0.02,0-0.03,0-0.05,0c-0.91,0.02-1.9-0.62-2.21-1.74c-0.69-2.5,0.91-4.27,2.14-4.27c0.16,0,0.3,0.02,0.43,0.04c-0.14,1.04,0.39,2.83,0.73,3.71c-0.45,0.88-1.02,2.24-1.04,2.26Zm4.43-5.26c-0.52-0.04-1.55-0.18-2.3-1.09c0.71-0.81,1.71-1.21,2.41-1.21c0.11,0,0.21,0,0.3,0.02c-0.14,0.73-0.23,1.52-0.41,2.28Z"></path>
                 </svg>
                 <span className="truncate">Apple ile Kaydol</span>
               </Button>
             </div>
-            <p className="text-subtle-dark text-sm font-normal leading-normal text-center">Veya e-posta ile devam et</p>
+            <p className="text-muted-foreground text-sm font-normal leading-normal text-center">Veya e-posta ile devam et</p>
             <div className="space-y-4">
               <Label className="flex flex-col flex-1">
-                <p className="text-text-dark text-base font-medium leading-normal pb-2">E-posta</p>
+                <p className="text-foreground text-base font-medium leading-normal pb-2">E-posta</p>
                 <Input
-                  className="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary-app/50 border border-border-dark bg-surface-dark h-14 placeholder:text-subtle-dark p-[15px] text-base font-normal leading-normal"
+                  className="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-foreground focus:outline-0 focus:ring-2 focus:ring-primary-app/50 border border-border bg-card h-14 placeholder:text-muted-foreground p-[15px] text-base font-normal leading-normal"
                   placeholder="E-posta adresinizi girin"
                   type="email"
                   value={email}
@@ -146,17 +145,17 @@ const RegisterPage = () => {
                 />
               </Label>
               <Label className="flex flex-col flex-1">
-                <p className="text-text-dark text-base font-medium leading-normal pb-2">Şifre</p>
+                <p className="text-foreground text-base font-medium leading-normal pb-2">Şifre</p>
                 <div className="flex w-full flex-1 items-stretch rounded-xl">
                   <Input
-                    className="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-l-xl text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary-app/50 border border-border-dark bg-surface-dark h-14 placeholder:text-subtle-dark p-[15px] rounded-r-none border-r-0 pr-2 text-base font-normal leading-normal"
+                    className="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-l-xl text-foreground focus:outline-0 focus:ring-2 focus:ring-primary-app/50 border border-border bg-card h-14 placeholder:text-muted-foreground p-[15px] rounded-r-none border-r-0 pr-2 text-base font-normal leading-normal"
                     placeholder="Şifrenizi oluşturun"
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
                   <div
-                    className="text-subtle-dark flex border border-border-dark bg-surface-dark items-center justify-center pr-[15px] rounded-r-xl border-l-0 cursor-pointer"
+                    className="text-muted-foreground flex border border-border bg-card items-center justify-center pr-[15px] rounded-r-xl border-l-0 cursor-pointer"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     <span className="material-symbols-outlined">{showPassword ? "visibility" : "visibility_off"}</span>
@@ -174,20 +173,20 @@ const RegisterPage = () => {
         {currentStep === 2 && (
           <div className="space-y-8">
             <div className="text-center">
-              <h2 className="text-text-dark tracking-light text-[28px] font-bold leading-tight">Zevklerini Belirle</h2>
-              <p className="text-subtle-dark mt-1">Sana en uygun kişiyi bulmamıza yardım et.</p>
+              <h2 className="text-foreground tracking-light text-[28px] font-bold leading-tight">Zevklerini Belirle</h2>
+              <p className="text-muted-foreground mt-1">Sana en uygun kişiyi bulmamıza yardım et.</p>
             </div>
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-text-dark">Favori Türlerin Hangileri?</h3>
+              <h3 className="text-lg font-semibold text-foreground">Favori Türlerin Hangileri?</h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {genres.map((genre) => (
                   <Button
                     key={genre.name}
                     onClick={() => handleGenreToggle(genre.name)}
-                    className={`flex flex-col items-center justify-center gap-2 p-4 rounded-xl border bg-surface-dark transition-all h-auto ${
+                    className={`flex flex-col items-center justify-center gap-2 p-4 rounded-xl border bg-card transition-all h-auto ${
                       selectedGenres.includes(genre.name)
                         ? "border-primary-app bg-primary-app/10 text-primary-app"
-                        : "border-border-dark hover:border-primary-app focus:border-primary-app focus:ring-2 focus:ring-primary-app/50 text-text-dark"
+                        : "border-border hover:border-primary-app focus:border-primary-app focus:ring-2 focus:ring-primary-app/50 text-foreground"
                     }`}
                   >
                     <span className="material-symbols-outlined text-primary-app">{genre.icon}</span>
@@ -197,11 +196,11 @@ const RegisterPage = () => {
               </div>
             </div>
             <div className="space-y-4">
-              <h3 className="text-lg font-semibold text-text-dark">En Sevdiğin 3 Film ve 3 Kitabı Ekle</h3>
+              <h3 className="text-lg font-semibold text-foreground">En Sevdiğin 3 Film ve 3 Kitabı Ekle</h3>
               <div className="relative">
-                <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-subtle-dark">search</span>
+                <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground">search</span>
                 <Input
-                  className="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-full text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary-app/50 border border-border-dark bg-surface-dark h-14 placeholder:text-subtle-dark pl-12 pr-4 py-2 text-base font-normal"
+                  className="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-full text-foreground focus:outline-0 focus:ring-2 focus:ring-primary-app/50 border border-border bg-card h-14 placeholder:text-muted-foreground pl-12 pr-4 py-2 text-base font-normal"
                   placeholder="Film veya kitap ara..."
                   type="search"
                   value={searchQuery}
@@ -224,7 +223,7 @@ const RegisterPage = () => {
               </div>
             </div>
             <div className="flex justify-between items-center pt-4">
-              <Button variant="link" onClick={nextStep} className="text-sm font-semibold text-subtle-dark hover:text-primary-app">Daha Sonra Ekle</Button>
+              <Button variant="link" onClick={nextStep} className="text-sm font-semibold text-muted-foreground hover:text-primary-app">Daha Sonra Ekle</Button>
               <Button onClick={nextStep} className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 px-8 bg-primary-app text-white text-base font-bold leading-normal tracking-[0.015em] shadow-lg shadow-primary-app/30 hover:bg-primary-app/90">
                 <span className="truncate">Devam Et</span>
               </Button>
@@ -236,14 +235,14 @@ const RegisterPage = () => {
         {currentStep === 3 && (
           <div className="space-y-8">
             <div className="text-center">
-              <h2 className="text-text-dark tracking-light text-[28px] font-bold leading-tight">Biraz da Senden Bahsedelim</h2>
-              <p className="text-subtle-dark mt-1">Profilini tamamla ve eşleşmeye başla.</p>
+              <h2 className="text-foreground tracking-light text-[28px] font-bold leading-tight">Biraz da Senden Bahsedelim</h2>
+              <p className="text-muted-foreground mt-1">Profilini tamamla ve eşleşmeye başla.</p>
             </div>
             <div className="space-y-4">
               <Label className="flex flex-col flex-1">
-                <p className="text-text-dark text-base font-medium leading-normal pb-2">Adın</p>
+                <p className="text-foreground text-base font-medium leading-normal pb-2">Adın</p>
                 <Input
-                  className="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary-app/50 border border-border-dark bg-surface-dark h-14 placeholder:text-subtle-dark p-[15px] text-base font-normal leading-normal"
+                  className="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-foreground focus:outline-0 focus:ring-2 focus:ring-primary-app/50 border border-border bg-card h-14 placeholder:text-muted-foreground p-[15px] text-base font-normal leading-normal"
                   placeholder="Adını gir"
                   type="text"
                   value={name}
@@ -251,9 +250,9 @@ const RegisterPage = () => {
                 />
               </Label>
               <Label className="flex flex-col flex-1">
-                <p className="text-text-dark text-base font-medium leading-normal pb-2">Yaşın</p>
+                <p className="text-foreground text-base font-medium leading-normal pb-2">Yaşın</p>
                 <Input
-                  className="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-text-dark focus:outline-0 focus:ring-2 focus:ring-primary-app/50 border border-border-dark bg-surface-dark h-14 placeholder:text-subtle-dark p-[15px] text-base font-normal leading-normal"
+                  className="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl text-foreground focus:outline-0 focus:ring-2 focus:ring-primary-app/50 border border-border bg-card h-14 placeholder:text-muted-foreground p-[15px] text-base font-normal leading-normal"
                   placeholder="Yaşını gir"
                   type="number"
                   value={age}
@@ -261,15 +260,15 @@ const RegisterPage = () => {
                 />
               </Label>
               <div>
-                <p className="text-text-dark text-base font-medium leading-normal pb-2">Cinsiyetin</p>
+                <p className="text-foreground text-base font-medium leading-normal pb-2">Cinsiyetin</p>
                 <RadioGroup defaultValue={gender} onValueChange={setGender} className="grid grid-cols-2 gap-3">
-                  <Label className="flex items-center p-4 rounded-xl border border-border-dark bg-surface-dark has-[:checked]:border-primary-app has-[:checked]:bg-primary-app/10 cursor-pointer">
+                  <Label className="flex items-center p-4 rounded-xl border border-border bg-card has-[:checked]:border-primary-app has-[:checked]:bg-primary-app/10 cursor-pointer">
                     <RadioGroupItem value="Kadın" id="gender-female" className="text-primary-app focus:ring-primary-app/50" />
-                    <span className="ml-3 font-medium text-text-dark">Kadın</span>
+                    <span className="ml-3 font-medium text-foreground">Kadın</span>
                   </Label>
-                  <Label className="flex items-center p-4 rounded-xl border border-border-dark bg-surface-dark has-[:checked]:border-primary-app has-[:checked]:bg-primary-app/10 cursor-pointer">
+                  <Label className="flex items-center p-4 rounded-xl border border-border bg-card has-[:checked]:border-primary-app has-[:checked]:bg-primary-app/10 cursor-pointer">
                     <RadioGroupItem value="Erkek" id="gender-male" className="text-primary-app focus:ring-primary-app/50" />
-                    <span className="ml-3 font-medium text-text-dark">Erkek</span>
+                    <span className="ml-3 font-medium text-foreground">Erkek</span>
                   </Label>
                 </RadioGroup>
               </div>
