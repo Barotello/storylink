@@ -34,12 +34,12 @@ const BottomNavBar = () => {
 
   return (
     <nav
-      className={`fixed bottom-0 left-0 right-0 flex gap-2 border-t border-slate-200 dark:border-chip-dark-bg bg-background-light dark:bg-surface-dark px-4 pb-3 pt-2 transition-transform duration-300 ease-in-out ${
+      className={`fixed bottom-0 left-0 right-0 flex gap-2 border-t border-chip-dark-bg bg-background-dark px-4 pb-3 pt-2 transition-transform duration-300 ease-in-out ${
         showBottomNav ? "translate-y-0" : "translate-y-full"
       } z-50`}
     >
       {/* Keşfet */}
-      <Link className={`flex flex-1 flex-col items-center justify-end gap-1 ${isActive("/explore") ? "text-primary-app" : "text-slate-500 dark:text-nav-dark-text"}`} to="/explore">
+      <Link className={`flex flex-1 flex-col items-center justify-end gap-1 ${isActive("/explore") ? "text-primary-app" : "text-nav-dark-text"}`} to="/explore">
         <div className="flex h-8 items-center justify-center">
           <span className="material-symbols-outlined" style={{ fontVariationSettings: isActive("/explore") ? "'FILL' 1" : "'FILL' 0" }}>travel_explore</span>
         </div>
@@ -47,7 +47,7 @@ const BottomNavBar = () => {
       </Link>
 
       {/* Eşleş */}
-      <Link className={`flex flex-1 flex-col items-center justify-end gap-1 ${isActive("/matches") ? "text-primary-app" : "text-slate-500 dark:text-nav-dark-text"}`} to="/matches">
+      <Link className={`flex flex-1 flex-col items-center justify-end gap-1 ${isActive("/matches") ? "text-primary-app" : "text-nav-dark-text"}`} to="/matches">
         <div className="flex h-8 items-center justify-center">
           <span className="material-symbols-outlined" style={{ fontVariationSettings: isActive("/matches") ? "'FILL' 1" : "'FILL' 0" }}>favorite</span>
         </div>
@@ -55,7 +55,7 @@ const BottomNavBar = () => {
       </Link>
 
       {/* Bildirimler */}
-      <Link className={`flex flex-1 flex-col items-center justify-end gap-1 ${isActive("/notifications") ? "text-primary-app" : "text-slate-500 dark:text-nav-dark-text"}`} to="/notifications">
+      <Link className={`flex flex-1 flex-col items-center justify-end gap-1 ${isActive("/notifications") ? "text-primary-app" : "text-nav-dark-text"}`} to="/notifications">
         <div className="flex h-8 items-center justify-center">
           <span className="material-symbols-outlined" style={{ fontVariationSettings: isActive("/notifications") ? "'FILL' 1" : "'FILL' 0" }}>notifications</span>
         </div>
@@ -63,7 +63,7 @@ const BottomNavBar = () => {
       </Link>
 
       {/* Sohbetler */}
-      <Link className={`flex flex-1 flex-col items-center justify-end gap-1 ${isActive("/chats") ? "text-primary-app" : "text-slate-500 dark:text-nav-dark-text"}`} to="/chats">
+      <Link className={`flex flex-1 flex-col items-center justify-end gap-1 ${isActive("/chats") ? "text-primary-app" : "text-nav-dark-text"}`} to="/chats">
         <div className="flex h-8 items-center justify-center">
           <span className="material-symbols-outlined" style={{ fontVariationSettings: isActive("/chats") ? "'FILL' 1" : "'FILL' 0" }}>chat_bubble</span>
         </div>
@@ -71,7 +71,7 @@ const BottomNavBar = () => {
       </Link>
 
       {/* Profil */}
-      <Link className={`flex flex-1 flex-col items-center justify-end gap-1 ${isActive("/profile") ? "text-primary-app" : "text-slate-500 dark:text-nav-dark-text"}`} to="/profile">
+      <Link className={`flex flex-1 flex-col items-center justify-end gap-1 ${isActive("/profile") ? "text-primary-app" : "text-nav-dark-text"}`} to="/profile">
         <div className="flex h-8 items-center justify-center">
           <span className="material-symbols-outlined" style={{ fontVariationSettings: isActive("/profile") ? "'FILL' 1" : "'FILL' 0" }}>person</span>
         </div>

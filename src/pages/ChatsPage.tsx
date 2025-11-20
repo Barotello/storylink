@@ -54,16 +54,16 @@ const ChatsPage = () => {
   );
 
   return (
-    <div className="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark font-display">
+    <div className="relative flex h-auto min-h-screen w-full flex-col bg-background-dark font-display">
       {/* Top App Bar */}
-      <div className="sticky top-0 z-10 flex flex-col bg-background-light dark:bg-background-dark pt-4">
+      <div className="sticky top-0 z-10 flex flex-col bg-background-dark pt-4">
         <div className="flex items-center px-4 pb-2 justify-between">
           <div className="flex size-12 shrink-0 items-center justify-start">
             {/* Placeholder for potential back button or menu */}
           </div>
-          <h2 className="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Sohbetler</h2>
+          <h2 className="text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Sohbetler</h2>
           <div className="flex w-12 items-center justify-end">
-            <Button variant="ghost" className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 bg-transparent text-slate-500 dark:text-white/80 gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+            <Button variant="ghost" className="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-12 bg-transparent text-white/80 gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
               <span className="material-symbols-outlined text-2xl">more_vert</span>
             </Button>
           </div>
@@ -73,11 +73,11 @@ const ChatsPage = () => {
       <div className="px-4 py-3">
         <label className="flex flex-col min-w-40 h-12 w-full">
           <div className="flex w-full flex-1 items-stretch rounded-lg h-full">
-            <div className="text-slate-400 dark:text-[#b792c9] flex border-none bg-slate-200 dark:bg-[#3c2348] items-center justify-center pl-4 rounded-l-lg border-r-0">
+            <div className="text-nav-dark-text flex border-none bg-chip-dark-bg items-center justify-center pl-4 rounded-l-lg border-r-0">
               <span className="material-symbols-outlined text-2xl">search</span>
             </div>
             <Input
-              className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-0 border-none bg-slate-200 dark:bg-[#3c2348] focus:border-none h-full placeholder:text-slate-400 dark:placeholder:text-[#b792c9] px-4 pl-2 text-base font-normal leading-normal"
+              className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg text-white focus:outline-0 focus:ring-0 border-none bg-chip-dark-bg focus:border-none h-full placeholder:text-nav-dark-text px-4 pl-2 text-base font-normal leading-normal"
               placeholder="Sohbetlerde ara"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -100,7 +100,7 @@ const ChatsPage = () => {
           />
         ))}
         {filteredChats.length === 0 && (
-          <p className="text-center text-subtle-light dark:text-subtle-dark mt-8">Eşleşen sohbet bulunamadı.</p>
+          <p className="text-center text-subtle-dark mt-8">Eşleşen sohbet bulunamadı.</p>
         )}
       </div>
       {/* Floating Action Button for New Chat */}

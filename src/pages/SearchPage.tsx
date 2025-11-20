@@ -7,16 +7,16 @@ const SearchPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
-      <header className="sticky top-0 z-10 flex items-center bg-background-light/80 dark:bg-background-dark/80 p-4 pb-2 backdrop-blur-sm justify-between">
+    <div className="relative flex h-auto min-h-screen w-full flex-col font-display text-text-dark">
+      <header className="sticky top-0 z-10 flex items-center bg-background-dark/80 p-4 pb-2 backdrop-blur-sm justify-between">
         <Button
           variant="ghost"
-          className="text-slate-800 dark:text-white flex size-10 shrink-0 items-center justify-center p-0"
+          className="text-white flex size-10 shrink-0 items-center justify-center p-0"
           onClick={() => navigate(-1)}
         >
           <span className="material-symbols-outlined">arrow_back</span>
         </Button>
-        <h1 className="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Arama</h1>
+        <h1 className="text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Arama</h1>
         <div className="size-10 shrink-0"></div>
       </header>
       <main className="flex-1 px-4 py-4 pb-24"> {/* Alt navigasyon çubuğu için yeterli boşluk bırak */}
@@ -32,7 +32,7 @@ const SearchPage = () => {
             />
           </div>
         </label>
-        <div className="mt-8 text-center text-subtle-light dark:text-subtle-dark">
+        <div className="mt-8 text-center text-subtle-dark">
           <p>Aramaya başlamak için yukarıdaki kutuyu kullanın.</p>
         </div>
       </main>
