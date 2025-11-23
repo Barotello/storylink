@@ -2,6 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ThemeProvider } from "@/components/theme-provider";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
@@ -14,13 +15,21 @@ import ProfilePage from "./pages/ProfilePage";
 import SearchPage from "./pages/SearchPage";
 import ChatsPage from "./pages/ChatsPage";
 import ChatDetailPage from "./pages/ChatDetailPage";
-import NotificationsPage from "./pages/NotificationsPage"; // Yeni Bildirimler sayfasını import et
+import NotificationsPage from "./pages/NotificationsPage";
 import NotFound from "./pages/NotFound";
 import MainLayout from "./components/layout/MainLayout";
-
-const queryClient = new QueryClient();
-
 import { DataProvider } from "./context/DataContext";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 minutes - data stays fresh
+      gcTime: 10 * 60 * 1000, // 10 minutes - cache time
+      retry: 1, // retry failed requests once
+      refetchOnWindowFocus: false, // don't refetch on window focus
+    },
+  },
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -55,6 +64,7 @@ const App = () => (
         </TooltipProvider>
       </DataProvider>
     </ThemeProvider>
+    {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
   </QueryClientProvider>
 );
 

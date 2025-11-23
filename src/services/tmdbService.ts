@@ -1,4 +1,4 @@
-const TMDB_API_KEY = "YOUR_TMDB_API_KEY"; // Replace with actual key or use env var
+const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY || "";
 const BASE_URL = "https://api.themoviedb.org/3";
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
 
@@ -77,22 +77,33 @@ export const searchMovies = async (query: string): Promise<MediaItem[]> => {
     if (!query) return [];
 
     // Return mock data if no API key or for testing specific terms
-    if (query.toLowerCase().includes("mock") || !TMDB_API_KEY || TMDB_API_KEY === "YOUR_TMDB_API_KEY") {
+    if (query.toLowerCase().includes("mock") || !TMDB_API_KEY) {
         return MOCK_MOVIES.filter(m => m.title.toLowerCase().includes(query.toLowerCase()));
     }
 
     try {
-        const response = await fetch(`${BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}&language=tr-TR`);
-        const data = await response.json();
-        return data.results.map((item: any) => ({
-            id: item.id.toString(),
-            title: item.title,
-            posterPath: item.poster_path ? `${IMAGE_BASE_URL}${item.poster_path}` : "",
-            type: "movie",
-            genreIds: item.genre_ids,
-            overview: item.overview,
-            releaseDate: item.release_date,
-        }));
+        // Use backend API in production, direct API in development
+        const isProduction = import.meta.env.PROD;
+
+        if (isProduction) {
+            // Production: Use backend API (secure)
+            const response = await fetch(`/api/search-movies?q=${encodeURIComponent(query)}`);
+            if (!response.ok) throw new Error('Backend API request failed');
+            return await response.json();
+        } else {
+            // Development: Use direct API (faster)
+            const response = await fetch(`${BASE_URL}/search/movie?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}&language=tr-TR`);
+            const data = await response.json();
+            return data.results.map((item: any) => ({
+                id: item.id.toString(),
+                title: item.title,
+                posterPath: item.poster_path ? `${IMAGE_BASE_URL}${item.poster_path}` : "",
+                type: "movie",
+                genreIds: item.genre_ids,
+                overview: item.overview,
+                releaseDate: item.release_date,
+            }));
+        }
     } catch (error) {
         console.error("Error searching movies:", error);
         return [];
@@ -102,22 +113,32 @@ export const searchMovies = async (query: string): Promise<MediaItem[]> => {
 export const searchTVSeries = async (query: string): Promise<MediaItem[]> => {
     if (!query) return [];
 
-    if (query.toLowerCase().includes("mock") || !TMDB_API_KEY || TMDB_API_KEY === "YOUR_TMDB_API_KEY") {
+    if (query.toLowerCase().includes("mock") || !TMDB_API_KEY) {
         return MOCK_TV.filter(t => t.title.toLowerCase().includes(query.toLowerCase()));
     }
 
     try {
-        const response = await fetch(`${BASE_URL}/search/tv?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}&language=tr-TR`);
-        const data = await response.json();
-        return data.results.map((item: any) => ({
-            id: item.id.toString(),
-            title: item.name,
-            posterPath: item.poster_path ? `${IMAGE_BASE_URL}${item.poster_path}` : "",
-            type: "tv",
-            genreIds: item.genre_ids,
-            overview: item.overview,
-            releaseDate: item.first_air_date,
-        }));
+        const isProduction = import.meta.env.PROD;
+
+        if (isProduction) {
+            // Production: Use backend API (secure)
+            const response = await fetch(`/api/search-tv?q=${encodeURIComponent(query)}`);
+            if (!response.ok) throw new Error('Backend API request failed');
+            return await response.json();
+        } else {
+            // Development: Use direct API (faster)
+            const response = await fetch(`${BASE_URL}/search/tv?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(query)}&language=tr-TR`);
+            const data = await response.json();
+            return data.results.map((item: any) => ({
+                id: item.id.toString(),
+                title: item.name,
+                posterPath: item.poster_path ? `${IMAGE_BASE_URL}${item.poster_path}` : "",
+                type: "tv",
+                genreIds: item.genre_ids,
+                overview: item.overview,
+                releaseDate: item.first_air_date,
+            }));
+        }
     } catch (error) {
         console.error("Error searching TV series:", error);
         return [];

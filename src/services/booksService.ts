@@ -1,4 +1,4 @@
-const GOOGLE_BOOKS_API_KEY = "YOUR_GOOGLE_BOOKS_API_KEY"; // Optional
+const GOOGLE_BOOKS_API_KEY = import.meta.env.VITE_GOOGLE_BOOKS_API_KEY || "";
 const BASE_URL = "https://www.googleapis.com/books/v1/volumes";
 
 export interface BookItem {
@@ -40,7 +40,7 @@ const MOCK_BOOKS: BookItem[] = [
 export const searchBooks = async (query: string): Promise<BookItem[]> => {
     if (!query) return [];
 
-    if (query.toLowerCase().includes("mock") || !GOOGLE_BOOKS_API_KEY || GOOGLE_BOOKS_API_KEY === "YOUR_GOOGLE_BOOKS_API_KEY") {
+    if (query.toLowerCase().includes("mock") || !GOOGLE_BOOKS_API_KEY) {
         // For demo purposes, always return mock if key is missing, or filter if query matches
         const mockResults = MOCK_BOOKS.filter(b => b.title.toLowerCase().includes(query.toLowerCase()));
         if (mockResults.length > 0) return mockResults;
@@ -48,20 +48,30 @@ export const searchBooks = async (query: string): Promise<BookItem[]> => {
     }
 
     try {
-        const url = `${BASE_URL}?q=${encodeURIComponent(query)}&langRestrict=tr${GOOGLE_BOOKS_API_KEY !== "YOUR_GOOGLE_BOOKS_API_KEY" ? `&key=${GOOGLE_BOOKS_API_KEY}` : ""}`;
-        const response = await fetch(url);
-        const data = await response.json();
+        const isProduction = import.meta.env.PROD;
 
-        if (!data.items) return [];
+        if (isProduction) {
+            // Production: Use backend API (secure)
+            const response = await fetch(`/api/search-books?q=${encodeURIComponent(query)}`);
+            if (!response.ok) throw new Error('Backend API request failed');
+            return await response.json();
+        } else {
+            // Development: Use direct API (faster)
+            const url = `${BASE_URL}?q=${encodeURIComponent(query)}&langRestrict=tr${GOOGLE_BOOKS_API_KEY ? `&key=${GOOGLE_BOOKS_API_KEY}` : ""}`;
+            const response = await fetch(url);
+            const data = await response.json();
 
-        return data.items.map((item: any) => ({
-            id: item.id,
-            title: item.volumeInfo.title,
-            authors: item.volumeInfo.authors || [],
-            coverPath: item.volumeInfo.imageLinks?.thumbnail || "",
-            description: item.volumeInfo.description || "",
-            publishedDate: item.volumeInfo.publishedDate || "",
-        }));
+            if (!data.items) return [];
+
+            return data.items.map((item: any) => ({
+                id: item.id,
+                title: item.volumeInfo.title,
+                authors: item.volumeInfo.authors || [],
+                coverPath: item.volumeInfo.imageLinks?.thumbnail || "",
+                description: item.volumeInfo.description || "",
+                publishedDate: item.volumeInfo.publishedDate || "",
+            }));
+        }
     } catch (error) {
         console.error("Error searching books:", error);
         return [];
