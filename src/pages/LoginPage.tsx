@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { supabase } from "@/lib/supabase";
+import { toast } from "sonner";
 
 const LoginPage = () => {
     const [email, setEmail] = useState("");
@@ -10,10 +12,29 @@ const LoginPage = () => {
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
-    const handleLogin = () => {
-        // Simulate login
-        console.log("Login attempt:", { email, password });
-        navigate("/explore");
+    const handleLogin = async () => {
+        if (!email || !password) {
+            toast.error("Lütfen e-posta ve şifrenizi girin.");
+            return;
+        }
+
+        try {
+            console.log("LoginPage: Attempting login with", email);
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email,
+                password,
+            });
+
+            console.log("LoginPage: Result", { data, error });
+
+            if (error) throw error;
+
+            toast.success("Giriş başarılı!");
+            navigate("/explore");
+        } catch (error: any) {
+            console.error("Login error:", error);
+            toast.error(error.message || "Giriş yapılırken bir hata oluştu.");
+        }
     };
 
     return (

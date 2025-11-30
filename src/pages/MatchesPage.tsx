@@ -113,7 +113,7 @@ const MatchesPage = () => {
                   {/* Name and Age */}
                   <div>
                     <h2 className="text-4xl font-bold flex items-end gap-3 mb-2">
-                      Jessica
+                      BARAN
                       <span className="text-2xl font-medium opacity-90">28</span>
                       <span className="material-symbols-outlined text-green-400 text-2xl mb-1">verified</span>
                     </h2>

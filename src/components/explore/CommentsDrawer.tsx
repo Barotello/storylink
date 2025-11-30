@@ -50,7 +50,7 @@ const CommentsDrawer: React.FC<CommentsDrawerProps> = ({ postId, isOpen, onClose
                             return (
                                 <div key={comment.id} className="flex gap-3">
                                     <img
-                                        src={user?.avatarSrc || "https://via.placeholder.com/40"}
+                                        src={user?.avatarSrc || "https://placehold.co/40"}
                                         alt={user?.name}
                                         className="w-8 h-8 rounded-full object-cover shrink-0"
                                     />

@@ -8,14 +8,19 @@ import { SearchSelect } from "@/components/register/SearchSelect";
 import { searchMovies, searchTVSeries, MediaItem } from "@/services/tmdbService";
 import { searchBooks, BookItem } from "@/services/booksService";
 import { useData } from "@/context/DataContext";
+import { supabase } from "@/lib/supabase";
+import { toast } from "sonner";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
-  const { updateUserFavorites } = useData();
+  const { updateUserFavorites, refreshUser } = useData();
   const [step, setStep] = useState(1);
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    username: "",
     name: "",
     age: "",
     gender: "",
@@ -37,14 +42,103 @@ const RegisterPage = () => {
     if (step > 1) setStep(step - 1);
   };
 
-  const handleRegister = () => {
-    // Save favorites to context (simulating registration)
-    updateUserFavorites("movie", formData.movies);
-    updateUserFavorites("tv", formData.series);
-    updateUserFavorites("book", formData.books);
+  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setAvatarFile(file);
+      setAvatarPreview(URL.createObjectURL(file));
+    }
+  };
 
-    // Navigate to explore
-    navigate("/explore");
+  const handleRegister = async () => {
+    try {
+      // 1. Sign up with Supabase Auth
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+      });
+
+      if (authError) throw authError;
+
+      if (authData.user) {
+        console.log("Signup successful. User:", authData.user.id);
+        console.log("Session:", authData.session);
+
+        let avatarUrl = `https://api.dicebear.com/7.x/avataaars/svg?seed=${formData.email}`;
+
+        // Upload avatar if selected
+        if (avatarFile) {
+          const fileExt = avatarFile.name.split('.').pop();
+          const fileName = `${authData.user.id}.${fileExt}`;
+          const filePath = `${fileName}`;
+
+          const { error: uploadError } = await supabase.storage
+            .from('avatars')
+            .upload(filePath, avatarFile);
+
+          if (uploadError) {
+            console.error("Avatar upload error:", uploadError);
+            toast.error("Profil fotoğrafı yüklenemedi, varsayılan avatar kullanılacak.");
+          } else {
+            const { data: { publicUrl } } = supabase.storage
+              .from('avatars')
+              .getPublicUrl(filePath);
+            avatarUrl = publicUrl;
+          }
+        }
+
+        if (!authData.session) {
+          console.warn("No session returned after signup. Email confirmation might be required.");
+          toast.info("Lütfen e-posta adresinizi doğrulayın.");
+          // If no session, we can't create profile/favorites due to RLS.
+          // We should stop here or handle it.
+          // For now, let's try to proceed but log if it fails.
+        }
+
+        // 2. Create profile in 'profiles' table
+        const { error: profileError } = await supabase
+          .from('profiles')
+          .insert([
+            {
+              id: authData.user.id,
+              name: formData.name,
+              handle: `@${formData.username || formData.email.split('@')[0]}`,
+              avatar_url: avatarUrl,
+            }
+          ]);
+
+        if (profileError) {
+          console.error("Profile creation error details:", JSON.stringify(profileError, null, 2));
+          console.error("Profile creation error message:", profileError.message);
+          console.error("Profile creation error code:", profileError.code);
+          // Optional: Delete auth user if profile creation fails
+        }
+
+        // 3. Save favorites to 'favorites' table
+        // Adjusting book fields to match schema (poster_path used for cover, release_date for publishedDate etc if needed, or generic fields)
+        // For simplicity, we map book cover to poster_path
+        const formattedFavorites = [
+          ...formData.movies.map(m => ({ user_id: authData.user!.id, item_id: m.id, item_type: 'movie', title: m.title, poster_path: m.posterPath, release_date: m.releaseDate, overview: m.overview })),
+          ...formData.series.map(s => ({ user_id: authData.user!.id, item_id: s.id, item_type: 'tv', title: s.title, poster_path: s.posterPath, release_date: s.releaseDate, overview: s.overview })),
+          ...formData.books.map(b => ({ user_id: authData.user!.id, item_id: b.id, item_type: 'book', title: b.title, poster_path: b.coverPath, overview: b.description, release_date: b.publishedDate }))
+        ];
+
+        if (formattedFavorites.length > 0) {
+          const { error: favError } = await supabase.from('favorites').insert(formattedFavorites);
+          if (favError) console.error("Favorites error:", favError);
+        }
+
+        toast.success("Kayıt başarılı! Giriş yapılıyor...");
+
+        // Force refresh data to get the new profile and favorites
+        await refreshUser();
+
+        navigate("/explore");
+      }
+    } catch (error: any) {
+      console.error("Registration error:", error);
+      toast.error(error.message || "Kayıt olurken bir hata oluştu.");
+    }
   };
 
   const renderStep3 = () => (
@@ -68,13 +162,13 @@ const RegisterPage = () => {
             onRemove={(item) => setFormData({ ...formData, movies: formData.movies.filter((i) => i.id !== item.id) })}
             renderItem={(item) => (
               <div className="w-20 flex flex-col gap-1">
-                <img src={item.posterPath || "https://via.placeholder.com/100x150"} alt={item.title} className="w-full h-28 object-cover rounded-md shadow-sm" />
+                <img src={item.posterPath || "https://placehold.co/100x150"} alt={item.title} className="w-full h-28 object-cover rounded-md shadow-sm" />
                 <span className="text-xs truncate text-center">{item.title}</span>
               </div>
             )}
             renderResult={(item) => (
               <>
-                <img src={item.posterPath || "https://via.placeholder.com/40x60"} alt={item.title} className="w-10 h-14 object-cover rounded" />
+                <img src={item.posterPath || "https://placehold.co/40x60"} alt={item.title} className="w-10 h-14 object-cover rounded" />
                 <div className="flex flex-col">
                   <span className="font-medium text-sm">{item.title}</span>
                   <span className="text-xs text-muted-foreground">{item.releaseDate?.split("-")[0]}</span>
@@ -95,13 +189,13 @@ const RegisterPage = () => {
             onRemove={(item) => setFormData({ ...formData, series: formData.series.filter((i) => i.id !== item.id) })}
             renderItem={(item) => (
               <div className="w-20 flex flex-col gap-1">
-                <img src={item.posterPath || "https://via.placeholder.com/100x150"} alt={item.title} className="w-full h-28 object-cover rounded-md shadow-sm" />
+                <img src={item.posterPath || "https://placehold.co/100x150"} alt={item.title} className="w-full h-28 object-cover rounded-md shadow-sm" />
                 <span className="text-xs truncate text-center">{item.title}</span>
               </div>
             )}
             renderResult={(item) => (
               <>
-                <img src={item.posterPath || "https://via.placeholder.com/40x60"} alt={item.title} className="w-10 h-14 object-cover rounded" />
+                <img src={item.posterPath || "https://placehold.co/40x60"} alt={item.title} className="w-10 h-14 object-cover rounded" />
                 <div className="flex flex-col">
                   <span className="font-medium text-sm">{item.title}</span>
                   <span className="text-xs text-muted-foreground">{item.releaseDate?.split("-")[0]}</span>
@@ -122,13 +216,13 @@ const RegisterPage = () => {
             onRemove={(item) => setFormData({ ...formData, books: formData.books.filter((i) => i.id !== item.id) })}
             renderItem={(item) => (
               <div className="w-20 flex flex-col gap-1">
-                <img src={item.coverPath || "https://via.placeholder.com/100x150"} alt={item.title} className="w-full h-28 object-cover rounded-md shadow-sm" />
+                <img src={item.coverPath || "https://placehold.co/100x150"} alt={item.title} className="w-full h-28 object-cover rounded-md shadow-sm" />
                 <span className="text-xs truncate text-center">{item.title}</span>
               </div>
             )}
             renderResult={(item) => (
               <>
-                <img src={item.coverPath || "https://via.placeholder.com/40x60"} alt={item.title} className="w-10 h-14 object-cover rounded" />
+                <img src={item.coverPath || "https://placehold.co/40x60"} alt={item.title} className="w-10 h-14 object-cover rounded" />
                 <div className="flex flex-col">
                   <span className="font-medium text-sm">{item.title}</span>
                   <span className="text-xs text-muted-foreground">{item.authors?.join(", ")}</span>
@@ -247,6 +341,49 @@ const RegisterPage = () => {
               <p className="text-muted-foreground">Kendinden bahset ve profilini oluştur.</p>
             </div>
             <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2">
+
+              {/* Avatar Upload */}
+              <div className="flex flex-col items-center gap-4">
+                <div className="relative w-24 h-24">
+                  <img
+                    src={avatarPreview || "https://placehold.co/150"}
+                    alt="Avatar Preview"
+                    className="w-full h-full rounded-full object-cover border-2 border-primary-app"
+                  />
+                  <label
+                    htmlFor="avatar-upload"
+                    className="absolute bottom-0 right-0 bg-primary-app text-white p-1.5 rounded-full cursor-pointer hover:bg-primary-app/90 transition-colors"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </label>
+                  <input
+                    id="avatar-upload"
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleAvatarChange}
+                  />
+                </div>
+                <span className="text-sm text-muted-foreground">Profil Fotoğrafı Ekle</span>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="username">Kullanıcı Adı</Label>
+                <div className="relative">
+                  <span className="absolute left-3 top-2.5 text-muted-foreground">@</span>
+                  <Input
+                    id="username"
+                    placeholder="kullaniciadi"
+                    className="pl-7"
+                    value={formData.username}
+                    onChange={(e) => setFormData({ ...formData, username: e.target.value.toLowerCase().replace(/[^a-z0-9_]/g, '') })}
+                  />
+                </div>
+              </div>
+
               <div className="space-y-2">
                 <Label htmlFor="name">Ad Soyad</Label>
                 <Input
@@ -355,8 +492,8 @@ const RegisterPage = () => {
                         setFormData({ ...formData, interests });
                       }}
                       className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${formData.interests.includes(interest)
-                          ? "bg-primary-app text-white"
-                          : "bg-muted hover:bg-muted/80"
+                        ? "bg-primary-app text-white"
+                        : "bg-muted hover:bg-muted/80"
                         }`}
                     >
                       {interest}

@@ -1,17 +1,70 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import SettingsSubPageAppBar from "@/components/settings/SettingsSubPageAppBar";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
+import { useData } from "@/context/DataContext";
+import { supabase } from "@/lib/supabase";
+import { toast } from "sonner";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 const AccountSettingsPage = () => {
   const { theme, setTheme } = useTheme();
+  const { currentUser, refreshUser } = useData();
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const userProfile = {
-    name: "Baran",
-    handle: "@baran",
-    avatarSrc: "https://lh3.googleusercontent.com/aida-public/AB6AXuCOxi_CQu8qdHRc62SS1DZs_4lDZEA3AwgiBhzfNNbB-BICmymjcFM86f8BU03ywrK9ZzWXsODnx0fJMuANYaHJ7jLX2UoV4DszW8gm9UYsoq60LbKkjHO1epXTFD7ZWVOIb6hRAWczXIfdzDzcjNSHU37y9XPsBojFKfMdqGpk2y2nileJe0",
+  const handleLogout = async () => {
+    try {
+      await supabase.auth.signOut();
+      await refreshUser();
+      navigate("/login");
+      toast.success("Başarıyla çıkış yapıldı.");
+    } catch (error) {
+      console.error("Logout error:", error);
+      toast.error("Çıkış yapılırken bir hata oluştu.");
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    if (currentUser.id === "guest") {
+      toast.error("Misafir hesabı silinemez. Lütfen giriş yapın.");
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      // 1. Delete profile (cascades to other tables)
+      const { error: deleteError } = await supabase
+        .from('profiles')
+        .delete()
+        .eq('id', currentUser.id);
+
+      if (deleteError) throw deleteError;
+
+      // 2. Sign out
+      await supabase.auth.signOut();
+      await refreshUser();
+
+      navigate("/");
+      toast.success("Hesabınız başarıyla silindi.");
+    } catch (error: any) {
+      console.error("Delete account error:", error);
+      toast.error("Hesap silinirken bir hata oluştu: " + error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -22,12 +75,12 @@ const AccountSettingsPage = () => {
         <section className="mb-6">
           <div className="flex flex-col items-center justify-center p-6 rounded-lg bg-card shadow-sm">
             <img
-              src={userProfile.avatarSrc}
-              alt={`${userProfile.name}'s profile picture`}
+              src={currentUser.avatarSrc || "https://placehold.co/150"}
+              alt={`${currentUser.name}'s profile picture`}
               className="w-24 h-24 rounded-full object-cover border-4 border-primary-app/20"
             />
-            <h2 className="text-xl font-bold text-foreground mt-4">{userProfile.name}</h2>
-            <p className="text-muted-foreground mt-1">{userProfile.handle}</p>
+            <h2 className="text-xl font-bold text-foreground mt-4">{currentUser.name}</h2>
+            <p className="text-muted-foreground mt-1">{currentUser.handle}</p>
           </div>
         </section>
 
@@ -98,12 +151,34 @@ const AccountSettingsPage = () => {
         </section>
         {/* Oturum Yönetimi */}
         <section className="mt-8 mb-4 space-y-4">
-          <button className="w-full rounded-lg bg-primary-app/20 px-6 py-3 text-base font-bold text-primary-app transition-colors hover:bg-primary-app/30">
+          <button
+            onClick={handleLogout}
+            className="w-full rounded-lg bg-primary-app/20 px-6 py-3 text-base font-bold text-primary-app transition-colors hover:bg-primary-app/30"
+          >
             Çıkış Yap
           </button>
-          <button className="w-full rounded-lg px-6 py-3 text-base font-medium text-destructive transition-colors hover:bg-destructive/10">
-            Hesabı Sil
-          </button>
+
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <button className="w-full rounded-lg px-6 py-3 text-base font-medium text-destructive transition-colors hover:bg-destructive/10">
+                Hesabı Sil
+              </button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Hesabınızı silmek istediğinize emin misiniz?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Bu işlem geri alınamaz. Hesabınız ve ilgili tüm verileriniz (paylaşımlar, favoriler, yorumlar) kalıcı olarak silinecektir.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>İptal</AlertDialogCancel>
+                <AlertDialogAction onClick={handleDeleteAccount} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                  {isLoading ? "Siliniyor..." : "Evet, Hesabımı Sil"}
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </section>
       </main>
     </div>

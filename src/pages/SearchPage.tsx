@@ -7,6 +7,7 @@ import { searchBooks, BookItem } from "@/services/booksService";
 import { useData } from "@/context/DataContext";
 import { useNavigate } from "react-router-dom";
 import { useDebounce } from "@/hooks/useDebounce";
+import MediaDetailDialog from "@/components/search/MediaDetailDialog";
 
 const SearchPage = () => {
   const navigate = useNavigate();
@@ -14,6 +15,15 @@ const SearchPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const debouncedSearchQuery = useDebounce(searchQuery, 500); // 500ms debounce
   const [activeTab, setActiveTab] = useState<"all" | "movies" | "books" | "users">("all");
+  const [selectedItem, setSelectedItem] = useState<MediaItem | BookItem | null>(null);
+  const [selectedType, setSelectedType] = useState<"movie" | "tv" | "book">("movie");
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
+
+  const handleItemClick = (item: MediaItem | BookItem, type: "movie" | "tv" | "book") => {
+    setSelectedItem(item);
+    setSelectedType(type);
+    setIsDetailOpen(true);
+  };
 
   // React Query for movies - automatic caching & deduplication
   const { data: movies = [], isLoading: isLoadingMovies } = useQuery({
@@ -92,9 +102,10 @@ const SearchPage = () => {
                 <div
                   key={item.id}
                   className="flex items-center gap-3 p-3 hover:bg-muted/50 transition-colors cursor-pointer mx-2 rounded-lg"
+                  onClick={() => handleItemClick(item, item.type)}
                 >
                   <img
-                    src={item.posterPath || "https://via.placeholder.com/60x90"}
+                    src={item.posterPath || "https://placehold.co/60x90"}
                     alt={item.title}
                     className="w-12 h-18 object-cover rounded"
                   />
@@ -120,9 +131,10 @@ const SearchPage = () => {
                 <div
                   key={book.id}
                   className="flex items-center gap-3 p-3 hover:bg-muted/50 transition-colors cursor-pointer mx-2 rounded-lg"
+                  onClick={() => handleItemClick(book, "book")}
                 >
                   <img
-                    src={book.coverPath || "https://via.placeholder.com/60x90"}
+                    src={book.coverPath || "https://placehold.co/60x90"}
                     alt={book.title}
                     className="w-12 h-18 object-cover rounded"
                   />
@@ -243,6 +255,13 @@ const SearchPage = () => {
       <div className="flex-1 overflow-y-auto">
         {renderResults()}
       </div>
+
+      <MediaDetailDialog
+        isOpen={isDetailOpen}
+        onClose={() => setIsDetailOpen(false)}
+        item={selectedItem}
+        type={selectedType}
+      />
     </div>
   );
 };

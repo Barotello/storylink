@@ -5,12 +5,15 @@ import PostCard from "@/components/explore/PostCard";
 import { Button } from "@/components/ui/button";
 import { useData } from "@/context/DataContext";
 import CommentsDrawer from "@/components/explore/CommentsDrawer";
+import CreatePostDialog from "@/components/explore/CreatePostDialog";
+import { Plus } from "lucide-react";
 
 const ExplorePage = () => {
   const [activeTab, setActiveTab] = useState("Sana Özel");
   const { posts, users, toggleLike } = useData();
   const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
   const [isCommentsOpen, setIsCommentsOpen] = useState(false);
+  const [isCreatePostOpen, setIsCreatePostOpen] = useState(false);
 
   const handleCommentClick = (postId: string) => {
     setSelectedPostId(postId);
@@ -75,8 +78,8 @@ const ExplorePage = () => {
           <Button
             variant="ghost"
             className={`flex flex-col items-center justify-center border-b-[3px] pb-[13px] pt-4 flex-1 h-auto rounded-none ${activeTab === "Sana Özel"
-                ? "border-b-primary-app text-foreground"
-                : "border-b-transparent text-muted-foreground"
+              ? "border-b-primary-app text-foreground"
+              : "border-b-transparent text-muted-foreground"
               }`}
             onClick={() => setActiveTab("Sana Özel")}
           >
@@ -85,8 +88,8 @@ const ExplorePage = () => {
           <Button
             variant="ghost"
             className={`flex flex-col items-center justify-center border-b-[3px] pb-[13px] pt-4 flex-1 h-auto rounded-none ${activeTab === "Filmler"
-                ? "border-b-primary-app text-foreground"
-                : "border-b-transparent text-muted-foreground"
+              ? "border-b-primary-app text-foreground"
+              : "border-b-transparent text-muted-foreground"
               }`}
             onClick={() => setActiveTab("Filmler")}
           >
@@ -95,8 +98,8 @@ const ExplorePage = () => {
           <Button
             variant="ghost"
             className={`flex flex-col items-center justify-center border-b-[3px] pb-[13px] pt-4 flex-1 h-auto rounded-none ${activeTab === "Kitaplar"
-                ? "border-b-primary-app text-foreground"
-                : "border-b-transparent text-muted-foreground"
+              ? "border-b-primary-app text-foreground"
+              : "border-b-transparent text-muted-foreground"
               }`}
             onClick={() => setActiveTab("Kitaplar")}
           >
@@ -114,6 +117,19 @@ const ExplorePage = () => {
         postId={selectedPostId}
         isOpen={isCommentsOpen}
         onClose={() => setIsCommentsOpen(false)}
+      />
+
+      <Button
+        className="fixed bottom-20 right-4 h-14 w-14 rounded-full shadow-lg z-50"
+        size="icon"
+        onClick={() => setIsCreatePostOpen(true)}
+      >
+        <Plus className="h-6 w-6" />
+      </Button>
+
+      <CreatePostDialog
+        isOpen={isCreatePostOpen}
+        onClose={() => setIsCreatePostOpen(false)}
       />
     </div>
   );

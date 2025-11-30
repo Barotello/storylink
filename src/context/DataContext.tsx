@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 import { MediaItem } from "@/services/tmdbService";
 import { BookItem } from "@/services/booksService";
+import { supabase } from "@/lib/supabase";
+import { toast } from "sonner";
 
 // Types
 export interface User {
@@ -37,182 +39,268 @@ interface DataContextType {
     currentUser: User;
     posts: Post[];
     users: Record<string, User>;
+    addPost: (content: string) => void;
     addComment: (postId: string, content: string) => void;
     toggleLike: (postId: string) => void;
     getMatches: () => { user: User; score: number; sharedItems: string[] }[];
     updateUserFavorites: (type: "movie" | "tv" | "book", items: (MediaItem | BookItem)[]) => void;
+    toggleFavorite: (item: MediaItem | BookItem, type: "movie" | "tv" | "book") => void;
+    refreshUser: () => Promise<void>;
 }
 
-// Mock Data
-const MOCK_USERS: Record<string, User> = {
-    "current": {
-        id: "current",
-        name: "Baran",
-        handle: "@baran",
-        avatarSrc: "https://lh3.googleusercontent.com/aida-public/AB6AXuCOxi_CQu8qdHRc62SS1DZs_4lDZEA3AwgiBhzfNNbB-BICmymjcFM86f8BU03ywrK9ZzWXsODnx0fJMuANYc_HJ7jLX2UoV4DszW8gm9UYsoq60LbKkjHO1epXTFD7ZWVOIb6hRAWczXIfdzDzcjNSHU37y9XPsBojFKfMdqGpk2y2nileJe0",
-        favoriteMovies: [],
-        favoriteSeries: [],
-        favoriteBooks: [],
-    },
-    "u1": {
-        id: "u1",
-        name: "Mert Yılmaz",
-        handle: "@mertyilmaz",
-        avatarSrc: "https://lh3.googleusercontent.com/aida-public/AB6AXuDu1v-VkjLsjXU1-5MkGJEZLCIfZQKqUPm4TUOKLJ4TDs8ObBmSVWQiJEeT1tZ-T5trHKvF3IlYXIMBIU7I8FZdC6mkNUvMEsmZol5Q4EtQX3n5DGIczs_3w0tctYdicqgRiUl9qPImMN2UgwtSaJZI6oVIZBE4KhnGl7d5-z766M2OBX4oIQAiepPHGM3MAtCw16hmb92oLQ7SW6rUmWlZjVGMmw5g_BPY8BqCw4jxF4Biw_jm0zhmsajkvt0i7VQweHiSqRYEy2I",
-        favoriteMovies: [
-            { id: "m1", title: "Inception", posterPath: "", type: "movie", genreIds: [], overview: "", releaseDate: "" }
-        ],
-        favoriteSeries: [],
-        favoriteBooks: [
-            { id: "b1", title: "Dune", authors: [], coverPath: "", description: "", publishedDate: "" }
-        ],
-    },
-    "u2": {
-        id: "u2",
-        name: "Ayşe Kaya",
-        handle: "@aysekaya",
-        avatarSrc: "https://lh3.googleusercontent.com/aida-public/AB6AXuAKGB2oZEPf4p3zu7WpYbCn3dWTC49agopcubP9E3VHzrdHVIpqWMhR45VJOpgVW90-uLwU1I4TV7fRj-44q37dfP1vAf3En1XrRLTqkEI9k4Bp0riDz2UHEKIUoxoscUR4a2PNq6hyPC7lXU9X_0TS0JoUevqNTxXlq4Sn6nxipHZ7uBILzPsAOz7CZLe8ds4gqKS9EhXxmcepArkF35kLk3YNV_qcwemRyOmOQxyGQA3HNfIwcB-gY6zkglB2lC68iVuUOP9XMQ8",
-        favoriteMovies: [],
-        favoriteSeries: [],
-        favoriteBooks: [],
-    },
-    "u3": {
-        id: "u3",
-        name: "Emre Tekin",
-        handle: "@emretekin",
-        avatarSrc: "https://lh3.googleusercontent.com/aida-public/AB6AXuBSfVVOzvBmiJ5IseGK7PZJwncH52ZNwM5DhknI1JcqeH71iNEdtzA-BqVK98lPQNCOfzEzPPSfYVlpD7CzyHWoDdtLCsSM2RLVk74wK-QpA-37U6g-iO3YdeXmGUZ0QV2xArBUhIk8Zk2YW3LCSDZsvWZdOTnuwK-QpA-37U6g-iO3YdeXmGUZ0QV2xArBUhIk8Zk2YW3LCSDZsvWZdOTnuwKrlYaEdyoancsCUvr-luz1rYX1_jMwmbVychHj0ucxSWPToJdNh1p7nj94Ft3wQxDHviY7TGGcY3NGY7v_MMRJPl0ZS9BMuXB2zRvNzSphl1ZIV79387E7zgoFJNMdTzJpy4TqeCFItcUOs9pErLGyye_ptrenv-ZIWkApYA",
-        favoriteMovies: [],
-        favoriteSeries: [],
-        favoriteBooks: [],
-    },
-};
-
-const MOCK_POSTS: Post[] = [
-    {
-        id: "p1",
-        userId: "u1",
-        content: "Az önce Dune: Part Two'yu bitirdim, filmin sonu hakkındaki düşünceleriniz neler?",
-        mediaType: "film",
-        mediaTitle: "Dune: Part Two",
-        mediaImageSrc: "https://lh3.googleusercontent.com/aida-public/AB6AXuAa-flcZ06vYMzJ9yWygSKsmGRBXWQlmbnkTCo7UKGZfQVTe8hy3QXCtvnk7fX95836UY1h3zVYYr9V12tmSK_V-lvkisu83c3eZH2rUgjLrRZS3Ry6bdET86-3Jq0zTfRVZSP8JTdWw0gMVxvHc7MQW0wsOakUynRlgBbSVvdT8CpicnT1CnPZI_vto7x0jUqC3uMdos4HqEgOOCNvPyI05nbMxD2-r78dkkqSTC61oT_JzDrj3__N7iaXpGLmv9uf2u-ECXFmhM",
-        likes: 47,
-        reposts: 3,
-        createdAt: "2s önce",
-        comments: [
-            { id: "c1", userId: "u2", content: "Görsellik inanılmazdı!", createdAt: "1s önce" },
-            { id: "c2", userId: "u3", content: "Kitaba sadık kalmışlar mı?", createdAt: "30dk önce" }
-        ],
-    },
-    {
-        id: "p2",
-        userId: "u2",
-        content: "\"Yeraltından Notlar\" kitabını okuyan var mı? Baş karakter hakkında konuşmak istiyorum. Gerçekten inanılmaz bir karakter analizi.",
-        likes: 89,
-        reposts: 11,
-        createdAt: "1sa önce",
-        comments: [],
-    },
-    {
-        id: "p3",
-        userId: "u3",
-        content: "Hafta sonu için bilim kurgu film önerisi olan var mı? Blade Runner 2049 tarzı bir şeyler arıyorum.",
-        likes: 35,
-        reposts: 2,
-        createdAt: "5sa önce",
-        comments: [],
-    },
-];
-
+// Mock Data Removed
 const DataContext = createContext<DataContextType | undefined>(undefined);
 
 export const DataProvider = ({ children }: { children: ReactNode }) => {
-    const [posts, setPosts] = useState<Post[]>(MOCK_POSTS);
-    const [users, setUsers] = useState<Record<string, User>>(MOCK_USERS);
+    const [posts, setPosts] = useState<Post[]>([]);
+    const [users, setUsers] = useState<Record<string, User>>({});
+    const [currentUser, setCurrentUser] = useState<User>({
+        id: "guest",
+        name: "Misafir",
+        handle: "@misafir",
+        avatarSrc: "https://placehold.co/150",
+        favoriteMovies: [],
+        favoriteSeries: [],
+        favoriteBooks: [],
+    });
 
-    // In a real app, this would come from auth state
-    const currentUser = users["current"];
+    // Fetch initial data
+    const fetchData = async () => {
+        console.log("DataContext: fetchData called");
+        // 1. Get current session
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+
+        if (sessionError) {
+            console.error("DataContext: Session error", sessionError);
+        }
+
+        console.log("DataContext: Session", session);
+
+        if (session?.user) {
+            console.log("DataContext: User found, fetching profile for", session.user.id);
+            // Fetch profile
+            let { data: profile, error: profileError } = await supabase
+                .from('profiles')
+                .select('*')
+                .eq('id', session.user.id)
+                .maybeSingle();
+
+            if (profileError) {
+                console.error("DataContext: Profile fetch error", profileError);
+            } else if (!profile) {
+                console.log("DataContext: Profile not found, creating new profile...");
+                // Auto-create profile if missing
+                const newProfile = {
+                    id: session.user.id,
+                    name: session.user.email?.split('@')[0] || "Kullanıcı",
+                    handle: `@${session.user.email?.split('@')[0] || "user"}`,
+                    avatar_url: `https://api.dicebear.com/7.x/avataaars/svg?seed=${session.user.email}`,
+                };
+
+                const { data: createdProfile, error: createError } = await supabase
+                    .from('profiles')
+                    .insert([newProfile])
+                    .select()
+                    .single();
+
+                if (createError) {
+                    console.error("DataContext: Failed to create profile", createError);
+                } else {
+                    console.log("DataContext: Profile created", createdProfile);
+                    profile = createdProfile;
+                }
+            } else {
+                console.log("DataContext: Profile fetched", profile);
+            }
+
+            // Fetch favorites
+            const { data: favorites, error: favError } = await supabase
+                .from('favorites')
+                .select('*')
+                .eq('user_id', session.user.id);
+
+            if (favError) console.error("DataContext: Favorites fetch error", favError);
+
+            if (profile) {
+                const movies = favorites?.filter(f => f.item_type === 'movie').map(f => ({ id: f.item_id, title: f.title, posterPath: f.poster_path, type: 'movie', overview: f.overview, releaseDate: f.release_date } as MediaItem)) || [];
+                const series = favorites?.filter(f => f.item_type === 'tv').map(f => ({ id: f.item_id, title: f.title, posterPath: f.poster_path, type: 'tv', overview: f.overview, releaseDate: f.release_date } as MediaItem)) || [];
+                const books = favorites?.filter(f => f.item_type === 'book').map(f => ({ id: f.item_id, title: f.title, coverPath: f.poster_path, description: f.overview, publishedDate: f.release_date } as BookItem)) || [];
+
+                setCurrentUser({
+                    id: profile.id,
+                    name: profile.name,
+                    handle: profile.handle,
+                    avatarSrc: profile.avatar_url || "https://placehold.co/150",
+                    favoriteMovies: movies,
+                    favoriteSeries: series,
+                    favoriteBooks: books,
+                });
+            }
+        } else {
+            console.log("DataContext: No session user");
+        }
+
+        // 2. Fetch Posts (with profiles)
+        const { data: postsData } = await supabase
+            .from('posts')
+            .select(`
+                    *,
+                    profiles (name, handle, avatar_url)
+                `)
+            .order('created_at', { ascending: false });
+
+        if (postsData) {
+            const formattedPosts: Post[] = postsData.map(p => ({
+                id: p.id,
+                userId: p.user_id,
+                content: p.content,
+                mediaType: p.media_type,
+                mediaTitle: p.media_title,
+                mediaImageSrc: p.media_image_src,
+                likes: p.likes,
+                reposts: p.reposts,
+                createdAt: new Date(p.created_at).toLocaleDateString(), // Simple formatting
+                comments: [], // TODO: Fetch comments
+            }));
+            setPosts(formattedPosts);
+
+            // Update users map for avatar display in posts
+            const newUsers: Record<string, User> = {};
+            postsData.forEach(p => {
+                if (p.profiles) {
+                    newUsers[p.user_id] = {
+                        id: p.user_id,
+                        name: p.profiles.name,
+                        handle: p.profiles.handle,
+                        avatarSrc: p.profiles.avatar_url,
+                        favoriteMovies: [],
+                        favoriteSeries: [],
+                        favoriteBooks: []
+                    };
+                }
+            });
+            setUsers(prev => ({ ...prev, ...newUsers }));
+        }
+    };
+
+    React.useEffect(() => {
+        fetchData();
+
+        // Listen for auth changes
+        const { data: authListener } = supabase.auth.onAuthStateChange(() => {
+            fetchData();
+        });
+
+        return () => {
+            authListener.subscription.unsubscribe();
+        };
+    }, []);
+
+
+    const addPost = async (content: string) => {
+        if (currentUser.id === "guest") {
+            toast.error("Paylaşım yapmak için giriş yapmalısınız.");
+            return;
+        }
+
+        const { data, error } = await supabase
+            .from('posts')
+            .insert([
+                { user_id: currentUser.id, content }
+            ])
+            .select()
+            .single();
+
+        if (error) {
+            toast.error("Gönderi paylaşılamadı.");
+            console.error(error);
+            return;
+        }
+
+        if (data) {
+            const newPost: Post = {
+                id: data.id,
+                userId: currentUser.id,
+                content: data.content,
+                likes: 0,
+                reposts: 0,
+                createdAt: "Şimdi",
+                comments: [],
+            };
+            setPosts((prev) => [newPost, ...prev]);
+        }
+    };
 
     const addComment = (postId: string, content: string) => {
-        const newComment: Comment = {
-            id: Math.random().toString(36).substr(2, 9),
-            userId: currentUser.id,
-            content,
-            createdAt: "Şimdi",
-        };
-
-        setPosts((prevPosts) =>
-            prevPosts.map((post) =>
-                post.id === postId
-                    ? { ...post, comments: [...post.comments, newComment] }
-                    : post
-            )
-        );
+        // Placeholder for comment implementation
+        console.log("Add comment", postId, content);
     };
 
     const toggleLike = (postId: string) => {
-        setPosts((prevPosts) =>
-            prevPosts.map((post) =>
-                post.id === postId
-                    ? { ...post, likes: post.likes + 1 }
-                    : post
-            )
-        );
+        // Placeholder for like implementation
+        console.log("Like", postId);
     };
 
     const updateUserFavorites = (type: "movie" | "tv" | "book", items: (MediaItem | BookItem)[]) => {
-        setUsers(prev => ({
-            ...prev,
-            "current": {
-                ...prev["current"],
-                [type === "movie" ? "favoriteMovies" : type === "tv" ? "favoriteSeries" : "favoriteBooks"]: items
+        // Deprecated in favor of direct DB manipulation via toggleFavorite, keeping for compatibility if needed
+        console.log("updateUserFavorites deprecated");
+    };
+
+    const toggleFavorite = async (item: MediaItem | BookItem, type: "movie" | "tv" | "book") => {
+        if (currentUser.id === "guest") {
+            toast.error("Favorilere eklemek için giriş yapmalısınız.");
+            return;
+        }
+
+        const listKey = type === "movie" ? "favoriteMovies" : type === "tv" ? "favoriteSeries" : "favoriteBooks";
+        const list = currentUser[listKey] as (MediaItem | BookItem)[];
+        const exists = list.some((i) => i.id === item.id);
+
+        if (exists) {
+            // Remove
+            const { error } = await supabase
+                .from('favorites')
+                .delete()
+                .eq('user_id', currentUser.id)
+                .eq('item_id', item.id);
+
+            if (!error) {
+                setCurrentUser(prev => ({
+                    ...prev,
+                    [listKey]: (prev[listKey] as any[]).filter(i => i.id !== item.id)
+                }));
             }
-        }));
+        } else {
+            // Add
+            const payload = {
+                user_id: currentUser.id,
+                item_id: item.id,
+                item_type: type,
+                title: item.title,
+                poster_path: 'posterPath' in item ? item.posterPath : (item as BookItem).coverPath,
+                overview: 'overview' in item ? item.overview : (item as BookItem).description,
+                release_date: 'releaseDate' in item ? item.releaseDate : (item as BookItem).publishedDate,
+            };
+
+            const { error } = await supabase
+                .from('favorites')
+                .insert([payload]);
+
+            if (!error) {
+                setCurrentUser(prev => ({
+                    ...prev,
+                    [listKey]: [...(prev[listKey] as any[]), item]
+                }));
+            }
+        }
     };
 
     const getMatches = () => {
-        const matches: { user: User; score: number; sharedItems: string[] }[] = [];
-        const current = users["current"];
-
-        Object.values(users).forEach(user => {
-            if (user.id === current.id) return;
-
-            let score = 0;
-            const sharedItems: string[] = [];
-
-            // Check Movies
-            current.favoriteMovies.forEach(m1 => {
-                if (user.favoriteMovies.some(m2 => m2.title === m1.title)) {
-                    score += 10;
-                    sharedItems.push(m1.title);
-                }
-            });
-
-            // Check Series
-            current.favoriteSeries.forEach(s1 => {
-                if (user.favoriteSeries.some(s2 => s2.title === s1.title)) {
-                    score += 10;
-                    sharedItems.push(s1.title);
-                }
-            });
-
-            // Check Books
-            current.favoriteBooks.forEach(b1 => {
-                if (user.favoriteBooks.some(b2 => b2.title === b1.title)) {
-                    score += 10;
-                    sharedItems.push(b1.title);
-                }
-            });
-
-            if (score > 0) {
-                matches.push({ user, score, sharedItems });
-            }
-        });
-
-        return matches.sort((a, b) => b.score - a.score);
+        return []; // TODO: Implement matching logic with backend
     };
 
     return (
-        <DataContext.Provider value={{ currentUser, posts, users, addComment, toggleLike, getMatches, updateUserFavorites }}>
+        <DataContext.Provider value={{ currentUser, posts, users, addPost, addComment, toggleLike, getMatches, updateUserFavorites, toggleFavorite, refreshUser: fetchData }}>
             {children}
         </DataContext.Provider>
     );
