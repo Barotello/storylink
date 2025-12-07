@@ -28,6 +28,12 @@ const ProfileTabs = ({ user, posts, onMediaClick }: ProfileTabsProps) => {
                     Filmler
                 </TabsTrigger>
                 <TabsTrigger
+                    value="series"
+                    className="flex-1 rounded-none border-b-2 border-transparent px-4 py-3 font-semibold text-muted-foreground data-[state=active]:border-primary-app data-[state=active]:text-foreground"
+                >
+                    Diziler
+                </TabsTrigger>
+                <TabsTrigger
                     value="books"
                     className="flex-1 rounded-none border-b-2 border-transparent px-4 py-3 font-semibold text-muted-foreground data-[state=active]:border-primary-app data-[state=active]:text-foreground"
                 >
@@ -83,6 +89,32 @@ const ProfileTabs = ({ user, posts, onMediaClick }: ProfileTabsProps) => {
                     {user.favoriteMovies.length === 0 && (
                         <div className="col-span-3 text-center py-8 text-muted-foreground">
                             Henüz favori film eklenmemiş.
+                        </div>
+                    )}
+                </div>
+            </TabsContent>
+
+            <TabsContent value="series" className="mt-0 p-4">
+                <div className="grid grid-cols-3 gap-4">
+                    {user.favoriteSeries.map((series) => (
+                        <div
+                            key={series.id}
+                            className="cursor-pointer group"
+                            onClick={() => onMediaClick(series, "tv")}
+                        >
+                            <div className="aspect-[2/3] overflow-hidden rounded-lg bg-muted">
+                                <img
+                                    src={series.posterPath || "https://placehold.co/200x300"}
+                                    alt={series.title}
+                                    className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                                />
+                            </div>
+                            <p className="mt-2 text-xs font-medium truncate">{series.title}</p>
+                        </div>
+                    ))}
+                    {user.favoriteSeries.length === 0 && (
+                        <div className="col-span-3 text-center py-8 text-muted-foreground">
+                            Henüz favori dizi eklenmemiş.
                         </div>
                     )}
                 </div>

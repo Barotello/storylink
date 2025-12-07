@@ -3,6 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 import { SearchSelect } from "@/components/register/SearchSelect";
 import { searchMovies, searchTVSeries, MediaItem } from "@/services/tmdbService";
@@ -74,25 +80,33 @@ const RegisterPage = () => {
 
           const { error: uploadError } = await supabase.storage
             .from('avatars')
-            .upload(filePath, avatarFile);
+            .upload(filePath, avatarFile, {
+              upsert: true
+            });
 
           if (uploadError) {
             console.error("Avatar upload error:", uploadError);
             toast.error("Profil fotoğrafı yüklenemedi, varsayılan avatar kullanılacak.");
           } else {
-            const { data: { publicUrl } } = supabase.storage
+            console.log("Avatar upload successful to path:", filePath);
+            const { data } = supabase.storage
               .from('avatars')
               .getPublicUrl(filePath);
-            avatarUrl = publicUrl;
+
+            console.log("Avatar public URL data:", data);
+            if (data) {
+              avatarUrl = data.publicUrl;
+            }
           }
         }
 
+
         if (!authData.session) {
           console.warn("No session returned after signup. Email confirmation might be required.");
-          toast.info("Lütfen e-posta adresinizi doğrulayın.");
-          // If no session, we can't create profile/favorites due to RLS.
-          // We should stop here or handle it.
-          // For now, let's try to proceed but log if it fails.
+          toast.success("Kayıt başarılı! Lütfen e-posta adresinizi doğrulayıp giriş yapın.");
+          // Redirect to login because we can't auto-login without email confirmation
+          navigate("/login");
+          return;
         }
 
         // 2. Create profile in 'profiles' table
@@ -109,23 +123,26 @@ const RegisterPage = () => {
 
         if (profileError) {
           console.error("Profile creation error details:", JSON.stringify(profileError, null, 2));
-          console.error("Profile creation error message:", profileError.message);
-          console.error("Profile creation error code:", profileError.code);
-          // Optional: Delete auth user if profile creation fails
+          // Proceeding even if profile creation fails, though ideally we retry or alert
         }
 
         // 3. Save favorites to 'favorites' table
-        // Adjusting book fields to match schema (poster_path used for cover, release_date for publishedDate etc if needed, or generic fields)
-        // For simplicity, we map book cover to poster_path
         const formattedFavorites = [
-          ...formData.movies.map(m => ({ user_id: authData.user!.id, item_id: m.id, item_type: 'movie', title: m.title, poster_path: m.posterPath, release_date: m.releaseDate, overview: m.overview })),
-          ...formData.series.map(s => ({ user_id: authData.user!.id, item_id: s.id, item_type: 'tv', title: s.title, poster_path: s.posterPath, release_date: s.releaseDate, overview: s.overview })),
-          ...formData.books.map(b => ({ user_id: authData.user!.id, item_id: b.id, item_type: 'book', title: b.title, poster_path: b.coverPath, overview: b.description, release_date: b.publishedDate }))
+          ...formData.movies.map(m => ({ user_id: authData.user!.id, item_id: String(m.id), item_type: 'movie', title: m.title, poster_path: m.posterPath, release_date: m.releaseDate, overview: m.overview })),
+          ...formData.series.map(s => ({ user_id: authData.user!.id, item_id: String(s.id), item_type: 'tv', title: s.title, poster_path: s.posterPath, release_date: s.releaseDate, overview: s.overview })),
+          ...formData.books.map(b => ({ user_id: authData.user!.id, item_id: String(b.id), item_type: 'book', title: b.title, poster_path: b.coverPath, overview: b.description, release_date: b.publishedDate }))
         ];
+
+        console.log("Attempting to save favorites:", formattedFavorites.length);
 
         if (formattedFavorites.length > 0) {
           const { error: favError } = await supabase.from('favorites').insert(formattedFavorites);
-          if (favError) console.error("Favorites error:", favError);
+          if (favError) {
+            console.error("Favorites insert error details:", JSON.stringify(favError, null, 2));
+            toast.error("Favoriler kaydedilirken bir hata oluştu.");
+          } else {
+            console.log("Favorites saved successfully");
+          }
         }
 
         toast.success("Kayıt başarılı! Giriş yapılıyor...");
@@ -133,7 +150,7 @@ const RegisterPage = () => {
         // Force refresh data to get the new profile and favorites
         await refreshUser();
 
-        navigate("/explore");
+        navigate("/profile"); // Navigate to profile as requested by user context "profil sekmesine girdim"
       }
     } catch (error: any) {
       console.error("Registration error:", error);
@@ -150,88 +167,94 @@ const RegisterPage = () => {
         </p>
       </div>
 
-      <div className="space-y-6">
+      <Accordion type="single" collapsible className="w-full" defaultValue="movies">
         {/* Movies */}
-        <div className="space-y-2">
-          <Label>En Sevdiğin Filmler</Label>
-          <SearchSelect
-            placeholder="Film ara..."
-            onSearch={searchMovies}
-            selectedItems={formData.movies}
-            onSelect={(item) => setFormData({ ...formData, movies: [...formData.movies, item] })}
-            onRemove={(item) => setFormData({ ...formData, movies: formData.movies.filter((i) => i.id !== item.id) })}
-            renderItem={(item) => (
-              <div className="w-20 flex flex-col gap-1">
-                <img src={item.posterPath || "https://placehold.co/100x150"} alt={item.title} className="w-full h-28 object-cover rounded-md shadow-sm" />
-                <span className="text-xs truncate text-center">{item.title}</span>
-              </div>
-            )}
-            renderResult={(item) => (
-              <>
-                <img src={item.posterPath || "https://placehold.co/40x60"} alt={item.title} className="w-10 h-14 object-cover rounded" />
-                <div className="flex flex-col">
-                  <span className="font-medium text-sm">{item.title}</span>
-                  <span className="text-xs text-muted-foreground">{item.releaseDate?.split("-")[0]}</span>
+        <AccordionItem value="movies">
+          <AccordionTrigger>En Sevdiğin Filmler</AccordionTrigger>
+          <AccordionContent>
+            <SearchSelect
+              placeholder="Film ara..."
+              onSearch={searchMovies}
+              selectedItems={formData.movies}
+              onSelect={(item) => setFormData({ ...formData, movies: [...formData.movies, item] })}
+              onRemove={(item) => setFormData({ ...formData, movies: formData.movies.filter((i) => i.id !== item.id) })}
+              renderItem={(item) => (
+                <div className="w-20 flex flex-col gap-1">
+                  <img src={item.posterPath || "https://placehold.co/100x150"} alt={item.title} className="w-full h-28 object-cover rounded-md shadow-sm" />
+                  <span className="text-xs truncate text-center">{item.title}</span>
                 </div>
-              </>
-            )}
-          />
-        </div>
+              )}
+              renderResult={(item) => (
+                <>
+                  <img src={item.posterPath || "https://placehold.co/40x60"} alt={item.title} className="w-10 h-14 object-cover rounded" />
+                  <div className="flex flex-col">
+                    <span className="font-medium text-sm">{item.title}</span>
+                    <span className="text-xs text-muted-foreground">{item.releaseDate?.split("-")[0]}</span>
+                  </div>
+                </>
+              )}
+            />
+          </AccordionContent>
+        </AccordionItem>
 
         {/* Series */}
-        <div className="space-y-2">
-          <Label>En Sevdiğin Diziler</Label>
-          <SearchSelect
-            placeholder="Dizi ara..."
-            onSearch={searchTVSeries}
-            selectedItems={formData.series}
-            onSelect={(item) => setFormData({ ...formData, series: [...formData.series, item] })}
-            onRemove={(item) => setFormData({ ...formData, series: formData.series.filter((i) => i.id !== item.id) })}
-            renderItem={(item) => (
-              <div className="w-20 flex flex-col gap-1">
-                <img src={item.posterPath || "https://placehold.co/100x150"} alt={item.title} className="w-full h-28 object-cover rounded-md shadow-sm" />
-                <span className="text-xs truncate text-center">{item.title}</span>
-              </div>
-            )}
-            renderResult={(item) => (
-              <>
-                <img src={item.posterPath || "https://placehold.co/40x60"} alt={item.title} className="w-10 h-14 object-cover rounded" />
-                <div className="flex flex-col">
-                  <span className="font-medium text-sm">{item.title}</span>
-                  <span className="text-xs text-muted-foreground">{item.releaseDate?.split("-")[0]}</span>
+        <AccordionItem value="series">
+          <AccordionTrigger>En Sevdiğin Diziler</AccordionTrigger>
+          <AccordionContent>
+            <SearchSelect
+              placeholder="Dizi ara..."
+              onSearch={searchTVSeries}
+              selectedItems={formData.series}
+              onSelect={(item) => setFormData({ ...formData, series: [...formData.series, item] })}
+              onRemove={(item) => setFormData({ ...formData, series: formData.series.filter((i) => i.id !== item.id) })}
+              renderItem={(item) => (
+                <div className="w-20 flex flex-col gap-1">
+                  <img src={item.posterPath || "https://placehold.co/100x150"} alt={item.title} className="w-full h-28 object-cover rounded-md shadow-sm" />
+                  <span className="text-xs truncate text-center">{item.title}</span>
                 </div>
-              </>
-            )}
-          />
-        </div>
+              )}
+              renderResult={(item) => (
+                <>
+                  <img src={item.posterPath || "https://placehold.co/40x60"} alt={item.title} className="w-10 h-14 object-cover rounded" />
+                  <div className="flex flex-col">
+                    <span className="font-medium text-sm">{item.title}</span>
+                    <span className="text-xs text-muted-foreground">{item.releaseDate?.split("-")[0]}</span>
+                  </div>
+                </>
+              )}
+            />
+          </AccordionContent>
+        </AccordionItem>
 
         {/* Books */}
-        <div className="space-y-2">
-          <Label>En Sevdiğin Kitaplar</Label>
-          <SearchSelect
-            placeholder="Kitap ara..."
-            onSearch={searchBooks}
-            selectedItems={formData.books}
-            onSelect={(item) => setFormData({ ...formData, books: [...formData.books, item] })}
-            onRemove={(item) => setFormData({ ...formData, books: formData.books.filter((i) => i.id !== item.id) })}
-            renderItem={(item) => (
-              <div className="w-20 flex flex-col gap-1">
-                <img src={item.coverPath || "https://placehold.co/100x150"} alt={item.title} className="w-full h-28 object-cover rounded-md shadow-sm" />
-                <span className="text-xs truncate text-center">{item.title}</span>
-              </div>
-            )}
-            renderResult={(item) => (
-              <>
-                <img src={item.coverPath || "https://placehold.co/40x60"} alt={item.title} className="w-10 h-14 object-cover rounded" />
-                <div className="flex flex-col">
-                  <span className="font-medium text-sm">{item.title}</span>
-                  <span className="text-xs text-muted-foreground">{item.authors?.join(", ")}</span>
+        <AccordionItem value="books">
+          <AccordionTrigger>En Sevdiğin Kitaplar</AccordionTrigger>
+          <AccordionContent>
+            <SearchSelect
+              placeholder="Kitap ara..."
+              onSearch={searchBooks}
+              selectedItems={formData.books}
+              onSelect={(item) => setFormData({ ...formData, books: [...formData.books, item] })}
+              onRemove={(item) => setFormData({ ...formData, books: formData.books.filter((i) => i.id !== item.id) })}
+              renderItem={(item) => (
+                <div className="w-20 flex flex-col gap-1">
+                  <img src={item.coverPath || "https://placehold.co/100x150"} alt={item.title} className="w-full h-28 object-cover rounded-md shadow-sm" />
+                  <span className="text-xs truncate text-center">{item.title}</span>
                 </div>
-              </>
-            )}
-          />
-        </div>
-      </div>
+              )}
+              renderResult={(item) => (
+                <>
+                  <img src={item.coverPath || "https://placehold.co/40x60"} alt={item.title} className="w-10 h-14 object-cover rounded" />
+                  <div className="flex flex-col">
+                    <span className="font-medium text-sm">{item.title}</span>
+                    <span className="text-xs text-muted-foreground">{item.authors?.join(", ")}</span>
+                  </div>
+                </>
+              )}
+            />
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
 
       <div className="flex gap-4 pt-4">
         <Button variant="outline" className="flex-1" onClick={handleBack}>
@@ -243,6 +266,21 @@ const RegisterPage = () => {
       </div>
     </div>
   );
+
+  const handleGoogleLogin = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/explore`
+        }
+      });
+      if (error) throw error;
+    } catch (error: any) {
+      console.error("Google login error:", error);
+      toast.error("Google ile giriş yapılırken bir hata oluştu.");
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
@@ -270,7 +308,7 @@ const RegisterPage = () => {
               <Button
                 variant="outline"
                 className="w-full flex items-center justify-center gap-3 h-11"
-                onClick={() => console.log('Google login')}
+                onClick={handleGoogleLogin}
               >
                 <svg className="w-5 h-5" viewBox="0 0 24 24">
                   <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />

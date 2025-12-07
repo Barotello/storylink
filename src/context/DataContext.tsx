@@ -122,9 +122,12 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
             if (favError) console.error("DataContext: Favorites fetch error", favError);
 
             if (profile) {
+                console.log("DataContext: Raw favorites fetched:", favorites);
                 const movies = favorites?.filter(f => f.item_type === 'movie').map(f => ({ id: f.item_id, title: f.title, posterPath: f.poster_path, type: 'movie', overview: f.overview, releaseDate: f.release_date } as MediaItem)) || [];
                 const series = favorites?.filter(f => f.item_type === 'tv').map(f => ({ id: f.item_id, title: f.title, posterPath: f.poster_path, type: 'tv', overview: f.overview, releaseDate: f.release_date } as MediaItem)) || [];
                 const books = favorites?.filter(f => f.item_type === 'book').map(f => ({ id: f.item_id, title: f.title, coverPath: f.poster_path, description: f.overview, publishedDate: f.release_date } as BookItem)) || [];
+
+                console.log("DataContext: Mapped favorites:", { movies, series, books });
 
                 setCurrentUser({
                     id: profile.id,
@@ -141,13 +144,17 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         }
 
         // 2. Fetch Posts (with profiles)
-        const { data: postsData } = await supabase
+        const { data: postsData, error } = await supabase
             .from('posts')
             .select(`
                     *,
                     profiles (name, handle, avatar_url)
                 `)
             .order('created_at', { ascending: false });
+
+        if (error) {
+            console.error("DataContext: Error fetching posts", error);
+        }
 
         if (postsData) {
             const formattedPosts: Post[] = postsData.map(p => ({
